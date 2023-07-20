@@ -14,11 +14,11 @@ function App() {
     {/* Content*/}
       <NavbarComp></NavbarComp>
       <GalleryComp></GalleryComp>
-      {/* <ServicesComp></ServicesComp>
-      <FaqComp></FaqComp> */}
+      <ServicesComp></ServicesComp>
+      <FaqComp></FaqComp> 
     {/* Content*/}
 
-      {/* <FooterComp></FooterComp>  */}
+      <FooterComp></FooterComp> 
     </div>
   )
     

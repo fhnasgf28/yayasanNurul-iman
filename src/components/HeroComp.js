@@ -5,12 +5,12 @@ import '../css/main.css';
 
 const HeroComp = () => {
     return (
-    <div className= "hero min-vh-100 w-100">
+    <div className= "hero min-vh-100 w-100" id='beranda'>
         <Container>
         <Row>
-            <Col className='text-white text-center'>
+            <Col className='text-white text-center fs-1'>
                 <h1>farhan assegaf</h1>
-                <h2>web developer</h2>
+                <p className='heroNav text-white text-center text-white-50'>Lorem ipsum dolor sit amet consectetur adipisicing elit. Sapiente perspiciatis </p>
             </Col>
         </Row>
         </Container>
