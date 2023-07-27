@@ -60,6 +60,59 @@ const AboutUs = () => {
             </div>
         </section>
         
+
+        <section className='container px-3 md:pb-20 md:pt-10 pt-20'>
+                <div className="">
+                    <a href="https://webexpe.com/" target="_blank" rel="noopener noreferrer" className="block md:w-[15%] w-[50%] ">
+                        <img src="/images/YT Logo.png" alt="webexpe.com" className="rounded-lg overflow-hidden" />
+                    </a>
+                    <Text title className='mb-5 mt-10 dark:text-sky-400 text-sky-600'>
+                        Hi we are WebExpe.
+                    </Text>
+                    <Text subtitle className='text-xl mb-5'>
+                        This is an open source blog template which can help you start a simple static blog.
+                    </Text>
+
+                    <Text p className='text-lg'>
+                        The idea was to start a blog or create a template with as little investment as possible. <br />In this template we have used Next.js SSG to create static HTML files which can be hosted on firebase or any static site hosting service. <br />
+                        There is also options like vercel for hosting Next.js dynamic webistes but we wanted this template to be easy to use for any non techie person too, so we explored the option of static site generation. <br /><br />
+                        If you have a github account you can clone the project or use it as a template or else you can simply download the code from <a href="https://github.com/webexpe13/blog-template-using-nextjs-typescript-tailwindcss" className="underline font-bold">here</a>.
+                    </Text>
+
+                    <div className="flex flex-wrap justify-between">
+                        <div className="md:w-auto w-full my-5">
+                            <Text subtitle className='text-3xl font-medium'>
+                                Features
+                            </Text>
+                            <List type={ListType.disc}>
+                                <li>Minimilist Template</li>
+                                <li>Light and Dark theme</li>
+                                <li>Default and Centered Layout</li>
+                                <li>Maximize lighthouse score</li>
+                                <li>Privacy Policy, Terms and Conditions page template</li>
+                                <li>Integrate with <a href="https://tailwindcss.com/" target="_blank" rel="noopener noreferrer">Tailwind CSS </a></li>
+                                <li>Type checking TypeScript</li>
+                                <li>SEO metadata, Open Graph tags with Next SEO</li>
+                            </List>
+                        </div>
+
+                        <div className="md:w-auto w-full my-5">
+                            <Text subtitle className='text-3xl font-medium'>
+                                Philosophy
+                            </Text>
+                            <List type={ListType.disc}>
+                                <li>Minimal code</li>
+                                <li>SEO-friendly</li>
+                                <li>Production-ready</li>
+                                <li>Easy to use</li>
+                                <li>Sould be faster than Wordpress or any other CMS</li>
+                            </List>
+                        </div>
+                    </div>
+                    <Seperator />
+                </div>
+            </section>
+            
         {/* Blog Section Start  */}
     <section id="blog" className="bg-slate-100 pt-36 pb-32 dark:bg-dark">
       <div className="container">
@@ -112,6 +165,7 @@ const AboutUs = () => {
       </div>
     </section>
     {/* Blog Section End */}
+    
     
     
         </PageLayout>
