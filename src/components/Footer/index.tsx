@@ -9,10 +9,10 @@ const Footer = () => {
             <div className="md:container flex items-center md:justify-center justify-around flex-wrap md:text-[14px] text-[12px] py-5">
                 <p className="my-0 mr-[10px] md:mr-3">Copyright © {year} {WEBSITE_NAME}</p>
                 <LinkTo href="/privacy-policy" passHref={true} className="pr-[10px] md:pr-3">
-                    Privacy Policy
+                    Kebijakan Pribadi
                 </LinkTo>
                 <LinkTo href="/terms-and-condition" passHref={true}>
-                    Terms and Conditions
+                    Syarat dan Ketentuan
                 </LinkTo>
             </div>
         </div>
