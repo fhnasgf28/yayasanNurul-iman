@@ -70,7 +70,7 @@ const SimpleNavbar = ({ openSearch, changeTheme, toggleSideMenu, openSidebar = f
         </div>
 
         <div className="" onClick={() => onShareClick()}>
-          <button name="share" aria-label="share page">
+          <button name="share" aria-label="share halaman">
             <BsFillShareFill className="dark:text-white text-black text-[16px] mt-[7px] ml-2 mr-1" />
           </button>
         </div>

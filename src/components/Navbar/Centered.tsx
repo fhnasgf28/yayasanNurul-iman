@@ -41,7 +41,7 @@ const CenteredNavbar = ({
           >
             <button
               name="search"
-              aria-label="search"
+              aria-label="cari"
               className="dark:text-white text-black"
             >
               <AiOutlineSearch className="text-[24px]" />
