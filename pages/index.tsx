@@ -5,8 +5,21 @@ import { SORTED_ARTICLES_BY_DATE } from '../BLOG_CONSTANTS/_ARTICLES_LIST';
 import { DEFAULT_SEO } from "../BLOG_CONSTANTS/_BLOG_SETUP";
 import FeaturedArticleSection from "../src/components/Misc/FeaturedArticleSection";
 import HomeNonFeatureArticles from "../src/components/Misc/HomeNonFeatureAricles";
+import Slider from 'react-slick';
+import 'slick-carousel/slick/slick.css';
+import 'slick-carousel/slick/slick-theme.css';
 
 const Home = () => {
+  const settings = {
+    dots: true,
+    infinite: true,
+    speed: 500,
+    slidesToShow: 1,
+    slidesToScroll: 1,
+    autoplay: true,         // Aktifkan penggeseran otomatis
+    autoplaySpeed: 3000,
+  };
+
   return (
     <PageLayout home PAGE_SEO={DEFAULT_SEO}>
        <section className="relative">
@@ -34,73 +47,22 @@ const Home = () => {
             </div>
           </div>
         </div>
-
       </div>
 
-
-       {/* Section background (needs .relative class on parent and next sibling elements) */}
-       {/* <div className="absolute inset-0 top-1/2 md:mt-24 lg:mt-0 bg-gray-900 pointer-events-none" aria-hidden="true"></div> */}
-      <div className="absolute left-0 right-0 bottom-0 m-auto w-px p-px h-20 bg-gray-200 transform translate-y-1/2"></div>
-
-      <div className="relative max-w-6xl mx-auto px-4 sm:px-6">
-        <div className="py-12 md:py-20">
-
-          {/* Section header */}
-          <div className="max-w-3xl mx-auto text-center pb-12 md:pb-20">
-            <h2 className="h2 mb-4">Explore the solutions</h2>
-            <p className="text-xl text-gray-600">Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur excepteur sint occaecat cupidatat.</p>
-          </div>
-
-          {/* Items */}
-          <div className="max-w-sm mx-auto grid gap-6 md:grid-cols-2 lg:grid-cols-3 items-start md:max-w-2xl lg:max-w-none">
-
-            {/* 1st item */}
-            <div className="relative flex flex-col items-center p-6 bg-white rounded shadow-xl">
-              #
-              <h4 className="text-xl font-bold leading-snug tracking-tight mb-1">Headless CMS</h4>
-              <p className="text-gray-600 text-center">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-            </div>
-
-            {/* 2nd item */}
-            <div className="relative flex flex-col items-center p-6 bg-white rounded shadow-xl">
-              #
-              <h4 className="text-xl font-bold leading-snug tracking-tight mb-1">Headless CMS</h4>
-              <p className="text-gray-600 text-center">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-            </div>
-
-            {/* 3rd item */}
-            <div className="relative flex flex-col items-center p-6 bg-white rounded shadow-xl">
-              #
-              <h4 className="text-xl font-bold leading-snug tracking-tight mb-1">Headless CMS</h4>
-              <p className="text-gray-600 text-center">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-            </div>
-
-            {/* 4th item */}
-            <div className="relative flex flex-col items-center p-6 bg-white rounded shadow-xl">
-              #
-              <h4 className="text-xl font-bold leading-snug tracking-tight mb-1">Headless CMS</h4>
-              <p className="text-gray-600 text-center">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-            </div>
-
-            {/* 5th item */}
-            <div className="relative flex flex-col items-center p-6 bg-white rounded shadow-xl">
-              #
-              <h4 className="text-xl font-bold leading-snug tracking-tight mb-1">Headless CMS</h4>
-              <p className="text-gray-600 text-center">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-            </div>
-
-            {/* 6th item */}
-            <div className="relative flex flex-col items-center p-6 bg-white rounded shadow-xl">
-             #
-              <h4 className="text-xl font-bold leading-snug tracking-tight mb-1">Headless CMS</h4>
-              <p className="text-gray-600 text-center">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-            </div>
-
-          </div>
-
+      {/* Carousel */}
+      <Slider {...settings} className=" container px-6 py-8 border border-gray-300 shadow-md">
+        <div className="bg-gray-100 h-80 h-[500px] rounded-lg overflow-hidden ">
+          <img src="/images/yayasanContoh.jpg" alt="Slide 1" className="w-full h-full object-cover" />
         </div>
-      </div>
-      
+        <div className="bg-gray-100 h-80 h-[500px] rounded-lg overflow-hidden">
+          <img src="/images/yayasanContoh.jpg" alt="Slide 2" className="w-full h-full object-cover" />
+        </div>
+        <div className="bg-gray-100 h-80 h-[500px] rounded-lg overflow-hidden">
+          <img src="/images/yayasanContoh.jpg" alt="Slide 3" className="w-full h-full object-cover" />
+        </div>
+        {/* Add more slides as needed */}
+      </Slider>
+
     </section>
       <div className="container mx-auto lg:px-[15px] px-0">
         <div className={'flex flex-wrap'}>

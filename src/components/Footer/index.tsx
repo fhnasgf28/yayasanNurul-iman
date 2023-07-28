@@ -17,7 +17,12 @@ const Footer = () => {
               <div className="mb-2">
               </div>
               <div className="text-sm text-gray-600">
-                <a href="#0" className="text-gray-600 hover:text-gray-900 hover:underline transition duration-150 ease-in-out">Terms</a> · <a href="#0" className="text-gray-600 hover:text-gray-900 hover:underline transition duration-150 ease-in-out">Privacy Policy</a>
+              <LinkTo href="/privacy-policy" passHref={true} className="pr-[10px] md:pr-3">
+                    Kebijakan Privasi
+                </LinkTo>
+                <LinkTo href="/terms-and-condition" passHref={true}>
+                    Syarat & Ketentuan
+                </LinkTo>
               </div>
             </div>
   
@@ -142,10 +147,9 @@ const Footer = () => {
             </ul>
   
             {/* Copyrights note */}
-            <div className="text-sm text-gray-600 mr-4">&copy; Yayasan Nurul Iman 2023</div>
-  
+            <div className="text-sm text-gray-600 mr-4"> Yayasan Nurul Iman © {year} </div>
+
           </div>
-  
         </div>
       </footer>
 

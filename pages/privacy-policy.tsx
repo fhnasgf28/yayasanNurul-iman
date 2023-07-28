@@ -14,7 +14,7 @@ const TermsAndConditions = () => {
         <PageLayout PAGE_SEO={PAGE_SEO} home>
             <div className='container px-3 pb-[20px] mt-10 pt-14 md:pt-0'>
                 <Text title className="text-3xl">
-                    Privacy Policy
+                    Kebijakan Provasi
                 </Text>
                 <Text p>
                     At [Website_Name], accessible from [Website_URL], one of our main priorities is the privacy of our visitors. This Privacy Policy document contains types of information that is collected and recorded by [Website_Name] and how we use it. <br />
