@@ -54,6 +54,7 @@ const NavSidebar = ({ openSidebar = false, closeNavSidebar, navSetup, changeThem
                                     {each.label}
                                 </a>
                                 :
+                                // eslint-disable-next-line react/jsx-key
                                 <NavCatergoryDD label={each.label} openDD={openDD} setOpenDD={() => setOpenDD(!openDD)} />
                         ))
                     }

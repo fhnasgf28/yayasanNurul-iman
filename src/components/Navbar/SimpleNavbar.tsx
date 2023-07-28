@@ -47,6 +47,8 @@ const SimpleNavbar = ({ openSearch, changeTheme, toggleSideMenu, openSidebar = f
                   {each.label}
                 </a>
                 :
+                
+                // eslint-disable-next-line react/jsx-key
                 <NavCatergoryDD label={each.label} openDD={openDD} setOpenDD={() => setOpenDD(!openDD)} floating />
             ))
           }

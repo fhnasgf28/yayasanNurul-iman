@@ -117,6 +117,7 @@ const CenteredNavbar = ({
               </a>
             )
           ) : (
+            // eslint-disable-next-line react/jsx-key
             <NavCatergoryDD
               label={each.label}
               openDD={openDD}
