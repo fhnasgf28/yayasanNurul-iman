@@ -1,10 +1,12 @@
 /**These are necessary imports / components for the page */
 import { PageLayout, Text, LinkTo } from "../src/components";
+import React, { useEffect, useRef, useState } from 'react';
 import ArticleCard from '../src/components/ArticleCards/ArticleCard';
 import { SORTED_ARTICLES_BY_DATE } from '../BLOG_CONSTANTS/_ARTICLES_LIST';
 import { DEFAULT_SEO } from "../BLOG_CONSTANTS/_BLOG_SETUP";
 import FeaturedArticleSection from "../src/components/Misc/FeaturedArticleSection";
 import HomeNonFeatureArticles from "../src/components/Misc/HomeNonFeatureAricles";
+import LazyImage from '../src/components/LazyImage/LazyImage';
 import Slider from 'react-slick';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
@@ -39,9 +41,9 @@ const Home = () => {
             </p>
               <div className="max-w-xs mx-auto sm:max-w-none sm:flex sm:justify-center" data-aos="zoom-y-out" data-aos-delay="300">
               <div>
-              <a href="#0" className="inline-block py-3 px-6 bg-gradient-to-r from-blue-600 to-teal-400 rounded-md shadow-lg text-white font-semibold text-lg hover:from-blue-800 hover:to-teal-600 hover:text-opacity-100 hover:text-shadow-md transition duration-300">
+              <LinkTo href="" className="inline-block py-3 px-6 bg-gradient-to-r from-blue-600 to-teal-400 rounded-md shadow-lg text-white font-semibold text-lg hover:from-blue-800 hover:to-teal-600 hover:text-opacity-100 hover:text-shadow-md transition duration-300">
                 Donasi Pembangunan
-              </a>
+              </LinkTo>
               </div>
               </div>
             </div>
@@ -50,17 +52,30 @@ const Home = () => {
       </div>
 
       {/* Carousel */}
-      <Slider {...settings} className=" container px-6 py-8 border border-gray-300 shadow-md">
-        <div className="bg-gray-100 h-80 h-[500px] rounded-lg overflow-hidden ">
-          <img src="/images/yayasanContoh.jpg" alt="Slide 1" className="w-full h-full object-cover" />
-        </div>
+      <Slider {...settings} className="container px-6 py-8 border border-gray-300 shadow-md ">
         <div className="bg-gray-100 h-80 h-[500px] rounded-lg overflow-hidden">
-          <img src="/images/yayasanContoh.jpg" alt="Slide 2" className="w-full h-full object-cover" />
+          <LazyImage
+            src="/images/yayasanContoh.jpg"
+            alt="Slide 1"
+            className="w-full h-full object-cover"
+          />
         </div>
+        
         <div className="bg-gray-100 h-80 h-[500px] rounded-lg overflow-hidden">
-          <img src="/images/yayasanContoh.jpg" alt="Slide 3" className="w-full h-full object-cover" />
+          <LazyImage
+            src="/images/yayasanContoh.jpg"
+            alt="Slide 1"
+            className="w-full h-full object-cover"
+          />
         </div>
-        {/* Add more slides as needed */}
+
+        <div className="bg-gray-100 h-80 h-[500px] rounded-lg overflow-hidden">
+          <LazyImage
+            src="/images/yayasanContoh.jpg"
+            alt="Slide 1"
+            className="w-full h-full object-cover"
+          />
+        </div>
       </Slider>
 
     </section>
