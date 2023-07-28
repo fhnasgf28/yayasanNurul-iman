@@ -17,24 +17,14 @@ const AboutUs = () => {
             <div className="container">
                 <div className="flex flex-wrap">
                 <div className="w-full self-center px-4 lg:w-1/2">
-                    <h1 className="text-base font-semibold text-primary md:text-xl">Halo Semua 👋, saya <span className="mt-1 block text-4xl font-bold text-dark dark:text-white lg:text-5xl">Sandhika Galih</span></h1>
-                    <h2 className="mb-5 text-lg font-medium text-secondary lg:text-2xl">Lecturer &amp; <span className="text-dark dark:text-white">Content Creator</span></h2>
+                    <h1 className="text-base font-semibold text-primary md:text-xl">Sejarah<span className="mt-1 block text-4xl font-bold text-dark dark:text-white lg:text-5xl">Yayasan Nurul Iman</span></h1>
                     <p className="mb-10 font-medium leading-relaxed text-secondary">Belajar web programming itu mudah dan menyenangkan bukan. <span className="font-bold text-dark dark:text-white">bukan!</span></p>
 
                     <a href="#" className="rounded-full bg-primary py-3 px-8 text-base font-semibold text-white transition duration-300 ease-in-out hover:opacity-80 hover:shadow-lg">Hubungi Saya</a>
                 </div>
                 <div className="w-full self-end px-4 lg:w-1/2">
                     <div className="relative mt-10 lg:right-0 lg:mt-9">
-                    <img src="#" alt="Sandhika Galih" className="relative z-10 mx-auto max-w-full" />
-                    <span className="absolute bottom-0 left-1/2 -translate-x-1/2 md:scale-125">
-                        <svg width="400" height="400" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
-                        <path
-                            fill="#14b8a6"
-                            d="M47.4,-51C59.2,-35.6,65.1,-17.8,63.4,-1.7C61.7,14.5,52.6,28.9,40.8,36.6C28.9,44.2,14.5,45,-2,47C-18.4,49,-36.8,52.1,-45.4,44.5C-53.9,36.8,-52.5,18.4,-51.2,1.3C-49.9,-15.8,-48.7,-31.7,-40.2,-47.1C-31.7,-62.4,-15.8,-77.3,1,-78.3C17.8,-79.2,35.6,-66.3,47.4,-51Z"
-                            transform="translate(100 100) scale(1.1)"
-                        />
-                        </svg>
-                    </span>
+                    <img src="/images/masjid.jpg" alt="masjid nurul iman" className="rounded-lg shadow-lg z-10 mx-auto max-w-full hover:animate-pulse" />
                     </div>
                 </div>
                 </div>
@@ -59,59 +49,43 @@ const AboutUs = () => {
             </div>
             </div>
         </section>
-        
 
         <section className='container px-3 md:pb-20 md:pt-10 pt-20'>
-                <div className="">
-                    <a href="https://webexpe.com/" target="_blank" rel="noopener noreferrer" className="block md:w-[15%] w-[50%] ">
-                        <img src="/images/YT Logo.png" alt="webexpe.com" className="rounded-lg overflow-hidden" />
-                    </a>
-                    <Text title className='mb-5 mt-10 dark:text-sky-400 text-sky-600'>
-                        Hi we are WebExpe.
-                    </Text>
-                    <Text subtitle className='text-xl mb-5'>
-                        This is an open source blog template which can help you start a simple static blog.
-                    </Text>
 
-                    <Text p className='text-lg'>
-                        The idea was to start a blog or create a template with as little investment as possible. <br />In this template we have used Next.js SSG to create static HTML files which can be hosted on firebase or any static site hosting service. <br />
-                        There is also options like vercel for hosting Next.js dynamic webistes but we wanted this template to be easy to use for any non techie person too, so we explored the option of static site generation. <br /><br />
-                        If you have a github account you can clone the project or use it as a template or else you can simply download the code from <a href="https://github.com/webexpe13/blog-template-using-nextjs-typescript-tailwindcss" className="underline font-bold">here</a>.
-                    </Text>
-
-                    <div className="flex flex-wrap justify-between">
-                        <div className="md:w-auto w-full my-5">
-                            <Text subtitle className='text-3xl font-medium'>
-                                Features
-                            </Text>
-                            <List type={ListType.disc}>
-                                <li>Minimilist Template</li>
-                                <li>Light and Dark theme</li>
-                                <li>Default and Centered Layout</li>
-                                <li>Maximize lighthouse score</li>
-                                <li>Privacy Policy, Terms and Conditions page template</li>
-                                <li>Integrate with <a href="https://tailwindcss.com/" target="_blank" rel="noopener noreferrer">Tailwind CSS </a></li>
-                                <li>Type checking TypeScript</li>
-                                <li>SEO metadata, Open Graph tags with Next SEO</li>
-                            </List>
-                        </div>
-
-                        <div className="md:w-auto w-full my-5">
-                            <Text subtitle className='text-3xl font-medium'>
-                                Philosophy
-                            </Text>
-                            <List type={ListType.disc}>
-                                <li>Minimal code</li>
-                                <li>SEO-friendly</li>
-                                <li>Production-ready</li>
-                                <li>Easy to use</li>
-                                <li>Sould be faster than Wordpress or any other CMS</li>
-                            </List>
-                        </div>
-                    </div>
-                    <Seperator />
-                </div>
-            </section>
+           {/* Gambar */}
+           <img src="/images/yayasanContoh.jpg" alt="Yayasan Nurul Iman" className="w-full md:w-2/3 lg:w-1/2 mx-auto rounded-lg shadow-md" />
+          
+          {/* Judul */}
+          <Text title className='mt-10 dark:text-sky-400 text-sky-600' >
+          Visi dan Misi Yayasan Nurul Iman
+          </Text>
+           {/* Visi dan Misi */}
+           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-10">
+            <div>
+              <div className="bg-white rounded-lg shadow-md p-6">
+                <Text subtitle className='text-3xl font-medium'>
+                  Visi
+                </Text>
+                <Text p className='text-lg'>
+                  Menjadi lembaga pendidikan dan sosial yang unggul, berdaya saing, serta berlandaskan keimanan dan ketaqwaan kepada Allah SWT.
+                </Text>
+              </div>
+            </div>
+            <div>
+              <div className="bg-white rounded-lg shadow-md p-6">
+                <Text subtitle className='text-3xl font-medium'>
+                  Misi
+                </Text>
+                <List type={ListType.disc}>
+                  <li>Mengembangkan karakter dan akhlakul karimah siswa-siswi yang berlandaskan nilai-nilai Islami.</li>
+                  <li>Mendorong peningkatan prestasi akademik dan non-akademik melalui program pembelajaran yang inovatif dan berbasis teknologi.</li>
+                  <li>Menyediakan lingkungan belajar yang aman, nyaman, dan mendukung perkembangan potensi siswa-siswi secara holistik.</li>
+                  {/* ... tambahkan misi lainnya ... */}
+                </List>
+              </div>
+            </div>
+          </div>    
+        </section>
             
         {/* Blog Section Start  */}
     <section id="blog" className="bg-slate-100 pt-36 pb-32 dark:bg-dark">
