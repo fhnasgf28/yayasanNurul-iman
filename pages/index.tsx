@@ -22,12 +22,6 @@ const Home = () => {
     autoplaySpeed: 3000,
   };
 
-  const gambar = [
-    "gambar1.jpg",
-    "gambar2.jpg",
-    "gambar3.jpg"
-  ];
-
   return (
     <PageLayout home PAGE_SEO={DEFAULT_SEO}>
        <section className="relative">
@@ -47,7 +41,7 @@ const Home = () => {
             </p>
               <div className="max-w-xs mx-auto sm:max-w-none sm:flex sm:justify-center" data-aos="zoom-y-out" data-aos-delay="300">
               <div>
-              <LinkTo href="" className="inline-block py-3 px-6 bg-gradient-to-r from-blue-600 to-teal-400 rounded-md shadow-lg text-white font-semibold text-lg hover:from-blue-800 hover:to-teal-600 hover:text-opacity-100 hover:text-shadow-md transition duration-300">
+              <LinkTo href="/donationPage" className="inline-block py-3 px-6 bg-gradient-to-r from-blue-600 to-teal-400 rounded-md shadow-lg text-white font-semibold text-lg hover:from-blue-800 hover:to-teal-600 hover:text-opacity-100 hover:text-shadow-md transition duration-300">
                 Donasi Pembangunan
               </LinkTo>
               </div>

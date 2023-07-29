@@ -103,7 +103,7 @@ export const PRIMARY_NAV: iNavSetup = {
         },
         {
             label: 'Donasi Pembangunan',
-            path: '/donation',
+            path: '/donationPage',
             newTab: true
         },
         {
