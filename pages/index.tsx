@@ -22,6 +22,12 @@ const Home = () => {
     autoplaySpeed: 3000,
   };
 
+  const gambar = [
+    "gambar1.jpg",
+    "gambar2.jpg",
+    "gambar3.jpg"
+  ];
+
   return (
     <PageLayout home PAGE_SEO={DEFAULT_SEO}>
        <section className="relative">
@@ -52,8 +58,8 @@ const Home = () => {
       </div>
 
       {/* Carousel */}
-      <Slider {...settings} className="container px-6 py-8 border border-gray-300 shadow-md ">
-        <div className="bg-gray-100 h-80 h-[500px] rounded-lg overflow-hidden">
+      <Slider {...settings} className="container px-6 py-8">
+        <div className="bg-gray-100 h-80 rounded-lg overflow-hidden">
           <LazyImage
             src="/images/yayasanContoh.jpg"
             alt="Slide 1"
@@ -61,7 +67,7 @@ const Home = () => {
           />
         </div>
         
-        <div className="bg-gray-100 h-80 h-[500px] rounded-lg overflow-hidden">
+        <div className="bg-gray-100 h-80 rounded-lg overflow-hidden">
           <LazyImage
             src="/images/yayasanContoh.jpg"
             alt="Slide 1"
@@ -69,7 +75,7 @@ const Home = () => {
           />
         </div>
 
-        <div className="bg-gray-100 h-80 h-[500px] rounded-lg overflow-hidden">
+        <div className="bg-gray-100 h-80 rounded-lg overflow-hidden">
           <LazyImage
             src="/images/yayasanContoh.jpg"
             alt="Slide 1"

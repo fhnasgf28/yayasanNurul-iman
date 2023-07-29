@@ -1,5 +1,5 @@
 import '../src/styles/globals.scss'
-
+import Custom404 from './404'; // Import komponen custom 404
 import type { AppProps } from 'next/app'
 import Head from 'next/head'
 
@@ -7,7 +7,7 @@ import { NextSeo } from "next-seo";
 import Footer from '../src/components/Footer';
 import Script from 'next/script';
 import * as gtag from '../google';
-import { useEffect, useState } from 'react';
+import { Component, useEffect, useState } from 'react';
 import { CREATE_SEO_CONFIG } from '../src/utils/utils';
 import { ThemeProvider } from 'next-themes'
 
@@ -71,7 +71,17 @@ function MyApp({ Component, pageProps }: AppProps) {
       </ThemeProvider>
     </>
   )
-
 }
+
+MyApp.getInitialProps = async ( context: { Component: any; ctx: any; } ) => {
+  const {Component, ctx} = context;
+  let pageProps = {};
+  if (Component.getInitialProps) {
+    pageProps = await Component.getInitialProps(ctx);
+  }
+  const statusCode = ctx.res ? ctx.res.statusCode : 404;
+
+  return { pageProps, statusCode };
+};
 
 export default MyApp

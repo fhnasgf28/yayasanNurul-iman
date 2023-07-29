@@ -47,51 +47,6 @@ const Footer = () => {
                 </li>
               </ul>
             </div>
-  
-            {/* 3rd block */}
-            <div className="sm:col-span-6 md:col-span-3 lg:col-span-2">
-              <h6 className="text-gray-800 font-medium mb-2">Resources</h6>
-              <ul className="text-sm">
-                <li className="mb-2">
-                  <a href="#0" className="text-gray-600 hover:text-gray-900 transition duration-150 ease-in-out">Documentation</a>
-                </li>
-                <li className="mb-2">
-                  <a href="#0" className="text-gray-600 hover:text-gray-900 transition duration-150 ease-in-out">Tutorials & Guides</a>
-                </li>
-                <li className="mb-2">
-                  <a href="#0" className="text-gray-600 hover:text-gray-900 transition duration-150 ease-in-out">Blog</a>
-                </li>
-                <li className="mb-2">
-                  <a href="#0" className="text-gray-600 hover:text-gray-900 transition duration-150 ease-in-out">Support Center</a>
-                </li>
-                <li className="mb-2">
-                  <a href="#0" className="text-gray-600 hover:text-gray-900 transition duration-150 ease-in-out">Partners</a>
-                </li>
-              </ul>
-            </div>
-  
-            {/* 4th block */}
-            <div className="sm:col-span-6 md:col-span-3 lg:col-span-2">
-              <h6 className="text-gray-800 font-medium mb-2">Company</h6>
-              <ul className="text-sm">
-                <li className="mb-2">
-                  <a href="#0" className="text-gray-600 hover:text-gray-900 transition duration-150 ease-in-out">Home</a>
-                </li>
-                <li className="mb-2">
-                  <a href="#0" className="text-gray-600 hover:text-gray-900 transition duration-150 ease-in-out">About us</a>
-                </li>
-                <li className="mb-2">
-                  <a href="#0" className="text-gray-600 hover:text-gray-900 transition duration-150 ease-in-out">Company values</a>
-                </li>
-                <li className="mb-2">
-                  <a href="#0" className="text-gray-600 hover:text-gray-900 transition duration-150 ease-in-out">Pricing</a>
-                </li>
-                <li className="mb-2">
-                  <a href="#0" className="text-gray-600 hover:text-gray-900 transition duration-150 ease-in-out">Privacy Policy</a>
-                </li>
-              </ul>
-            </div>
-  
             {/* 5th block */}
             <div className="sm:col-span-6 md:col-span-3 lg:col-span-3">
               <h6 className="text-gray-800 font-medium mb-2">Subscribe</h6>
@@ -110,7 +65,6 @@ const Footer = () => {
                       </button>
                     </div>
                     {/* Success message */}
-                    {/* <p className="mt-2 text-green-600 text-sm">Thanks for subscribing!</p> */}
                   </div>
                 </div>
               </form>
