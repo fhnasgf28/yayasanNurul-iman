@@ -3,6 +3,7 @@ import { PageLayout, Text, LinkTo } from "../src/components";
 import React, { useEffect, useRef, useState } from 'react';
 import ArticleCard from '../src/components/ArticleCards/ArticleCard';
 import { SORTED_ARTICLES_BY_DATE } from '../BLOG_CONSTANTS/_ARTICLES_LIST';
+import Link from 'next/link';
 import { DEFAULT_SEO } from "../BLOG_CONSTANTS/_BLOG_SETUP";
 import FeaturedArticleSection from "../src/components/Misc/FeaturedArticleSection";
 import HomeNonFeatureArticles from "../src/components/Misc/HomeNonFeatureAricles";
@@ -41,9 +42,11 @@ const Home = () => {
             </p>
               <div className="max-w-xs mx-auto sm:max-w-none sm:flex sm:justify-center" data-aos="zoom-y-out" data-aos-delay="300">
               <div>
-              <LinkTo href="/donationPage" className="inline-block py-3 px-6 bg-gradient-to-r from-blue-600 to-teal-400 rounded-md shadow-lg text-white font-semibold text-lg hover:from-blue-800 hover:to-teal-600 hover:text-opacity-100 hover:text-shadow-md transition duration-300">
-                Donasi Pembangunan
-              </LinkTo>
+              <Link href="/donationPage">
+                <a className="inline-block py-3 px-6 bg-gradient-to-r from-blue-600 to-teal-400 rounded-md shadow-lg text-white font-semibold text-lg hover:from-blue-800 hover:to-teal-600 hover:text-opacity-100 hover:text-shadow-md transition duration-300">
+                  Donasi Pembangunan
+                </a>
+              </Link>
               </div>
               </div>
             </div>
