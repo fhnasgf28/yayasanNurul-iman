@@ -2,9 +2,8 @@
 import { PageLayout, Text, List,LinkTo } from "../src/components";
 import { ListType } from "../src/shared/enums";
 import React, { useEffect, useRef, useState } from 'react';
-// import ArticleCard from '../src/components/ArticleCards/ArticleCard';
-// import { SORTED_ARTICLES_BY_DATE } from '../BLOG_CONSTANTS/_ARTICLES_LIST';
-import dataSiswa from "./dataSiswa"
+import ArticleCard from '../src/components/ArticleCards/ArticleCard';
+import { SORTED_ARTICLES_BY_DATE } from '../BLOG_CONSTANTS/_ARTICLES_LIST';
 import Link from 'next/link';
 import { DEFAULT_SEO } from "../BLOG_CONSTANTS/_BLOG_SETUP";
 import FeaturedArticleSection from "../src/components/Misc/FeaturedArticleSection";
