@@ -62,8 +62,9 @@ const AboutUs = () => {
         <section className='container px-3 md:pb-20 md:pt-10 pt-20'>
 
            {/* Gambar */}
-           <img src="/images/yayasanContoh.jpg" alt="Yayasan Nurul Iman" className="w-full md:w-2/3 lg:w-1/2 mx-auto rounded-lg shadow-md" />
-          
+           <div className="w-full md:w-2/3 lg:w-1/2 mx-auto" >
+            <Image src="/images/yayasanContoh.jpg" alt="Yayasan Nurul Iman" />
+           </div>
           {/* Judul */}
           <Text title className='mt-10 dark:text-sky-400 text-sky-600' >
           Visi dan Misi Yayasan Nurul Iman

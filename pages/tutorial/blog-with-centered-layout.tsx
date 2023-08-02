@@ -16,7 +16,7 @@ const Article = () => {
       <main className="container mx-auto py-8 px-4">
 
         <section>
-          <LazyImage className="mb-8 w-full rounded-lg shadow-lg" src="/images/1Muharram.jpeg" alt="1 Muharram 1445 " />
+          <Image className="mb-8 w-full shadow-lg" src="/images/1Muharram.jpeg" alt="1 Muharram 1445 " />
         </section>
 
         <section className="mb-8">

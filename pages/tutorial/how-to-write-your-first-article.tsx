@@ -2,8 +2,7 @@
 import { ImageSize, TextAlign, ListType } from "../../src/shared/enums";
 import { PageLayout, Text, List, Image, LinkTo, Seperator, Slider } from "../../src/components";
 import CodeBlock from "../../src/components/CodeBlock";
-import { Article_Entry_inList } from "../../src/constants/codeBlocks";
-import LazyImage from "../../src/components/LazyImage/LazyImage";
+
 
 const Article = () => {
     return (
@@ -12,7 +11,6 @@ const Article = () => {
             <section className="bg-white rounded-lg shadow-lg p-8 mb-8">
             <h2 className="text-3xl font-semibold mb-4">Yayasan Nurul Iman Perum Taman Singaperbangsa Karawang Adakan Acara Santunan Anak Yatim 10 Muharram</h2>
             <p className="text-gray-600 mb-4">Karawang, 10 Muharram 1445 - Yayasan Nurul Iman Perum Taman Singaperbangsa Karawang menggelar acara santunan anak yatim dalam rangka menyambut peringatan 10 Muharram. Acara berlangsung meriah dan dihadiri oleh ratusan anak yatim dari berbagai daerah sekitar.</p>
-
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
                 <div className="col-span-1 ">
                 <Image src="/images/10Muharrom/1Muharram.jpg" alt= " PawaiObor" className="w-full h-auto rounded-lg"/>

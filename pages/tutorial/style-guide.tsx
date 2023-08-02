@@ -4,7 +4,7 @@ import { combineClasses } from "../../src/utils/utils"
 
 const StyleGuide = () => {
     return (
-        <PageLayout>
+        <PageLayout blogwithsidebar>
             <section className="container md:pt-10 pt-20">
                 <Text title className="text-blue-600">
                     Style Guide

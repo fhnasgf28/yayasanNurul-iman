@@ -40,7 +40,7 @@ const ARTICLES_LIST: iArticle[] = [
       date: "August 08 2022",
       articleTitle: "How to setup this blog template",
       tags: "demo, blog setup",
-      thumbnail: "/public/imp_assets/tutorials/how-to-setup-blog.svg",
+      thumbnail: "/public/images/1Muharram.jpeg",
       shortIntro: "These are the steps to setup your blog",
       category: "tutorial",
     },
@@ -61,7 +61,7 @@ const ARTICLES_LIST: iArticle[] = [
       date: "August 08 2023",
       articleTitle: "Yayasan Nurul Iman Singaperbangsa Karawang Adakan Acara Santunan Anak Yatim",
       tags: "demo, first article",
-      thumbnail: "/public/imp_assets/tutorials/how-to-write-first-article.svg",
+      thumbnail: "/public/images/10Muharrom/santunan1.jpg",
       shortIntro:
         "This a step by step guide on how to write your first article.",
       category: "tutorial",
@@ -134,7 +134,7 @@ const ARTICLES_LIST: iArticle[] = [
       date: "August 14 2022",
       articleTitle: "Pawai Obor Yayasan Nurul Iman",
       tags: "demo, centered, centered layout",
-      thumbnail: "/public/imp_assets/tutorials/blog-with-centered-layout.svg",
+      thumbnail: "/public/images/1Muharram.jpeg",
       shortIntro:
         "This a demo article with centered layout and with demo of all the components.",
       category: "layouts",

@@ -28,9 +28,9 @@ export const MOCK_ARTICLES_LIST: iArticle[] = [
         featureArticle: true,
         preview: {
             author: RUPALI,
-            date: "August 08 2022",
-            articleTitle: "How to write your first article",
-            tags: "demo, first article",
+            date: "28 Juli 2023",
+            articleTitle: "",
+            tags: "yayasan, nurul, iman,singaperbangsa",
             thumbnail: "/public/imp_assets/tutorials/how-to-write-first-article.svg",
             shortIntro: "This a step by step guide on how to write your first article.",
             category: 'tutorial'

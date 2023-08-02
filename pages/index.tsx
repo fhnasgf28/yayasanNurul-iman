@@ -26,7 +26,7 @@ const Home = () => {
 
   return (
     <PageLayout home PAGE_SEO={DEFAULT_SEO}>
-       <section className="relative">
+    <section className="relative container mx-auto px-4 sm:px-6 lg:px-8">
 
       <div className="max-w-6xl mx-auto px-4 sm:px-6">
      
@@ -119,7 +119,7 @@ const Home = () => {
       <div className="container mx-auto lg:px-[15px] px-0">
         <div className={'flex flex-wrap'}>
           <FeaturedArticleSection />
-          <h1 className='px-3 w-full mb-5 text-xl md:text-3xl font-medium'>Checkout the below articles on how to use different layouts and components</h1>
+          <h1 className='px-3 w-full mb-5 text-xl md:text-3xl font-medium'>Cek Berita Lainnya</h1>
           <hr className='border-1 mb-5 w-[98%] mx-auto' />
           <HomeNonFeatureArticles />
         </div>

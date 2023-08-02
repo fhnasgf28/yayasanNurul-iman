@@ -82,7 +82,7 @@ const NavSidebar = ({ openSidebar = false, closeNavSidebar, navSetup, changeThem
                                     How to setup your blog
                                 </LinkTo>
                                 <LinkTo href='/pages/tutorial/how-to-write-your-first-article.tsx' passHref className='text-[16px] block my-3'>
-                                    How to write your first article
+                                    Yayasan Nurul Iman Adakan Acara Santunan Anak Yatim 10 Muharram
                                 </LinkTo>
                                 <LinkTo href='/pages/tutorial/how-to-deploy-blog.tsx' passHref className='text-[16px] block my-3'>
                                     How to export the blog
