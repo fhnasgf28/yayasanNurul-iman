@@ -58,8 +58,8 @@ const ARTICLES_LIST: iArticle[] = [
     featureArticle: true,
     preview: {
       author: RUPALI,
-      date: "August 08 2022",
-      articleTitle: "How to write your first article",
+      date: "August 08 2023",
+      articleTitle: "Yayasan Nurul Iman Singaperbangsa Karawang Adakan Acara Santunan Anak Yatim",
       tags: "demo, first article",
       thumbnail: "/public/imp_assets/tutorials/how-to-write-first-article.svg",
       shortIntro:
@@ -132,7 +132,7 @@ const ARTICLES_LIST: iArticle[] = [
     preview: {
       author: RUPALI,
       date: "August 14 2022",
-      articleTitle: "Page Layout for a article with centered layout",
+      articleTitle: "Pawai Obor Yayasan Nurul Iman",
       tags: "demo, centered, centered layout",
       thumbnail: "/public/imp_assets/tutorials/blog-with-centered-layout.svg",
       shortIntro:

@@ -11,8 +11,11 @@
     "out": "next build && next export"
   },
   "dependencies": {
+    "@supabase/supabase-js": "^2.31.0",
+    "@types/mongoose": "^5.11.97",
     "@uiw/react-textarea-code-editor": "^1.4.4",
     "css-loader": "^6.7.1",
+    "mongoose": "^7.4.1",
     "next": "12.1.0",
     "next-remove-imports": "^1.0.6",
     "next-seo": "^5.1.0",

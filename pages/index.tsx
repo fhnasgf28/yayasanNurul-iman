@@ -1,8 +1,10 @@
 /**These are necessary imports / components for the page */
-import { PageLayout, Text, LinkTo } from "../src/components";
+import { PageLayout, Text, List,LinkTo } from "../src/components";
+import { ListType } from "../src/shared/enums";
 import React, { useEffect, useRef, useState } from 'react';
-import ArticleCard from '../src/components/ArticleCards/ArticleCard';
-import { SORTED_ARTICLES_BY_DATE } from '../BLOG_CONSTANTS/_ARTICLES_LIST';
+// import ArticleCard from '../src/components/ArticleCards/ArticleCard';
+// import { SORTED_ARTICLES_BY_DATE } from '../BLOG_CONSTANTS/_ARTICLES_LIST';
+import dataSiswa from "./dataSiswa"
 import Link from 'next/link';
 import { DEFAULT_SEO } from "../BLOG_CONSTANTS/_BLOG_SETUP";
 import FeaturedArticleSection from "../src/components/Misc/FeaturedArticleSection";
@@ -80,6 +82,39 @@ const Home = () => {
           />
         </div>
       </Slider>
+
+        <section className='container px-3 md:pb-20 md:pt-10 pt-20'>
+          {/* Judul */}
+          <Text title className='mt-10 dark:text-sky-400 text-sky-600' >
+          Visi dan Misi Yayasan Nurul Iman
+          </Text>
+           {/* Visi dan Misi */}
+           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-10">
+            <div>
+              <div className="bg-white rounded-lg shadow-md p-6">
+                <Text subtitle className='text-3xl font-medium'>
+                  Visi
+                </Text>
+                <Text p className='text-lg'>
+                  Menjadi lembaga pendidikan dan sosial yang unggul, berdaya saing, serta berlandaskan keimanan dan ketaqwaan kepada Allah SWT.
+                </Text>
+              </div>
+            </div>
+            <div>
+              <div className="bg-white rounded-lg shadow-md p-6">
+                <Text subtitle className='text-3xl font-medium'>
+                  Misi
+                </Text>
+                <List type={ListType.disc}>
+                  <li>Mengembangkan karakter dan akhlakul karimah siswa-siswi yang berlandaskan nilai-nilai Islami.</li>
+                  <li>Mendorong peningkatan prestasi akademik dan non-akademik melalui program pembelajaran yang inovatif dan berbasis teknologi.</li>
+                  <li>Menyediakan lingkungan belajar yang aman, nyaman, dan mendukung perkembangan potensi siswa-siswi secara holistik.</li>
+                  {/* ... tambahkan misi lainnya ... */}
+                </List>
+              </div>
+            </div>
+          </div>    
+        </section>
 
     </section>
       <div className="container mx-auto lg:px-[15px] px-0">

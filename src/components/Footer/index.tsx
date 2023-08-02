@@ -1,8 +1,11 @@
 import { WEBSITE_NAME } from "../../../BLOG_CONSTANTS/_BLOG_SETUP"
+import {Text } from "../index";
 import LinkTo from "../LinkTo"
+import supabase from "../../config/supabaseClient";
 
 const Footer = () => {
     const year = new Date().getFullYear()
+    console.log(supabase)
 
     return (
  
@@ -28,33 +31,19 @@ const Footer = () => {
   
             {/* 2nd block */}
             <div className="sm:col-span-6 md:col-span-3 lg:col-span-2">
-              <h6 className="text-gray-800 font-medium mb-2">Products</h6>
-              <ul className="text-sm">
-                <li className="mb-2">
-                  <a href="#0" className="text-gray-600 hover:text-gray-900 transition duration-150 ease-in-out">Web Studio</a>
-                </li>
-                <li className="mb-2">
-                  <a href="#0" className="text-gray-600 hover:text-gray-900 transition duration-150 ease-in-out">DynamicBox Flex</a>
-                </li>
-                <li className="mb-2">
-                  <a href="#0" className="text-gray-600 hover:text-gray-900 transition duration-150 ease-in-out">Programming Forms</a>
-                </li>
-                <li className="mb-2">
-                  <a href="#0" className="text-gray-600 hover:text-gray-900 transition duration-150 ease-in-out">Integrations</a>
-                </li>
-                <li className="mb-2">
-                  <a href="#0" className="text-gray-600 hover:text-gray-900 transition duration-150 ease-in-out">Command-line</a>
-                </li>
-              </ul>
+              <h6 className="text-gray-800 font-medium mb-2">Alamat</h6>
+              <Text p className="text-sm">
+                Perum Taman Singaperbangsa Karawang, Telukjambe Timur
+              </Text>
             </div>
-            {/* 5th block */}
+            {/* 3th block */}
             <div className="sm:col-span-6 md:col-span-3 lg:col-span-3">
-              <h6 className="text-gray-800 font-medium mb-2">Subscribe</h6>
-              <p className="text-sm text-gray-600 mb-4">Get the latest news and articles to your inbox every month.</p>
+              <h6 className="text-gray-800 font-medium mb-2">Langganan</h6>
+              <p className="text-sm text-gray-600 mb-4">Masukan email Anda untuk menerima berita terbaru dari kami. </p>
               <form>
                 <div className="flex flex-wrap mb-4">
                   <div className="w-full">
-                    <label className="block text-sm sr-only" htmlFor="newsletter">Email</label>
+                    <label className="block text-sm sr-only" htmlFor="newsletter">Email Anda</label>
                     <div className="relative flex items-center max-w-xs">
                       <input id="newsletter" type="email" className="form-input w-full text-gray-800 px-3 py-2 pr-12 text-sm" placeholder="Your email" required />
                       <button type="submit" className="absolute inset-0 left-auto" aria-label="Subscribe">
@@ -69,16 +58,12 @@ const Footer = () => {
                 </div>
               </form>
             </div>
-  
-          </div>
-  
-          {/* Bottom area */}
-          <div className="md:flex md:items-center md:justify-between py-4 md:py-8 border-t border-gray-200">
-            {/* Copyrights note */}
-            <div className="text-sm text-gray-600 mr-4"> Yayasan Nurul Iman © {year} </div>
-
           </div>
         </div>
+
+        <div className=" w-full md:flex md:items-center md:justify-center py-4 md:py-8 border-t border-gray-200 bg-gradient-to-r from-blue-500 to-pink-500 text-white" style={{maxHeight:'50px'}}>
+            Yayasan Nurul Iman © {year}
+          </div>
       </footer>
 
     )

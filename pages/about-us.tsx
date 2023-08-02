@@ -6,29 +6,38 @@ import { iSEO } from "../src/shared/interfaces";
 
 const AboutUs = () => {
     const PAGE_SEO: iSEO = {
-        title: 'About Us',
+        title: 'Tentang Yayasan Nurul Iman',
         description: `Hi we are WebExpe. This is an open source blog template which can help you start a simple static blog.`,
         keywords: 'webexpx, contact us, webexpe13@gmail.com, next js blog template',
         author: 'Mayur Nalwala, Rupali Yadav'
     }
     return (
         <PageLayout PAGE_SEO={PAGE_SEO} home>
-            <section id="home" className="pt-36 dark:bg-dark">
-            <div className="container">
-                <div className="flex flex-wrap">
-                <div className="w-full self-center px-4 lg:w-1/2">
-                    <h1 className="text-base font-semibold text-primary md:text-xl">Sejarah<span className="mt-1 block text-4xl font-bold text-dark dark:text-white lg:text-5xl">Yayasan Nurul Iman</span></h1>
-                    <p className="mb-10 font-medium leading-relaxed text-secondary">Belajar web programming itu mudah dan menyenangkan bukan. <span className="font-bold text-dark dark:text-white">bukan!</span></p>
+            <section id="home" className="pt-36 dark:bg-dark container mx-auto py-8">
+            <h1 className="text-3xl font-bold mb-4">Yayasan Nurul Iman</h1>
+        <p className="text-gray-700 mb-8">Perum Taman Singaperbangsa Karawang</p>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+          <div className="bg-white p-6 shadow">
+            <h2 className="text-xl font-bold mb-4">Sejarah Yayasan</h2>
+            <p className="text-gray-700">
+              Yayasan Nurul Iman Perum Taman Singaperbangsa Karawang didirikan pada tahun 2016 sebagai lembaga non-profit yang berfokus pada bidang pendidikan dan sosial. Yayasan ini berkomitmen untuk memberikan kontribusi positif bagi masyarakat di sekitar wilayah Perum Taman Singaperbangsa Karawang.
+            </p>
+            <p className="text-gray-700 mt-4">
+              Sejarah awal yayasan dimulai dari keinginan sekelompok individu yang peduli terhadap pendidikan dan kesejahteraan sosial masyarakat di wilayah tersebut. Melihat potensi dan kebutuhan yang ada, mereka bersama-sama mendirikan Yayasan Nurul Iman dengan tujuan untuk meningkatkan akses dan kualitas pendidikan, serta memberdayakan masyarakat dalam meningkatkan kesejahteraan hidup.
+            </p>
+          </div>
 
-                    <a href="#" className="rounded-full bg-primary py-3 px-8 text-base font-semibold text-white transition duration-300 ease-in-out hover:opacity-80 hover:shadow-lg">Hubungi Saya</a>
-                </div>
-                <div className="w-full self-end px-4 lg:w-1/2">
-                    <div className="relative mt-10 lg:right-0 lg:mt-9">
-                    <img src="/images/masjid.jpg" alt="masjid nurul iman" className="rounded-lg shadow-lg z-10 mx-auto max-w-full hover:animate-pulse" />
-                    </div>
-                </div>
-                </div>
-            </div>
+      <div className="bg-white p-6 shadow">
+        <h2 className="text-xl font-bold mb-4">Program</h2>
+        <ul className="list-disc list-inside text-gray-700">
+          <li>Penyediaan beasiswa pendidikan untuk siswa berprestasi namun kurang mampu, sehingga mereka dapat melanjutkan pendidikan ke jenjang yang lebih tinggi.</li>
+          <li>Pengadaan buku dan alat belajar bagi sekolah-sekolah di wilayah tersebut untuk meningkatkan fasilitas pembelajaran.</li>
+          <li>Mengadakan berbagai pelatihan dan workshop untuk masyarakat, seperti pelatihan keterampilan, pengembangan usaha kecil, dan pemahaman teknologi informasi.</li>
+          <li>Menyelenggarakan kegiatan sosial, seperti pembagian sembako kepada keluarga prasejahtera, bantuan untuk korban bencana, dan kegiatan santunan anak yatim.</li>
+          <li>Ikut berperan dalam kegiatan pelestarian lingkungan, seperti kampanye penghijauan, pembersihan lingkungan, dan program daur ulang.</li>
+        </ul>
+      </div>
+    </div>
             </section>
 
             {/* section Baru */}

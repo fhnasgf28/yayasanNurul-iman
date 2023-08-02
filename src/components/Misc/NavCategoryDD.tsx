@@ -39,7 +39,11 @@ const NavCatergoryDD = ({
           )}
         >
           <LinkTo href={"/blog"} passHref className="block text-sm py-2 px-2">
-            <span onClick={() => setOpenDD(!openDD)}>All Articles</span>
+            <span onClick={() => setOpenDD(!openDD)}>Semua Berita</span>
+          </LinkTo>
+
+          <LinkTo href={"/dataSiswa"} passHref className="block text-sm py-2 px-2 border">
+            <span onClick={() => setOpenDD(!openDD)}>Jadwal Kegiatan</span>
           </LinkTo>
           {CATEGORIES.map((each) => (
             <LinkTo

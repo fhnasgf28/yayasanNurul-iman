@@ -92,12 +92,12 @@ export const MOCK_ARTICLES_LIST: iArticle[] = [
         path: '/pages/tutorial/blog-with-centered-layout.tsx',
         preview: {
             author: RUPALI,
-            date: "August 14 2022",
-            articleTitle: "Page Layout for a article with centered layout",
+            date: "19 Juli 2022",
+            articleTitle: "Pawai Obor Bersama Warga Perumahan Singaperbangsa",
             tags: "demo, centered, centered layout",
             thumbnail: "/public/imp_assets/tutorials/blog-with-centered-layout.svg",
             shortIntro: "This a demo article with centered layout and with demo of all the components.",
-            category: 'layouts'
+            category: ''
         },
         seo: {
             keywords: "demo, centered, centered layout, blog page layout, blog page design with centered layout, webexpe, webexpe.com",
