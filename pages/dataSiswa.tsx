@@ -13,7 +13,7 @@ const DataSiswa: React.FC = () => {
       const fetchSiswaData = async () => {
         try {
           const { data, error } = await supabase
-            .from<Siswa>('siswaYayasan')
+            .from('siswaYayasan')
             .select('no_indukDTA, nama_siswa, tanggal_lahir, tempat_lahir, nama_ayah, jenis_kelamin, id');
   
           if (error) {
