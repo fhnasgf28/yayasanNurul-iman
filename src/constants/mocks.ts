@@ -45,7 +45,7 @@ export const MOCK_ARTICLES_LIST: iArticle[] = [
         preview: {
             author: RUPALI,
             date: "August 08 2022",
-            articleTitle: "How to Export and deploy on firebase",
+            articleTitle: "",
             tags: "demo, deploy blog",
             thumbnail: "/public/imp_assets/tutorials/how-to-deploy.svg",
             shortIntro: "In this article you will see how to export blog files and what folder to deploy on your hosting.",

@@ -37,7 +37,7 @@ const ARTICLES_LIST: iArticle[] = [
     featureArticle: true,
     preview: {
       author: MAYUR,
-      date: "August 08 2022",
+      date: "Agustus 15 2023",
       articleTitle: "Pawai Obor 1 Muharram",
       tags: "demo, blog setup",
       thumbnail: "/public/images/1Muharram.jpeg",
@@ -58,7 +58,7 @@ const ARTICLES_LIST: iArticle[] = [
     featureArticle: true,
     preview: {
       author: RUPALI,
-      date: "August 08 2023",
+      date: "Agustus 14 2023",
       articleTitle: "Yayasan Nurul Iman Singaperbangsa Karawang Adakan Acara Santunan Anak Yatim",
       tags: "demo, first article",
       thumbnail: "/public/images/10Muharrom/santunan1.jpg",
@@ -69,7 +69,7 @@ const ARTICLES_LIST: iArticle[] = [
     seo: {
       keywords:
         "demo, centered, centered layout, blog page layout, blog page design with centered layout, writing first article, webexpe, webexpe.com",
-      ogImage: "/public/imp_assets/tutorials/how-to-write-first-article.svg",
+      ogImage: "/public/",
     },
   },
   {
@@ -77,10 +77,10 @@ const ARTICLES_LIST: iArticle[] = [
     featureArticle: true,
     preview: {
       author: RUPALI,
-      date: "August 08 2022",
+      date: "Agustus 13 2023",
       articleTitle: "Sejarah Yayasan Nurul Iman Singaperbangsa Karawang",
       tags: "demo, deploy blog",
-      thumbnail: "/public/images/10Muharrom/santunan1.jpg",
+      thumbnail: "/public/images/yayasan/sejarah1.jpg",
       shortIntro:
         "In this article you will see how to export blog files and what folder to deploy on your hosting.",
       category: "tutorial",
@@ -93,15 +93,15 @@ const ARTICLES_LIST: iArticle[] = [
     path: "/pages/tutorial/home-layout.tsx",
     preview: {
       author: RUPALI,
-      date: "August 14 2022",
-      articleTitle: "Home Layout Example",
+      date: "Agustus 12 2023",
+      articleTitle: "Sejarah Yayasan Nurul Iman Singaperbangsa Karawang",
       tags: "demo, layout, home layout",
       thumbnail: "/public/imp_assets/tutorials/home-layouts.svg",
       shortIntro: "In this article we will see Default Home Layout example.",
       category: "layouts",
     },
     seo: {
-      title: "Home Layout Example",
+      title: "Sejarah Yayasan Nurul Iman Singaperbangsa Karawang",
       description: "In this article we will see Default Home Layout example.",
       keywords:
         "next js, tailwind css, typescript, blog template, default layout, default home layout",
@@ -113,8 +113,8 @@ const ARTICLES_LIST: iArticle[] = [
     path: "/pages/tutorial/blog-with-sidebar-layout.tsx",
     preview: {
       author: MAYUR,
-      date: "August 14 2022",
-      articleTitle: "Page Layout for a article with sidebar",
+      date: "Agustus 11 2023",
+      articleTitle: "Sejarah Yayasan Nurul Iman Singaperbangsa Karawang",
       tags: "demo, with sidebar, default layout",
       thumbnail: "/public/imp_assets/tutorials/blog-with-sidebar-layout.svg",
       shortIntro:
@@ -131,7 +131,7 @@ const ARTICLES_LIST: iArticle[] = [
     path: "/pages/tutorial/blog-with-centered-layout.tsx",
     preview: {
       author: RUPALI,
-      date: "August 14 2022",
+      date: "Agustus 10 2023",
       articleTitle: "Pawai Obor Yayasan Nurul Iman",
       tags: "demo, centered, centered layout",
       thumbnail: "/public/images/1Muharram.jpeg",
@@ -149,8 +149,8 @@ const ARTICLES_LIST: iArticle[] = [
     path: "/pages/tutorial/all-components.tsx",
     preview: {
       author: RUPALI,
-      date: "August 08 2022",
-      articleTitle: "All Components",
+      date: "Agustus 9 2023",
+      articleTitle: "Sejarah Yayasan Nurul Iman Singaperbangsa Karawang",
       tags: "demo, all components",
       thumbnail: "/public/imp_assets/tutorials/all-components.svg",
       shortIntro: "List of all usable components, its types and how to use it.",
@@ -165,8 +165,8 @@ const ARTICLES_LIST: iArticle[] = [
     path: "/pages/tutorial/style-guide.tsx",
     preview: {
       author: MAYUR,
-      date: "August 10 2022",
-      articleTitle: "Style Guide",
+      date: "Agustus 8 2023",
+      articleTitle: "Sejarah Yayasan Nurul Iman Singaperbangsa Karawang",
       tags: "demo, all components, style guide, styling tutorial",
       thumbnail: "/public/imp_assets/tutorials/style-guide.svg",
       shortIntro: "Styling and theming tutorial.",
@@ -182,8 +182,8 @@ const ARTICLES_LIST: iArticle[] = [
     path: "/pages/tutorial/icons.tsx",
     preview: {
       author: MAYUR,
-      date: "August 13 2022",
-      articleTitle: "How to use icons",
+      date: "Agustus 7 2023",
+      articleTitle: "Sejarah Yayasan Nurul Iman Singaperbangsa Karawang",
       tags: "demo, all components, style guide, styling tutorial, icons, how to use icons in website",
       thumbnail: "/public/imp_assets/tutorials/how-to-use-icons.svg",
       shortIntro: "How to use icons in your blog website.",
@@ -199,18 +199,18 @@ const ARTICLES_LIST: iArticle[] = [
     path: "/pages/blog/your-first-article.tsx",
     preview: {
       author: MAYUR,
-      date: "August 6 2022",
-      articleTitle: "Your first article",
+      date: "Agustus 6 2023",
+      articleTitle: "Sejarah Yayasan Nurul Iman Singaperbangsa Karawang",
       shortIntro:
         "This is a demo file for your first article, you can copy structure of this file to create multile article.",
       tags: "demo, your first article",
-      thumbnail: "/public/imp_assets/tutorials/how-to-write-first-article.svg",
+      thumbnail: "/public/",
       category: "tutorial",
     },
     seo: {
       keywords:
         "demo, all components, style guide, styling, css, tailwind css, tailwind, webexpe, webexpe.com, styling tutorial, icons, how to use icons in website",
-      ogImage: "/public/imp_assets/tutorials/how-to-write-first-article.svg",
+      ogImage: "/public/",
     },
   },
 ];
