@@ -29,7 +29,7 @@ function MyApp({ Component, pageProps }: AppProps) {
     <>
       <NextSeo {...SEO_CONFIG} />
       <Head>
-        <link rel="icon" href="/favicon.ico" />
+        <link rel="icon" href="/mosque.png" />
         <meta
           name="viewport"
           content="width=device-width, initial-scale=1, minimum-scale=1"
@@ -39,15 +39,15 @@ function MyApp({ Component, pageProps }: AppProps) {
         <meta name="google" content="notranslate" />
       </Head>
 
-      {
+      {/* {
         env !== 'development' ?
           <>
             <Script async
-              strategy="afterInteractive" src={`https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${gtag.GA_ADSENSE_ID}`} crossOrigin="anonymous"></Script>
+              strategy="afterInteractive" src={`https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${gtag.GA_ADSENSE_ID}`} crossOrigin="anonymous"></Script> */}
             {/* Google tag (gtag.js) */}
-            <Script async
-              strategy="afterInteractive" src={`https://www.googletagmanager.com/gtag/js?id=${gtag.GA_TRACKING_ID}`}></Script>
-            <Script
+            {/* <Script async
+              strategy="afterInteractive" src={`https://www.googletagmanager.com/gtag/js?id=${gtag.GA_TRACKING_ID}`}></Script> */}
+            {/* <Script
               id="gtag-init"
               strategy="afterInteractive"
               dangerouslySetInnerHTML={{
@@ -64,7 +64,7 @@ function MyApp({ Component, pageProps }: AppProps) {
           </>
 
           : null
-      }
+      } */}
       <ThemeProvider enableSystem={true} attribute="class">
         <Component {...pageProps} />
         <Footer />

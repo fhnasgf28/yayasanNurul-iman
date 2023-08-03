@@ -9,7 +9,7 @@ const Article = () => {
     return (
         // pass blogcentered as show below for article page centered layout
     <PageLayout blogwithsidebar>
-        <header className="bg-blue-600 text-white py-4 px-8">
+      <header className="bg-blue-600 text-white py-4 px-8">
         <h1 className="text-3xl font-bold">Berita: Pawai Obor Yayasan Nurul Iman</h1>
       </header>
 

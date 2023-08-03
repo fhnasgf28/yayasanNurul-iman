@@ -9,7 +9,7 @@ const Article = () => {
         // pass blogwithsidebar as show below for article page with sidebar layout
         <PageLayout blogwithsidebar >
             <Text p>
-                This current article is made using <b>blogwithsidebar</b> layout. This layout will be used to write your blog posts or articles.
+                Sejarah Yayasan Nurul Iman Singaperbangsa
             </Text>
             <CodeBlock
                 code={`

@@ -40,7 +40,7 @@ const Search = ({ closeSearch }: ISearch) => {
                     <div className="mb-[40px] mt-3">
                         <input
                             className='text-[20px] w-full bg-inherit border-b border-gray-400 p-2 dark:text-white text-black'
-                            placeholder="Enter keywords and seperate with commas"
+                            placeholder="Cari Berita dan informasi disini"
                             value={searchStr}
                             onChange={(e) => setSearchStr(e.target.value)}
                             onKeyPress={(e) => e.key === 'Enter' && handleSearch()}

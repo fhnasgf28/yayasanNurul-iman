@@ -38,17 +38,17 @@ const ARTICLES_LIST: iArticle[] = [
     preview: {
       author: MAYUR,
       date: "August 08 2022",
-      articleTitle: "How to setup this blog template",
+      articleTitle: "Pawai Obor 1 Muharram",
       tags: "demo, blog setup",
       thumbnail: "/public/images/1Muharram.jpeg",
       shortIntro: "These are the steps to setup your blog",
       category: "tutorial",
     },
     seo: {
-      title: "How to setup this blog template",
+      title: "pawai obor 1 muharram yayasan nurul iman singaperbangsa",
       description: "These are the steps to setup your blog",
       keywords: "demo, blog setup",
-      ogImage: "/public/imp_assets/tutorials/how-to-setup-blog.svg",
+      ogImage: "/public/images/1Muharram.jpeg",
       twitterHandle: "@mayur_nalwala",
       author: MAYUR.name,
     },
@@ -78,9 +78,9 @@ const ARTICLES_LIST: iArticle[] = [
     preview: {
       author: RUPALI,
       date: "August 08 2022",
-      articleTitle: "How to Export and deploy on firebase",
+      articleTitle: "Sejarah Yayasan Nurul Iman Singaperbangsa Karawang",
       tags: "demo, deploy blog",
-      thumbnail: "/public/imp_assets/tutorials/how-to-deploy.svg",
+      thumbnail: "/public/images/10Muharrom/santunan1.jpg",
       shortIntro:
         "In this article you will see how to export blog files and what folder to deploy on your hosting.",
       category: "tutorial",
