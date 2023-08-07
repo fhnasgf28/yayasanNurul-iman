@@ -30,7 +30,7 @@ const Article = () => {
         datangnya tahun baru Islam.
 
         Acara pawai obor ini bertujuan untuk mempererat tali silaturahmi antara Yayasan Nurul
-        Iman dengan warga Perum Taman Singaperbangsa Karwang, serta menyemarakkan perayaan tahun baru Islam. Selain itu,
+        Iman dengan warga Perum Taman Singaperbangsa Karawang, serta menyemarakkan perayaan tahun baru Islam. Selain itu,
         acara ini juga sebagai bentuk kegiatan sosial dan budaya yang positif bagi masyarakat.
 
         Tidak hanya itu, pawai obor juga diisi dengan berbagai penampilan seni dan budaya,

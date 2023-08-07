@@ -1,12 +1,9 @@
 import { WEBSITE_NAME } from "../../../BLOG_CONSTANTS/_BLOG_SETUP"
 import {Text } from "../index";
 import LinkTo from "../LinkTo"
-import supabase from "../../config/supabaseClient";
 
 const Footer = () => {
     const year = new Date().getFullYear()
-    console.log(supabase)
-
     return (
  
         <footer>

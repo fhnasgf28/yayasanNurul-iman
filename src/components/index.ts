@@ -9,3 +9,4 @@ export const LinkTo = dynamic(() => import('./LinkTo'))
 export const Slider = dynamic(() => import('./Slider'))
 export const Accordian = dynamic(() => import('./Accordian'))
 export const VideoPlayer = dynamic(() => import('./Video'))
+export { default as LoginPage } from "./LoginPage/LoginPage";

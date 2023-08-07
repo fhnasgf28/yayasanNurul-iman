@@ -109,10 +109,18 @@ export const PRIMARY_NAV: iNavSetup = {
         {
             label: 'Hubungi Kami',
             path: '/contact-us'
+        },
+        {
+            label: 'Login',
+            path: '/login'
         }
     ],
     // sideNavLinks are the links which appear when you open the side menu after clicking the burger menu icon.
     sideNavLinks: [
+        {
+            label: 'Login',
+            path: ''
+        },
         {
             label: 'Beranda',
             path: '/'
@@ -142,20 +150,7 @@ export const PRIMARY_NAV: iNavSetup = {
             path: '/contact-us'
         }
     ],
-    socials: [
-        {
-            link: 'https://www.facebook.com/',
-            icon: <AiFillFacebook />
-        },
-        {
-            link: 'https://www.instagram.com/',
-            icon: <AiFillInstagram />
-        },
-        {
-            link: 'https://twitter.com/WebExpe',
-            icon: <AiOutlineTwitter />
-        },
-    ]
+    socials: []
 }
 
 export const DEFAULT_SEO: iSEO = {

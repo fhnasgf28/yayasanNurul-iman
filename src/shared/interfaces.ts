@@ -69,3 +69,7 @@ export interface iNavSocials {
   link: string;
   icon: any;
 }
+export interface Login {
+  label: string;
+  path : string;
+}
