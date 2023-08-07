@@ -3,9 +3,10 @@ import { combineClasses, getArticleDetails, transformImagePaths, transformPath }
 import { SORTED_ARTICLES_BY_DATE } from '../../../BLOG_CONSTANTS/_ARTICLES_LIST';
 import ArticleHeader from '../../components/ArticleHeader';
 import ArticleMoreFromAuthor from '../../components/Misc/ArticleMoreFromAuthor';
+import router from 'next/router';
 
 const WithSidebar = ({ children, ads }: {children: any, ads?: string[]}) => {
-    const ARTICLE_DETAILS = getArticleDetails();
+    const ARTICLE_DETAILS = getArticleDetails(router);
     const author = ARTICLE_DETAILS.preview.author;
     const relatedArticles = SORTED_ARTICLES_BY_DATE.filter((each) => each.preview.author === author);
 

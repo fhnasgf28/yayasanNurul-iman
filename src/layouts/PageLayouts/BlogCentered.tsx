@@ -6,9 +6,10 @@ import Seperator from '../../components/Seperator';
 import ArticleHeader from '../../components/ArticleHeader';
 import Avatar from '../../components/Misc/Avatar';
 import ArticleMoreFromAuthor from '../../components/Misc/ArticleMoreFromAuthor';
+import router from 'next/router';
 
 const Centered = ({ children }: any) => {
-    const ARTICLE_DETAILS = getArticleDetails();
+    const ARTICLE_DETAILS = getArticleDetails(router);
     const author = ARTICLE_DETAILS.preview.author;
     const relatedArticles = SORTED_ARTICLES_BY_DATE.filter((each) => each.preview.author === author);
 
