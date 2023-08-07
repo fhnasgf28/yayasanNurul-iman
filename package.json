@@ -1,5 +1,5 @@
 {
-  "name": "nextjs-simple-blog-template",
+  "name": "yayasan-nurul-iman",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -11,12 +11,12 @@
     "out": "next build && next export"
   },
   "dependencies": {
-    "@supabase/supabase-js": "^2.31.0",
-    "@types/mongoose": "^5.11.97",
+    "@react-firebase/auth": "^0.2.10",
     "@uiw/react-textarea-code-editor": "^1.4.4",
     "css-loader": "^6.7.1",
-    "mongoose": "^7.4.1",
-    "next": "12.1.0",
+    "firebase": "^10.1.0",
+    "firebaseui": "^6.1.0",
+    "next": "12.2.5",
     "next-remove-imports": "^1.0.6",
     "next-seo": "^5.1.0",
     "next-themes": "^0.2.0",

@@ -38,14 +38,14 @@ const ARTICLES_LIST: iArticle[] = [
     preview: {
       author: MAYUR,
       date: "Agustus 15 2023",
-      articleTitle: "Pawai Obor 1 Muharram",
+      articleTitle: "Masjid Nurul iman Menyelenggarakan Idul Adha dan Berqurban",
       tags: "demo, blog setup",
-      thumbnail: "/public/images/1Muharram.jpeg",
+      thumbnail: "/public/images/Muharram.jpeg",
       shortIntro: "These are the steps to setup your blog",
       category: "tutorial",
     },
     seo: {
-      title: "pawai obor 1 muharram yayasan nurul iman singaperbangsa",
+      title: "Masjid Nurul iman Menyelenggarakan Idul Adha dan Berqurban",
       description: "These are the steps to setup your blog",
       keywords: "demo, blog setup",
       ogImage: "/public/images/1Muharram.jpeg",

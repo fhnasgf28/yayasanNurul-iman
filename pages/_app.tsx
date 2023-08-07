@@ -2,7 +2,6 @@ import '../src/styles/globals.scss'
 import Custom404 from './404'; // Import komponen custom 404
 import type { AppProps } from 'next/app'
 import Head from 'next/head'
-
 import { NextSeo } from "next-seo";
 import Footer from '../src/components/Footer';
 import Script from 'next/script';
@@ -10,7 +9,10 @@ import * as gtag from '../google';
 import { Component, useEffect, useState } from 'react';
 import { CREATE_SEO_CONFIG } from '../src/utils/utils';
 import { ThemeProvider } from 'next-themes'
-
+import { FirebaseAuthProvider } from "@react-firebase/auth";
+import { useRouter } from "next/router";
+import firebase from "firebase/app";
+import "firebase/auth";
 import "@uiw/react-textarea-code-editor/dist.css";
 import 'react-medium-image-zoom/dist/styles.css';
 
@@ -18,6 +20,7 @@ import 'react-medium-image-zoom/dist/styles.css';
 function MyApp({ Component, pageProps }: AppProps) {
   const [mounted, setMounted] = useState(false);
   const env = process.env.NODE_ENV;
+  const router = useRouter();
 
   useEffect(() => {
     setMounted(true);
