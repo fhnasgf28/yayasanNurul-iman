@@ -5,7 +5,7 @@ const nextConfig = {
   // productionBrowserSourceMaps: true,
   images: {
     loader: "akamai",
-    path: "",
+    path: "/",
   }
 };
 

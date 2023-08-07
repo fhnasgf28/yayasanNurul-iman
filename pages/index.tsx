@@ -8,7 +8,7 @@ import Link from 'next/link';
 import { DEFAULT_SEO } from "../BLOG_CONSTANTS/_BLOG_SETUP";
 import FeaturedArticleSection from "../src/components/Misc/FeaturedArticleSection";
 import HomeNonFeatureArticles from "../src/components/Misc/HomeNonFeatureAricles";
-import LazyImage from '../src/components/LazyImage/LazyImage';
+import Image from "../src/components/ArticleImage";
 import Slider from 'react-slick';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
@@ -26,6 +26,7 @@ const Home = () => {
 
   return (
     <PageLayout home PAGE_SEO={DEFAULT_SEO}>
+    
     <section className="relative container mx-auto px-4 sm:px-6 lg:px-8">
 
       <div className="max-w-6xl mx-auto px-4 sm:px-6">
@@ -43,7 +44,7 @@ const Home = () => {
             </p>
               <div className="max-w-xs mx-auto sm:max-w-none sm:flex sm:justify-center" data-aos="zoom-y-out" data-aos-delay="300">
               <div>
-              <Link href="/donationPage">
+              <Link href="/donationPage" >
                 <a className="inline-block py-3 px-6 bg-gradient-to-r from-blue-600 to-teal-400 rounded-md shadow-lg text-white font-semibold text-lg hover:from-blue-800 hover:to-teal-600 hover:text-opacity-100 hover:text-shadow-md transition duration-300">
                   Donasi Pembangunan
                 </a>
@@ -57,24 +58,24 @@ const Home = () => {
 
       {/* Carousel */}
       <Slider {...settings} className="container px-6 py-8">
-        <div className="bg-gray-100 h-80 rounded-lg overflow-hidden">
-          <LazyImage
+        <div className="bg-gray-100 h-50 rounded-lg overflow-hidden">
+          <Image
             src="/images/yayasanContoh.jpg"
             alt="Slide 1"
             className="w-full h-full object-cover"
           />
         </div>
         
-        <div className="bg-gray-100 h-80 rounded-lg overflow-hidden">
-          <LazyImage
+        <div className="bg-gray-100 h-50 rounded-lg overflow-hidden">
+          <Image
             src="/images/yayasanContoh.jpg"
             alt="Slide 1"
             className="w-full h-full object-cover"
           />
         </div>
 
-        <div className="bg-gray-100 h-80 rounded-lg overflow-hidden">
-          <LazyImage
+        <div className="bg-gray-100 h-50 rounded-lg overflow-hidden">
+          <Image
             src="/images/yayasanContoh.jpg"
             alt="Slide 1"
             className="w-full h-full object-cover"

@@ -7,8 +7,8 @@ export const MOCK_ARTICLES_LIST: iArticle[] = [
         featureArticle: true,
         preview: {
             author: MAYUR,
-            date: "August 08 2022",
-            articleTitle: "How to setup this blog template",
+            date: "20 Juni 2023",
+            articleTitle: "",
             tags: "demo, blog setup",
             thumbnail: "/public/imp_assets/tutorials/how-to-setup-blog.svg",
             shortIntro: "These are the steps to setup your blog",
@@ -45,7 +45,7 @@ export const MOCK_ARTICLES_LIST: iArticle[] = [
         preview: {
             author: RUPALI,
             date: "August 08 2022",
-            articleTitle: "How to Export and deploy on firebase",
+            articleTitle: "",
             tags: "demo, deploy blog",
             thumbnail: "/public/imp_assets/tutorials/how-to-deploy.svg",
             shortIntro: "In this article you will see how to export blog files and what folder to deploy on your hosting.",
