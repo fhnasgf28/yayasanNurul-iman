@@ -6,6 +6,7 @@ import { CREATE_SEO_CONFIG, getArticleDetails } from '../../utils/utils';
 import Centered from './BlogCentered';
 import WithSidebar from './BlogWithSidebar';
 import HomeLayout from './HomeLayout';
+import router from 'next/router';
 
 interface IBlogLayout {
     children: any
@@ -17,7 +18,7 @@ interface IBlogLayout {
 }
 
 const PageLayout = ({ children, PAGE_SEO, blogwithsidebar = false, blogcentered = false, home = false, ads = [] }: IBlogLayout) => {
-    const ARTICLE_DETAILS = getArticleDetails();    
+    const ARTICLE_DETAILS = getArticleDetails(router);    
     let SEO_CONFIG = {};
     if (ARTICLE_DETAILS && ARTICLE_DETAILS.seo) {
         SEO_CONFIG = CREATE_SEO_CONFIG({ ...ARTICLE_DETAILS.seo })

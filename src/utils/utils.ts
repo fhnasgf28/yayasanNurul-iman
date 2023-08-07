@@ -103,8 +103,7 @@ export const removeBodyNoScroll = (): void => {
  * Returns Article details from SORTED_ARTICLES_BY_DATE wrt the path
  * @returns iArticle
  */
-export const getArticleDetails = (): iArticle => {
-  const router = useRouter();
+export const getArticleDetails = (router: ReturnType<typeof useRouter>): iArticle => {
   const articlePath = "/pages" + router.pathname + ".tsx";
   return (
     MOCK_ARTICLES_LIST.filter((each) => each.path.includes(articlePath))[0] ||
@@ -155,7 +154,7 @@ export const CREATE_SEO_CONFIG = (PAGE_SEO: iSEO) => {
    * ARTICLE_DETAILS or SEO object passed in article list or layout
    */
   const router = useRouter();
-  const ARTICLE_DETAILS = getArticleDetails();
+  const ARTICLE_DETAILS = getArticleDetails(router);
 
   // set url and path
   const origin =
