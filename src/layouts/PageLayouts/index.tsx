@@ -31,12 +31,11 @@ const PageLayout = ({ children, PAGE_SEO, blogwithsidebar = false, blogcentered 
         <>
             <NextSeo {...SEO_CONFIG} />
             <Navbar />
-            {
-                blogwithsidebar ? <WithSidebar children={children} ads={ads} /> :
-                    blogcentered ? <Centered children={children} /> :
-                        home ? <HomeLayout children={children} /> :
-                            <HomeLayout children={children} />
-            }
+            {blogwithsidebar ? <WithSidebar>{children}{ads}</WithSidebar> :
+            blogcentered ? <Centered>{children}</Centered> :
+            home ? <HomeLayout>{children}</HomeLayout> :
+            <HomeLayout>{children}</HomeLayout>}
+
         </>
     )
 }
