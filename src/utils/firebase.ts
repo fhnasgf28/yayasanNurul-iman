@@ -8,6 +8,7 @@ import { getAuth,
 const firebaseConfig = {
   apiKey: process.env.NEXT_PUBLIC_API_KEY,
   authDomain: process.env.NEXT_PUBLIC_AUTH_DOMAIN,
+  databaseURL: process.env.NEXT_PUBLIC_DATABASE_URL,
   projectId: process.env.NEXT_PUBLIC_PROJECT_ID,
   storageBucket:process.env.NEXT_PUBLIC_STORAGE_BUCKET,
   messagingSenderId: process.env.NEXT_PUBLIC_MESSAGE_SENDER_ID,
@@ -17,9 +18,7 @@ const firebaseConfig = {
 
 // Initialize Firebase
 
-if (!getApps().length) {
-  initializeApp(firebaseConfig);
-}
+const firebaseApp = initializeApp(firebaseConfig);
 
 export const FirebaseAuth = getAuth();
 
@@ -34,3 +33,5 @@ export const SignIn = async (email: string, password: string) => {
 export const SignOut = async () => {
   await signOut(FirebaseAuth);
 };
+
+export default firebaseApp;
