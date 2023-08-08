@@ -11,7 +11,7 @@ const SigninForm = () => {
           <div className="mx-auto overflow-hidden">
             <div className="p-4 md:p-8">
               <h1 className="text-2xl md:text-5xl font-bold text-indigo-600">
-                Welcome back!
+                Masuk Untuk Pencarian Data
               </h1>
 
               <form className="mt-6 md:mt-12" action="" method="POST">

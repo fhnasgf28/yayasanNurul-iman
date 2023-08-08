@@ -62,21 +62,23 @@ const DataGuru = () => {
       Search
     </button>
   </div>
-
-    <table className="table-auto w-full">
-      <thead>
-        <tr className="bg-gray-200">
-          <th className="px-4 py-2">Nomor Induk Guru</th>
-          <th className="px-4 py-2">Nama Guru</th>
-          <th className="px-4 py-2">Mata Pelajaran</th>
+    <table className="table-auto min-w-full divide-y divide-gray-200">
+      <thead className="bg-blue-600">
+        <tr>
+          <th scope="col"
+        className="px-6 py-3 text-left text-xs font-medium text-white uppercase tracking-wider">Nomor Induk Guru</th>
+          <th scope="col"
+        className="px-6 py-3 text-left text-xs font-medium text-white uppercase tracking-wider">Nama Guru</th>
+          <th scope="col"
+        className="px-6 py-3 text-left text-xs font-medium text-white uppercase tracking-wider">Mata Pelajaran</th>
         </tr>
       </thead>
       <tbody>
         {searchResults.map((item, index) => (
           <tr key={index} className={index % 2 === 0 ? 'bg-white' : 'bg-gray-100'}>
-            <td className="px-4 py-2">{item.nomor_guru}</td>
-            <td className="px-4 py-2">{item.nama_guru}</td>
-            <td className="px-4 py-2">{item.mata_pelajaran}</td>
+            <td className="px-6 py-4 whitespace-nowrap">{item.nomor_guru}</td>
+            <td className="px-6 py-4 whitespace-nowrap">{item.nama_guru}</td>
+            <td className="px-6 py-4 whitespace-nowrap">{item.mata_pelajaran}</td>
           </tr>
         ))}
       </tbody>

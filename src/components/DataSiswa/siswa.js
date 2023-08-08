@@ -58,35 +58,66 @@ const MyPage = () => {
     />
     <button
       onClick={handleSearch}
-      className="bg-blue-500 hover:bg-blue-600 text-white px-3 py-1 rounded-r-md"
+      className="bg-blue-500 hover:bg-green-400 text-white px-3 py-1 rounded-r-md transition duration-300 ease-in-out"
     >
       Search
     </button>
   </div>
-  <table className="table-auto w-full">
-    <thead>
-      <tr className="bg-gray-200">
-        <th className="px-4 py-2">Nomor Induk Siswa</th>
-        <th className="px-4 py-2">Nama Siswa</th>
-        <th className="px-4 py-2">Tanggal Lahir</th>
-        <th className="px-4 py-2">Tempat Lahir</th>
-        <th className="px-4 py-2">Nama Ayah</th>
-        <th className="px-4 py-2">Jenis Kelamin</th>
+  <table className="min-w-full divide-y divide-gray-200">
+  <thead className="bg-blue-600">
+    <tr>
+      <th
+        scope="col"
+        className="px-6 py-3 text-left text-xs font-medium text-white uppercase tracking-wider"
+      >
+        Nomor Induk Siswa
+      </th>
+      <th
+        scope="col"
+        className="px-6 py-3 text-left text-xs font-medium text-white uppercase tracking-wider"
+      >
+        Nama Siswa
+      </th>
+      <th
+        scope="col"
+        className="px-6 py-3 text-left text-xs font-medium text-white uppercase tracking-wider"
+      >
+        Tanggal Lahir
+      </th>
+      <th
+        scope="col"
+        className="px-6 py-3 text-left text-xs font-medium text-white uppercase tracking-wider"
+      >
+        Tempat Lahir
+      </th>
+      <th
+        scope="col"
+        className="px-6 py-3 text-left text-xs font-medium text-white uppercase tracking-wider"
+      >
+        Nama Ayah
+      </th>
+      <th
+        scope="col"
+        className="px-6 py-3 text-left text-xs font-medium text-white uppercase tracking-wider"
+      >
+        Jenis Kelamin
+      </th>
+    </tr>
+  </thead>
+  <tbody className="bg-white divide-y divide-gray-200">
+    {searchResults.map((item, index) => (
+      <tr key={index}>
+        <td className="px-6 py-4 whitespace-nowrap">{item.nomor_induk}</td>
+        <td className="px-6 py-4 whitespace-nowrap">{item.nama_siswa}</td>
+        <td className="px-6 py-4 whitespace-nowrap">{item.tanggal_lahir}</td>
+        <td className="px-6 py-4 whitespace-nowrap">{item.tempat_ahir}</td>
+        <td className="px-6 py-4 whitespace-nowrap">{item.nama_ayah}</td>
+        <td className="px-6 py-4 whitespace-nowrap">{item.jenis_kelamin}</td>
       </tr>
-    </thead>
-    <tbody>
-      {searchResults.map((item, index) => (
-        <tr key={index} className={index % 2 === 0 ? 'bg-white' : 'bg-gray-100'}>
-          <td className="px-4 py-2">{item.nomor_induk}</td>
-          <td className="px-4 py-2">{item.nama_siswa}</td>
-          <td className="px-4 py-2">{item.tanggal_lahir}</td>
-          <td className="px-4 py-2">{item.tempat_ahir}</td>
-          <td className="px-4 py-2">{item.nama_ayah}</td>
-          <td className="px-4 py-2">{item.jenis_kelamin}</td>
-        </tr>
-      ))}
-    </tbody>
-  </table>
+    ))}
+  </tbody>
+</table>
+
 </div>
   );
 };
