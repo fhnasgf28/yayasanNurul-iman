@@ -3,6 +3,7 @@ import { PageLayout,  } from "../src/components";
 import MyPage from '../src/components/DataSiswa/siswa';
 import firebaseSdk from '../src/utils/firebase';
 
+
 const DonationPage: React.FC = () => {
   const [name, setName] = useState<string>('');
   const [amount, setAmount] = useState<string>('');
@@ -17,7 +18,6 @@ const DonationPage: React.FC = () => {
 
   return (
     <PageLayout>
-      <MyPage></MyPage>
        <section className="flex justify-center items-center h-screen">
       <form onSubmit={handleSubmit} className="w-64">
         <div className="mb-4">
