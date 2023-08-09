@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { PageLayout,  } from "../src/components";
-import PencarianData from '../src/components/DataSiswa/pencarianData';
 
 const DonationPage: React.FC = () => {
   const [name, setName] = useState<string>('');
@@ -16,7 +15,7 @@ const DonationPage: React.FC = () => {
 
   return (
     <PageLayout>
-     <PencarianData></PencarianData>
+     {/* <PencarianData></PencarianData> */}
        <section className="flex justify-center items-center h-screen">
       <form onSubmit={handleSubmit} className="w-64">
         <div className="mb-4">
