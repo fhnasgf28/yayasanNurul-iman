@@ -1,7 +1,7 @@
 import React from "react";
 import { getAuth, GoogleAuthProvider, signInWithPopup } from "firebase/auth";
 import firebaseApp from "../../utils/firebase"; // Import konfigurasi Firebase dari file yang sesuai
-import { useHistory } from "react-router-dom";
+
 
 
 const GoogleLoginButton = () => {

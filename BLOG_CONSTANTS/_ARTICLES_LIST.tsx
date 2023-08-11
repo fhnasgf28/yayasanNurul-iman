@@ -90,13 +90,13 @@ const ARTICLES_LIST: iArticle[] = [
     },
   },
   {
-    path: "/pages/tutorial/home-layout.tsx",
+    path: "/pages/tutorial/israMiraj.tsx",
     preview: {
       author: RUPALI,
       date: "Agustus 12 2023",
-      articleTitle: "Sejarah Yayasan Nurul Iman Singaperbangsa Karawang",
+      articleTitle: "Yayasan Nurul Iman Menggelar Peringatan Isra Mi'raj: Meningkatkan Spiritualitas Umat",
       tags: "demo, layout, home layout",
-      thumbnail: "/public/imp_assets/tutorials/home-layouts.svg",
+      thumbnail: "/public/images/yayasan/isra.jpg",
       shortIntro: "In this article we will see Default Home Layout example.",
       category: "layouts",
     },
@@ -105,18 +105,18 @@ const ARTICLES_LIST: iArticle[] = [
       description: "In this article we will see Default Home Layout example.",
       keywords:
         "next js, tailwind css, typescript, blog template, default layout, default home layout",
-      ogImage: "/public/imp_assets/tutorials/home-layouts.svg",
+      ogImage: "/public/images/1Muharram.jpeg",
       author: RUPALI.name,
     },
   },
   {
-    path: "/pages/tutorial/blog-with-sidebar-layout.tsx",
+    path: "/pages/tutorial/sejarahYayasan.tsx",
     preview: {
       author: MAYUR,
       date: "Agustus 11 2023",
       articleTitle: "Sejarah Yayasan Nurul Iman Singaperbangsa Karawang",
       tags: "demo, with sidebar, default layout",
-      thumbnail: "/public/imp_assets/tutorials/blog-with-sidebar-layout.svg",
+      thumbnail: "/public/images/1Muharram.jpeg",
       shortIntro:
         "In this article we will see Page Layout for a blog with sidebar example.",
       category: "layouts",
@@ -128,7 +128,7 @@ const ARTICLES_LIST: iArticle[] = [
     },
   },
   {
-    path: "/pages/tutorial/blog-with-centered-layout.tsx",
+    path: "/pages/tutorial/pawaiObor.tsx",
     preview: {
       author: RUPALI,
       date: "Agustus 10 2023",
@@ -152,7 +152,7 @@ const ARTICLES_LIST: iArticle[] = [
       date: "Agustus 9 2023",
       articleTitle: "Sejarah Yayasan Nurul Iman Singaperbangsa Karawang",
       tags: "demo, all components",
-      thumbnail: "/public/imp_assets/tutorials/all-components.svg",
+      thumbnail: "/public/images/1Muharram.jpeg",
       shortIntro: "List of all usable components, its types and how to use it.",
       category: "tutorial",
     },
@@ -168,14 +168,14 @@ const ARTICLES_LIST: iArticle[] = [
       date: "Agustus 8 2023",
       articleTitle: "Sejarah Yayasan Nurul Iman Singaperbangsa Karawang",
       tags: "demo, all components, style guide, styling tutorial",
-      thumbnail: "/public/imp_assets/tutorials/style-guide.svg",
+      thumbnail: "/public/images/1Muharram.jpeg",
       shortIntro: "Styling and theming tutorial.",
       category: "tutorial",
     },
     seo: {
       keywords:
         "demo, all components, style guide, styling, css, tailwind css, tailwind, webexpe, webexpe.com",
-      ogImage: "/public/imp_assets/tutorials/style-guide.svg",
+      ogImage: "/public/images/1Muharram.jpeg",
     },
   },
   {
@@ -185,14 +185,14 @@ const ARTICLES_LIST: iArticle[] = [
       date: "Agustus 7 2023",
       articleTitle: "Sejarah Yayasan Nurul Iman Singaperbangsa Karawang",
       tags: "demo, all components, style guide, styling tutorial, icons, how to use icons in website",
-      thumbnail: "/public/imp_assets/tutorials/how-to-use-icons.svg",
+      thumbnail: "/public/images/1Muharram.jpeg",
       shortIntro: "How to use icons in your blog website.",
       category: "tutorial",
     },
     seo: {
       keywords:
         "demo, all components, style guide, styling, css, tailwind css, tailwind, webexpe, webexpe.com, styling tutorial, icons, how to use icons in website",
-      ogImage: "/public/imp_assets/tutorials/how-to-use-icons.svg",
+      ogImage: "/public/images/1Muharram.jpeg",
     },
   },
   {
@@ -204,7 +204,7 @@ const ARTICLES_LIST: iArticle[] = [
       shortIntro:
         "This is a demo file for your first article, you can copy structure of this file to create multile article.",
       tags: "demo, your first article",
-      thumbnail: "/public/",
+      thumbnail: "/public/images/1Muharram.jpeg",
       category: "tutorial",
     },
     seo: {

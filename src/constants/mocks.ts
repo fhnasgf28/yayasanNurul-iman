@@ -56,10 +56,10 @@ export const MOCK_ARTICLES_LIST: iArticle[] = [
         path: '/pages/tutorial/home-layout.tsx',
         preview: {
             author: RUPALI,
-            date: "August 14 2022",
-            articleTitle: "Home Layout Example",
-            tags: "demo, layout, home layout",
-            thumbnail: "/public/imp_assets/tutorials/home-layouts.svg",
+            date: "12 Juni 2023",
+            articleTitle: "",
+            tags: "IsraMiraj",
+            thumbnail: "/public/images/yayasan/isra.jpg",
             shortIntro: "In this article we will see Default Home Layout example.",
             category: 'layouts'
         },
@@ -79,13 +79,13 @@ export const MOCK_ARTICLES_LIST: iArticle[] = [
             date: "August 14 2022",
             articleTitle: "Page Layout for a article with sidebar",
             tags: "demo, with sidebar, default layout",
-            thumbnail: "/public/imp_assets/tutorials/blog-with-sidebar-layout.svg",
+            thumbnail: "/public/images/yayasan/isra",
             shortIntro: "In this article we will see Page Layout for a blog with sidebar example.",
             category: 'layouts'
         },
         seo: {
             keywords: "demo, with sidebar, blog page layout, blog page design with sidebar, webexpe, webexpe.com",
-            ogImage: "/public/imp_assets/tutorials/blog-with-sidebar-layout.svg",
+            ogImage: "/public/images/yayasan/isra",
         }
     },
     {
@@ -95,7 +95,7 @@ export const MOCK_ARTICLES_LIST: iArticle[] = [
             date: "19 Juli 2022",
             articleTitle: "Pawai Obor Bersama Warga Perumahan Singaperbangsa",
             tags: "demo, centered, centered layout",
-            thumbnail: "/public/imp_assets/tutorials/blog-with-centered-layout.svg",
+            thumbnail: "/public/images/yayasan/isra",
             shortIntro: "This a demo article with centered layout and with demo of all the components.",
             category: ''
         },
@@ -110,7 +110,7 @@ export const MOCK_ARTICLES_LIST: iArticle[] = [
             date: "August 08 2022",
             articleTitle: "All Components",
             tags: "demo, all components",
-            thumbnail: "/public/imp_assets/tutorials/all-components.svg",
+            thumbnail: "/public/images/yayasan/isra",
             shortIntro: "List of all usable components, its types and how to use it.",
             category: 'tutorial'
         },
@@ -125,7 +125,7 @@ export const MOCK_ARTICLES_LIST: iArticle[] = [
             date: "August 10 2022",
             articleTitle: "Style Guide",
             tags: "demo, all components, style guide, styling tutorial",
-            thumbnail: "/public/imp_assets/tutorials/style-guide.svg",
+            thumbnail: "/public/images/masjid.jpg",
             shortIntro: "Styling and theming tutorial.",
             category: 'tutorial'
         },

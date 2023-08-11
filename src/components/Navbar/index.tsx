@@ -72,7 +72,6 @@ const Navbar = () => {
       setOpenShareModal(true);
     }
   };
-
   return (
     <>
       <nav
