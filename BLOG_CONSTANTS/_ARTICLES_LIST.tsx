@@ -33,14 +33,14 @@ import { MAYUR, RUPALI } from "./_BLOG_SETUP";
 // clear this article list and add your own
 const ARTICLES_LIST: iArticle[] = [
   {
-    path: "/pages/tutorial/how-to-setup-blog.tsx",
+    path: "/pages/tutorial/idulAdha.tsx",
     featureArticle: true,
     preview: {
       author: MAYUR,
       date: "Agustus 15 2023",
       articleTitle: "Masjid Nurul iman Menyelenggarakan Idul Adha dan Berqurban",
       tags: "demo, blog setup",
-      thumbnail: "/public/images/Muharram.jpeg",
+      thumbnail: "/public/images/iduladha.jpg",
       shortIntro: "These are the steps to setup your blog",
       category: "tutorial",
     },
@@ -54,7 +54,7 @@ const ARTICLES_LIST: iArticle[] = [
     },
   },
   {
-    path: "/pages/tutorial/how-to-write-your-first-article.tsx",
+    path: "/pages/tutorial/santunanYatim.tsx",
     featureArticle: true,
     preview: {
       author: RUPALI,
@@ -73,7 +73,7 @@ const ARTICLES_LIST: iArticle[] = [
     },
   },
   {
-    path: "/pages/tutorial/how-to-deploy-blog.tsx",
+    path: "/pages/tutorial/sejarahYayasan.tsx",
     featureArticle: true,
     preview: {
       author: RUPALI,
@@ -116,7 +116,7 @@ const ARTICLES_LIST: iArticle[] = [
       date: "Agustus 11 2023",
       articleTitle: "Sejarah Yayasan Nurul Iman Singaperbangsa Karawang",
       tags: "demo, with sidebar, default layout",
-      thumbnail: "/public/images/1Muharram.jpeg",
+      thumbnail: "/public/images/yayasan/sejarah2.jpg",
       shortIntro:
         "In this article we will see Page Layout for a blog with sidebar example.",
       category: "layouts",
@@ -162,13 +162,13 @@ const ARTICLES_LIST: iArticle[] = [
     },
   },
   {
-    path: "/pages/tutorial/style-guide.tsx",
+    path: "/pages/tutorial/silabuh.tsx",
     preview: {
       author: MAYUR,
       date: "Agustus 8 2023",
-      articleTitle: "Sejarah Yayasan Nurul Iman Singaperbangsa Karawang",
+      articleTitle: "Masjid Nurul Iman Gelar Pengajian Ba'da Shubuh: Tafsir Surat Al-Fatihah Menyapa Pagi Umat",
       tags: "demo, all components, style guide, styling tutorial",
-      thumbnail: "/public/images/1Muharram.jpeg",
+      thumbnail: "/public/images/yayasan/silabuh.jpg",
       shortIntro: "Styling and theming tutorial.",
       category: "tutorial",
     },
