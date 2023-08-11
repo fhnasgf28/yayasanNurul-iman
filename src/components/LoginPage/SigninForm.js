@@ -1,8 +1,26 @@
 import { useState } from "react";
+import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
+import firebaseApp from "../../utils/firebase"; // Sesuaikan dengan lokasi file firebase.js Anda
+
+import { useHistory,BrowserRouter as Router, Route, Switch } from "react-router-dom"
 
 const SigninForm = () => {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const history = useHistory();
+  const handleSignIn = async (e) => {
+    e.preventDefault();
+
+  const auth = getAuth();
+  const email = "user@example.com"; // Ganti dengan email dan password yang sesuai
+  const password = "password123";
+  try {
+    const userCredential = await signInWithEmailAndPassword(auth, email, password);
+    console.log('Berhasil Masuk', userCredential.user);
+
+    history.push('/index')
+  } catch (error) {
+    console.log('Gagal Masuk', error);
+  }
+}
 
   return (
     <div className="selection:bg-indigo-500 selection:text-white">
@@ -14,7 +32,7 @@ const SigninForm = () => {
                 Masuk Untuk Pencarian Data
               </h1>
 
-              <form className="mt-6 md:mt-12" action="" method="POST">
+              <form className="mt-6 md:mt-12" action="" method="POST" onSubmit={handleSignIn}>
                 <div className="relative">
                   <input
                     id="signin-email"
