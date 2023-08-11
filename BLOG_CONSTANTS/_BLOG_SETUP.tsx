@@ -119,7 +119,7 @@ export const PRIMARY_NAV: iNavSetup = {
     sideNavLinks: [
         {
             label: 'Login',
-            path: ''
+            path: '/login'
         },
         {
             label: 'Beranda',

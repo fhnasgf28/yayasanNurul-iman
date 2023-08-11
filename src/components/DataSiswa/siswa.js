@@ -53,17 +53,24 @@ const MyPage = () => {
       type="text"
       value={searchTerm}
       onChange={(e) => setSearchTerm(e.target.value)}
+      onKeyUp={(e) => {
+        if (e.key === 'Enter') {
+          handleSearch();
+        }
+      }}
       className="px-3 py-2 border rounded-l-md w-50 focus:outline-none"
       placeholder="Cari"
     />
     <button
       onClick={handleSearch}
-      className="bg-blue-500 hover:bg-green-400 text-white px-3 py-1 rounded-r-md transition duration-300 ease-in-out"
+      className="bg-blue-500 hover:bg-green-400 text-white px-3 py-1 rounded-r-md transition duration-300 ease-in-out "
     >
       Search
     </button>
   </div>
-  <table className="min-w-full divide-y divide-gray-200">
+  
+  <div className="overflow-x-scroll">
+  <table className="min-w-full divide-y divide-gray-200 ">
   <thead className="bg-blue-600">
     <tr>
       <th
@@ -117,7 +124,7 @@ const MyPage = () => {
     ))}
   </tbody>
 </table>
-
+</div>
 </div>
   );
 };

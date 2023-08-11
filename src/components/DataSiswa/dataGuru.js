@@ -52,6 +52,11 @@ const DataGuru = () => {
       type="text"
       value={searchTerm}
       onChange={(e) => setSearchTerm(e.target.value)}
+      onKeyUp={(e) => {
+        if (e.key === 'Enter') {
+          handleSearch();
+        }
+      }}
       className="px-3 py-2 border rounded-l-md w-50 focus:outline-none"
       placeholder="Cari"
     />
