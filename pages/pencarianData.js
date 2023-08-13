@@ -2,7 +2,8 @@ import React, { useState } from 'react';
 import { useRouter } from 'next/router';
 import MyPage from '../src/components/DataSiswa/siswa';
 import DataGuru from '../src/components/DataSiswa/dataGuru';
-import PageLayout from '../src/layouts/PageLayouts';
+import JadwalSholat from '../src/components/DataSiswa/jadwalSholat';
+import ProtectedRoute from '../src/components/ProtectedRoute/protect';
 
 const PencarianData = () => {
   const [selectedOption, setSelectedOption] = useState('siswa');
@@ -29,6 +30,7 @@ const PencarianData = () => {
       >
         <option value="siswa">Data Siswa</option>
         <option value="guru">Data Guru</option>
+        <option value="Jadwal Sholat">Jadwal Sholat</option>
       </select>
 
       <button
@@ -40,9 +42,11 @@ const PencarianData = () => {
 
       </div>
       <div className='bg-white p-4 rounded-md shadow-md'>
-      {selectedOption === 'siswa' ? <MyPage /> : <DataGuru />}
+      {selectedOption === 'siswa' ? <MyPage /> : null}
+        {selectedOption === 'guru' ? <DataGuru /> : null}
+        {selectedOption === 'Jadwal Sholat' ? <JadwalSholat /> : null} {/* Tambahkan kondisi untuk halaman baru */}
     </div>
-    </div>
+    </div> 
   );
 };
 

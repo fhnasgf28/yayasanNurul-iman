@@ -10,7 +10,7 @@ const SigninForm = () => {
               <h1 className="text-2xl md:text-5xl font-bold text-indigo-600">
                 Masuk Dengan Google
               </h1>
-             <GoogleLoginButton></GoogleLoginButton>
+             <GoogleLoginButton/>
             </div>
           </div>
         </div>
