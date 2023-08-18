@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { getDatabase, ref, child, get } from 'firebase/database';
+import { getDatabase, ref, child, get, push} from 'firebase/database';
 import firebaseApp from '../../utils/firebase';
 
 const DataGuru = () => {
@@ -7,6 +7,9 @@ const DataGuru = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [searchTerm, setSearchTerm] = useState('');
   const [searchResults, setSearchResults] = useState([]);
+  const [newData, setNewData] = useState({nomor_guru: '', nama_guru: '', mata_pelajaran: ''})
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isNotificationVisible, setIsNotificationVisible] = useState(false);
 
   const getValue = async () => {
     try {
@@ -25,6 +28,22 @@ const DataGuru = () => {
       setIsLoading(false);
     }
   };
+
+  const addData = async (newData) => {
+    try {
+      const database = getDatabase(firebaseApp);
+      const rootReference = ref(database, 'data-guru');
+      await push(rootReference, newData);
+      console.log('data berhasil ditambahkan');
+      setIsModalOpen(false);
+      setIsNotificationVisible(true);
+      setTimeout(() => {
+        setIsNotificationVisible(false);
+      },3000);
+    } catch (error) {
+      console.log('Error menambahkan Data:', error.message)
+    }
+  }
 
   const handleSearch = () => {
     const results = [];
@@ -88,6 +107,55 @@ const DataGuru = () => {
         ))}
       </tbody>
     </table>
+
+    <form onSubmit={(e) => {e.preventDefault(); addData(newData); setNewData({ nomor_guru: '', nama_guru: '', mata_pelajaran: ''})}} className="mt-4">
+        <div className="flex mb-4">
+      <input type="text" className="px-4 py-2 border rounded-r-md w-1/2 focus:outline-none" placeholder="Nomor Guru" value={newData.nomor_guru} onChange={(e) => setNewData({...newData, nomor_guru: e.target.value})} />
+
+        <input type="text" className="px-4 py-2 border rounded-r-md w-1/2 focus:outline-none" placeholder="nama_guru" value={newData.nama_guru} onChange={(e) => setNewData({...newData, nama_guru: e.target.value})} />
+
+        <input type="text" className="px-4 py-2 border rounded-r-md w-1/2 focus:outline-none" placeholder="mata pelajaran" value={newData.mata_pelajaran} onChange={(e) => setNewData({...newData, mata_pelajaran: e.target.value})} />
+        </div>
+
+        <button
+        onClick={() => setIsModalOpen(true)}
+        className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-md"
+      >
+        Tambah Data
+      </button>
+
+      {/* modal di tailwind */}
+      {isModalOpen && (
+        <div className="fixed inset-0 flex items-center justify-center z-50">
+          <div className="absolute inset-0 bg-gray-800 opacity-50"></div>
+          <div className="bg-white p-4 rounded-lg z-10">
+            <h2 className="text-lg font-semibold mb-2">Konfirmasi</h2>
+            <p>Apakah Anda yakin ingin menambahkan data ini?</p>
+            <div className="mt-4 flex justify-end">
+              <button
+                onClick={() => setIsModalOpen(false)}
+                className="bg-gray-300 hover:bg-gray-400 text-gray-800 px-3 py-1 rounded"
+              >
+                Batal
+              </button>
+              <button
+                onClick={() => {
+                  addData();
+                  setIsModalOpen(false);
+                }}
+                className="bg-blue-500 hover:bg-blue-600 text-white px-3 py-1 rounded ml-2"
+              >
+                Ya, Tambahkan
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {isNotificationVisible && (
+        <div className="bg-green-500 text-white p-4 mt-4 rounded">Data Berhasil Ditambahkan</div>
+      )}
+      </form>
     </div>
   );
 };

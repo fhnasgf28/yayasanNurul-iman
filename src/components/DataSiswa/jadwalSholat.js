@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { getDatabase, ref, child, get } from 'firebase/database';
+import { getDatabase, ref, child, get, push } from 'firebase/database';
 import firebaseApp from '../../utils/firebase';
 
 const JadwalSholat = () => {
@@ -7,6 +7,7 @@ const JadwalSholat = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [searchTerm, setSearchTerm] = useState('');
   const [searchResults, setSearchResults] = useState([]);
+  const [newData, setNewData] = useState({hari: '', imam: ''});
 
   const getValue = async () => {
     try {
@@ -25,6 +26,46 @@ const JadwalSholat = () => {
       setIsLoading(false);
     }
   };
+
+  // fungsi untuk menambahkan data
+  const addData = async (newData) => {
+    try {
+      const database = getDatabase(firebaseApp);
+      const rootReference = ref(database, 'jadwal-sholat');
+      await push(rootReference, newData);
+      console.log('data berhasil ditambahkan');
+      getValue();
+    } catch (error) {
+      console.log(' Error menambahkan data :', error.message);
+    }
+  }
+
+  // fungsi untuk menghapus data
+  const removeData = async (key) => {
+    try {
+      const database = getDatabase(firebaseApp);
+      const rootReference = ref(database, 'jadwal-sholat');
+      // mengambil data dari database
+      const dbGet = await get(child(rootReference, 'dataList'));
+      const dbValue = dbGet.val();
+
+      // hapus data dengan indeks yang diinginkan
+      if (dbValue && dbValue[index]) {
+        const itemReference = ref(rootReference, 'dataList/' + index)
+        await remove(itemReference);
+        console.log('data berhasil dihapus')
+        getValue();
+        }
+      } catch (error) {
+        console.error('Gagal Menghapus Data', error.message);
+      }
+    };
+
+const confirmDelete = (index) => {
+      if (window.confirm('Apakah Anda yakin ingin menghapus data ini?')) {
+        removeData(index);
+      }
+    };
 
   const handleSearch = () => {
     const results = [];
@@ -81,10 +122,21 @@ const JadwalSholat = () => {
           <tr key={index} className={index % 2 === 0 ? 'bg-white' : 'bg-gray-100'}>
             <td className="px-6 py-4 whitespace-nowrap">{item.hari}</td>
             <td className="px-6 py-4 whitespace-nowrap">{item.imam}</td>
+            <td className="px-6 py-4 whitespace-nowrap">
+        <button onClick={() => confirmDelete(index)} className="text-red-600 hover:underline">Hapus</button>
+        </td>
           </tr>
         ))}
       </tbody>
     </table>
+
+      <form onSubmit={(e) => {e.preventDefault(); addData(newData); setNewData({ hari: '', imam: ''})}} className="mt-4">
+        <div className="flex mb-4">
+      <input type="text" className="px-4 py-2 border rounded-r-md w-1/2 focus:outline-none" placeholder="Hari" value={newData.hari} onChange={(e) => setNewData({...newData, hari: e.target.value})} />
+        <input type="text" className="px-4 py-2 border rounded-r-md w-1/2 focus:outline-none" placeholder="Imam" value={newData.imam} onChange={(e) => setNewData({...newData, imam: e.target.value})} />
+        </div>
+        <button type="submit" className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-md">Tambah Data</button>
+      </form>
     </div>
   );
 };
