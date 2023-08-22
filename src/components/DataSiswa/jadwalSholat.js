@@ -8,6 +8,21 @@ const JadwalSholat = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [searchResults, setSearchResults] = useState([]);
   const [newData, setNewData] = useState({hari: '', imam: ''});
+  const [itemToDelete, setItemToDelete] = useState(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isNotificationVisible, setIsNotificationVisible] = useState(false);
+  const [isInputEmpty, setIsInputEmpty] = useState(false);
+
+  const handleDeleteClick = (key) => {
+    setItemToDelete(key)
+  }
+
+  const confirmDelete = async () => {
+    if (itemToDelete) {
+      await removeData(itemToDelete);
+      setItemToDelete(null);
+    }
+  };
 
   const getValue = async () => {
     try {
@@ -34,38 +49,16 @@ const JadwalSholat = () => {
       const rootReference = ref(database, 'jadwal-sholat');
       await push(rootReference, newData);
       console.log('data berhasil ditambahkan');
+      setIsModalOpen(false);
+      setIsNotificationVisible(true);
+      setTimeout(() => {
+        setIsNotificationVisible(false);
+      },3000)
       getValue();
     } catch (error) {
       console.log(' Error menambahkan data :', error.message);
     }
-  }
-
-  // fungsi untuk menghapus data
-  const removeData = async (key) => {
-    try {
-      const database = getDatabase(firebaseApp);
-      const rootReference = ref(database, 'jadwal-sholat');
-      // mengambil data dari database
-      const dbGet = await get(child(rootReference, 'dataList'));
-      const dbValue = dbGet.val();
-
-      // hapus data dengan indeks yang diinginkan
-      if (dbValue && dbValue[index]) {
-        const itemReference = ref(rootReference, 'dataList/' + index)
-        await remove(itemReference);
-        console.log('data berhasil dihapus')
-        getValue();
-        }
-      } catch (error) {
-        console.error('Gagal Menghapus Data', error.message);
-      }
-    };
-
-const confirmDelete = (index) => {
-      if (window.confirm('Apakah Anda yakin ingin menghapus data ini?')) {
-        removeData(index);
-      }
-    };
+  } 
 
   const handleSearch = () => {
     const results = [];
@@ -84,6 +77,18 @@ const confirmDelete = (index) => {
   useEffect(() => {
     getValue();
   }, []);
+
+  const removeData = async (key) => {
+    try {
+      const database = getDatabase(firebaseApp);
+      const rootReference = ref(database, 'jadwal-sholat');
+      await remove(child(rootReference, key));
+      console.log('Data Berhasil Dihapus');
+      getValue();
+    } catch (error) {
+      console.error('Gagal Menghapus Data', error.message);
+    }
+  };
 
   return (
     <div className="bg-gray-100 p-8">
@@ -123,20 +128,55 @@ const confirmDelete = (index) => {
             <td className="px-6 py-4 whitespace-nowrap">{item.hari}</td>
             <td className="px-6 py-4 whitespace-nowrap">{item.imam}</td>
             <td className="px-6 py-4 whitespace-nowrap">
-        <button onClick={() => confirmDelete(index)} className="text-red-600 hover:underline">Hapus</button>
+            <button onClick={() => handleDeleteClick(item.key)} className="text-red-600">Hapus</button>
         </td>
           </tr>
         ))}
       </tbody>
     </table>
 
-      <form onSubmit={(e) => {e.preventDefault(); addData(newData); setNewData({ hari: '', imam: ''})}} className="mt-4">
+      <form onSubmit={(e) => {
+          e.preventDefault();
+          if (newData.hari && newData.imam) {
+            addData(newData);
+            setNewData({ hari: '', imam: ''});
+          } else {
+            setIsInputEmpty(true);
+          }
+        }}
+        className="mt-4">
         <div className="flex mb-4">
-      <input type="text" className="px-4 py-2 border rounded-r-md w-1/2 focus:outline-none" placeholder="Hari" value={newData.hari} onChange={(e) => setNewData({...newData, hari: e.target.value})} />
+        <input type="text" className="px-4 py-2 border rounded-r-md w-1/2 focus:outline-none" placeholder="Hari" value={newData.hari} onChange={(e) => setNewData({...newData, hari: e.target.value})} />
         <input type="text" className="px-4 py-2 border rounded-r-md w-1/2 focus:outline-none" placeholder="Imam" value={newData.imam} onChange={(e) => setNewData({...newData, imam: e.target.value})} />
         </div>
-        <button type="submit" className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-md">Tambah Data</button>
+        <button onClick= {() => {
+          setIsInputEmpty(false);
+          setIsModalOpen(true);
+        }} type="submit" className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-md">Tambah Data</button>
+
+        {isInputEmpty && (
+          <div className="text-red-500 mt-2">Semua field harus diisi</div>
+        )}
+
+        {isNotificationVisible && (
+          <div className="bg-green-500 text-white p-4 mt-4 rounded">
+            Data Berhasil Ditambahkan
+          </div>
+        )}
+
       </form>
+
+      {/* {itemToDelete && (
+        <div className="fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-50">
+          <div className="bg-white p-4 rounded">
+            <p>Apakah Anda yakin ingin menghapus data ini?</p>
+            <div className="flex justify-end mt-4">
+              <button onClick={confirmDelete} className="bg-red-500 text-white px-4 py-2 rounded mr-2">Ya</button>
+              <button onClick={() => setItemToDelete(null)} className="bg-gray-300 text-gray-700 px-4 py-2 rounded">Tidak</button>
+            </div>
+          </div>
+        </div>
+      )} */}
     </div>
   );
 };

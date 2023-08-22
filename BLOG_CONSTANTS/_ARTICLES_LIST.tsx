@@ -41,7 +41,7 @@ const ARTICLES_LIST: iArticle[] = [
       articleTitle: "Masjid Nurul iman Menyelenggarakan Idul Adha dan Berqurban",
       tags: "demo, blog setup",
       thumbnail: "/public/images/iduladha.jpg",
-      shortIntro: "These are the steps to setup your blog",
+      shortIntro: "Masjid Nurul iman Menyelenggarakan Idul Adha dan Berqurban",
       category: "tutorial",
     },
     seo: {
@@ -60,10 +60,10 @@ const ARTICLES_LIST: iArticle[] = [
       author: RUPALI,
       date: "Agustus 14 2023",
       articleTitle: "Yayasan Nurul Iman Singaperbangsa Karawang Adakan Acara Santunan Anak Yatim",
-      tags: "demo, first article",
+      tags: "",
       thumbnail: "/public/images/10Muharrom/santunan1.jpg",
       shortIntro:
-        "This a step by step guide on how to write your first article.",
+        "Yayasan Nurul Iman Singaperbangsa Karawang Adakan Acara Santunan Anak Yatim",
       category: "tutorial",
     },
     seo: {
@@ -82,7 +82,7 @@ const ARTICLES_LIST: iArticle[] = [
       tags: "demo, deploy blog",
       thumbnail: "/public/images/yayasan/sejarah1.jpg",
       shortIntro:
-        "In this article you will see how to export blog files and what folder to deploy on your hosting.",
+        "Sejarah Yayasan Nurul Iman Singaperbangsa Karawang",
       category: "tutorial",
     },
     seo: {
@@ -97,7 +97,7 @@ const ARTICLES_LIST: iArticle[] = [
       articleTitle: "Yayasan Nurul Iman Menggelar Peringatan Isra Mi'raj: Meningkatkan Spiritualitas Umat",
       tags: "demo, layout, home layout",
       thumbnail: "/public/images/yayasan/isra.jpg",
-      shortIntro: "In this article we will see Default Home Layout example.",
+      shortIntro: "Yayasan Nurul Iman Menggelar Peringatan Isra Mi'raj: Meningkatkan Spiritualitas Umat",
       category: "layouts",
     },
     seo: {
@@ -118,7 +118,7 @@ const ARTICLES_LIST: iArticle[] = [
       tags: "demo, with sidebar, default layout",
       thumbnail: "/public/images/yayasan/sejarah2.jpg",
       shortIntro:
-        "In this article we will see Page Layout for a blog with sidebar example.",
+        "Sejarah Yayasan Nurul Iman Singaperbangsa Karawang",
       category: "layouts",
     },
     seo: {
@@ -136,7 +136,7 @@ const ARTICLES_LIST: iArticle[] = [
       tags: "demo, centered, centered layout",
       thumbnail: "/public/images/1Muharram.jpeg",
       shortIntro:
-        "This a demo article with centered layout and with demo of all the components.",
+        "Pawai Obor Yayasan Nurul Iman",
       category: "layouts",
     },
     seo: {
@@ -146,14 +146,14 @@ const ARTICLES_LIST: iArticle[] = [
     },
   },
   {
-    path: "/pages/tutorial/all-components.tsx",
+    path: "/pages/tutorial/17Agustus.tsx",
     preview: {
       author: RUPALI,
       date: "Agustus 9 2023",
-      articleTitle: "Sejarah Yayasan Nurul Iman Singaperbangsa Karawang",
+      articleTitle: "Pekan Meriah Peringatan 17 Agustus di Perumahan Singaperbangsa RW 06",
       tags: "demo, all components",
-      thumbnail: "/public/images/1Muharram.jpeg",
-      shortIntro: "List of all usable components, its types and how to use it.",
+      thumbnail: "/public/images/kegiatan/ibu (2).jpg",
+      shortIntro: "Pekan Meriah Peringatan 17 Agustus di Perumahan Singaperbangsa RW 06",
       category: "tutorial",
     },
     seo: {
@@ -169,7 +169,7 @@ const ARTICLES_LIST: iArticle[] = [
       articleTitle: "Masjid Nurul Iman Gelar Pengajian Ba'da Shubuh: Tafsir Surat Al-Fatihah Menyapa Pagi Umat",
       tags: "demo, all components, style guide, styling tutorial",
       thumbnail: "/public/images/yayasan/silabuh.jpg",
-      shortIntro: "Styling and theming tutorial.",
+      shortIntro: "Masjid Nurul Iman Gelar Pengajian Ba'da Shubuh: Tafsir Surat Al-Fatihah Menyapa Pagi Umat",
       category: "tutorial",
     },
     seo: {
@@ -179,14 +179,14 @@ const ARTICLES_LIST: iArticle[] = [
     },
   },
   {
-    path: "/pages/tutorial/icons.tsx",
+    path: "/pages/tutorial/camping.tsx",
     preview: {
       author: MAYUR,
       date: "Agustus 7 2023",
-      articleTitle: "Sejarah Yayasan Nurul Iman Singaperbangsa Karawang",
+      articleTitle: "Camping Kebangsaan: Membangun Semangat Nasionalisme di Perumahan Singaperbangsa Rt 24",
       tags: "demo, all components, style guide, styling tutorial, icons, how to use icons in website",
-      thumbnail: "/public/images/1Muharram.jpeg",
-      shortIntro: "How to use icons in your blog website.",
+      thumbnail: "/public/images//kegiatan/camping.jpg",
+      shortIntro: "Camping Kebangsaan: Membangun Semangat Nasionalisme di Perumahan Singaperbangsa Rt 24",
       category: "tutorial",
     },
     seo: {

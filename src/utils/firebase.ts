@@ -34,4 +34,6 @@ export const SignOut = async () => {
   await signOut(FirebaseAuth);
 };
 
+export const auth = getAuth(firebaseApp);
+
 export default firebaseApp;
