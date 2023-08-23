@@ -12,6 +12,7 @@ import Image from "../src/components/ArticleImage";
 import Slider from 'react-slick';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
+import ProgramYayasan from "../src/components/newsConten/program";
 
 const Home = () => {
   const settings = {
@@ -115,6 +116,8 @@ const Home = () => {
             </div>
           </div>    
         </section>
+
+        <ProgramYayasan/>
 
     </section>
       <div className="container mx-auto lg:px-[15px] px-0">

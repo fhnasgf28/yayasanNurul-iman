@@ -3,8 +3,7 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 
 // Import Swiper styles
 import 'swiper/css';
-import 'swiper/css/bundle';
-
+import 'swiper/css/bundle'
 import classes from './slider.module.scss';
 import { transformImagePaths } from '../../utils/utils';
 
