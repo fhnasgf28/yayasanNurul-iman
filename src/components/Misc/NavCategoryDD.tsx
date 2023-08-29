@@ -1,6 +1,7 @@
 import { BiChevronDown } from "react-icons/bi";
 import { combineClasses, getCategories } from "../../utils/utils";
 import LinkTo from "../LinkTo";
+import Link from 'next/link'
 
 interface INavCatergoryDD {
   openDD: boolean;
@@ -42,9 +43,11 @@ const NavCatergoryDD = ({
             <span onClick={() => setOpenDD(!openDD)}>Semua Berita</span>
           </LinkTo>
 
-          <LinkTo href={"/dataSiswa"} passHref className="block text-sm py-2 px-2 border">
-            <span onClick={() => setOpenDD(!openDD)}>Jadwal Kegiatan</span>
-          </LinkTo>
+          <Link href="/dataData">
+            <a className="block text-sm py-2 px-2 border" onClick={() => setOpenDD(!openDD)}>
+              Pencarian Data
+            </a>
+          </Link>
           {CATEGORIES.map((each) => (
             <LinkTo
               href={"/blog?category=" + each}

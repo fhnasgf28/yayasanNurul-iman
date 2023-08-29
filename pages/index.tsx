@@ -13,6 +13,7 @@ import Slider from 'react-slick';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 import ProgramYayasan from "../src/components/newsConten/program";
+import VisiMisi from "../src/components/VisiMisi/visiMisi"
 
 const Home = () => {
   const settings = {
@@ -83,39 +84,7 @@ const Home = () => {
           />
         </div>
       </Slider>
-
-        <section className='container px-3 md:pb-20 md:pt-10 pt-20'>
-          {/* Judul */}
-          <Text title className='mt-10 dark:text-sky-400 text-sky-600' >
-          Visi dan Misi Yayasan Nurul Iman
-          </Text>
-           {/* Visi dan Misi */}
-           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-10">
-            <div>
-              <div className="bg-white rounded-lg shadow-md p-6">
-                <Text subtitle className='text-3xl font-medium'>
-                  Visi
-                </Text>
-                <Text p className='text-lg'>
-                  Menjadi lembaga pendidikan dan sosial yang unggul, berdaya saing, serta berlandaskan keimanan dan ketaqwaan kepada Allah SWT.
-                </Text>
-              </div>
-            </div>
-            <div>
-              <div className="bg-white rounded-lg shadow-md p-6">
-                <Text subtitle className='text-3xl font-medium'>
-                  Misi
-                </Text>
-                <List type={ListType.disc}>
-                  <li>Mengembangkan karakter dan akhlakul karimah siswa-siswi yang berlandaskan nilai-nilai Islami.</li>
-                  <li>Mendorong peningkatan prestasi akademik dan non-akademik melalui program pembelajaran yang inovatif dan berbasis teknologi.</li>
-                  <li>Menyediakan lingkungan belajar yang aman, nyaman, dan mendukung perkembangan potensi siswa-siswi secara holistik.</li>
-                  {/* ... tambahkan misi lainnya ... */}
-                </List>
-              </div>
-            </div>
-          </div>    
-        </section>
+      <VisiMisi/>
 
         <ProgramYayasan/>
 

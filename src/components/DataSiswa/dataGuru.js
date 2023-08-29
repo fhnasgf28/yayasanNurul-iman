@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { getDatabase, ref, child, get, push, onValue} from 'firebase/database';
+import { getDatabase, ref, child, get, push, onValue, remove} from 'firebase/database';
 import firebaseApp from '../../utils/firebase';
 
 const DataGuru = () => {
@@ -12,7 +12,9 @@ const DataGuru = () => {
   const [isNotificationVisible, setIsNotificationVisible] = useState(false);
   const rootReference = ref(getDatabase(firebaseApp))
   const [isInputEmpty, setIsInputEmpty] = useState(false);
-
+  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
+  const [dataToDelete, setDataToDelete] = useState(null);
+  const [isDeleteSuccess, setIsDeleteSuccess] = useState(false);
 
   const onDataChange = (snapshot) => {
     const dbvalue = snapshot.val();
@@ -80,6 +82,39 @@ const DataGuru = () => {
     setSearchResults(results);
   };
 
+// bagian untuk menghaps data
+  const deleteDataByCondition = async (field, value) => {
+    try {
+      const database = getDatabase(firebaseApp);
+      const dataRef = ref(database, 'data-guru');
+      const snapshot = await get(dataRef);
+
+      snapshot.forEach((childSnaphot) => {
+        const childData = childSnaphot.val();
+        if (childData[field] === value) {
+          remove(childSnaphot.ref);
+          console.log('data berhasil dihapus.');
+        }
+      })
+      setIsDeleteSuccess(true);
+      setTimeout(() => {
+        setIsDeleteSuccess(false);
+      },3000);
+  } catch (error) {
+    console.error('Error:', error.message);
+  }
+};
+
+const openDeleteModal = (data) => {
+  setIsDeleteModalOpen(true);
+  setDataToDelete(data);
+};
+
+const closeDeleteModal = () => {
+  setIsDeleteModalOpen(false);
+  setDataToDelete(null);
+}
+
   useEffect(() => {
     getValue();
   }, []);
@@ -107,6 +142,7 @@ const DataGuru = () => {
       Search
     </button>
   </div>
+   {/* Tabel Data */}
     <table className="table-auto min-w-full divide-y divide-gray-200">
       <thead className="bg-blue-600">
         <tr>
@@ -124,11 +160,22 @@ const DataGuru = () => {
             <td className="px-6 py-4 whitespace-nowrap">{item.nomor_guru}</td>
             <td className="px-6 py-4 whitespace-nowrap">{item.nama_guru}</td>
             <td className="px-6 py-4 whitespace-nowrap">{item.mata_pelajaran}</td>
+
+        <td className="px-6 py-4 whitespace-nowrap">
+          <button
+            className="bg-red-500 hover:bg-red-600 text-white px-2 py-1 rounded-md"
+            onClick={() => openDeleteModal(item)}
+          >
+            Hapus
+          </button>
+      </td>
           </tr>
         ))}
       </tbody>
     </table>
+          {/* akhir tabel data */}
 
+          {/* awal Form */}
     <form
         onSubmit={(e) => {
           e.preventDefault();
@@ -187,6 +234,54 @@ const DataGuru = () => {
           </div>
         )}
       </form>
+      {/* akhir form */}
+
+      {/* Modal Konfirmasi Hapus */}
+        {isDeleteModalOpen && (
+          <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
+            <div className="bg-white p-4 rounded shadow-md">
+              <p className="mb-2">Apakah Anda yakin ingin menghapus data?</p>
+              <div className="flex justify-end">
+                <button
+                  className="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-md mr-2"
+                  onClick={() => {
+                    deleteDataByCondition('nama_guru', dataToDelete.nama_guru);
+                    closeDeleteModal();
+                  }}
+                >
+                  Hapus
+                </button>
+                <button
+                  className="bg-gray-300 hover:bg-gray-400 text-gray-800 px-4 py-2 rounded-md"
+                  onClick={closeDeleteModal}
+                >
+                  Batal
+                </button>
+              </div>
+            </div>
+          </div>
+        )}
+
+        {/* modal untuk data berhasil dihapus */}
+            {isDeleteSuccess && (
+          <div className="bg-green-500 text-white p-4 mt-4 rounded flex items-center">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              className="h-6 w-6 mr-2"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M5 13l4 4L19 7"
+              />
+            </svg>
+            Data Berhasil Dihapus
+          </div>
+          )}
     </div>
   );
 };

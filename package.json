@@ -12,6 +12,7 @@
   },
   "dependencies": {
     "@react-firebase/auth": "^0.2.10",
+    "@types/firebase": "^3.2.1",
     "@uiw/react-textarea-code-editor": "^1.4.4",
     "css-loader": "^6.7.1",
     "firebase": "^10.1.0",
