@@ -3,7 +3,7 @@ import { useRouter } from 'next/router';
 import MyPage from '../src/components/DataSiswa/siswa';
 import DataGuru from '../src/components/DataSiswa/dataGuru';
 import JadwalSholat from '../src/components/DataSiswa/jadwalSholat';
-import ProtectedRoute from '../src/components/ProtectedRoute/protect';
+import FinancialForm from '../src/components/Laporan/pemasukan';
 
 const PencarianData = () => {
   const [selectedOption, setSelectedOption] = useState('siswa');
@@ -46,6 +46,8 @@ const PencarianData = () => {
         {selectedOption === 'guru' ? <DataGuru /> : null}
         {selectedOption === 'Jadwal Sholat' ? <JadwalSholat /> : null} {/* Tambahkan kondisi untuk halaman baru */}
     </div>
+
+    <FinancialForm/>
     </div> 
   );
 };

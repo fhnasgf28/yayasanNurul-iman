@@ -47,7 +47,7 @@ const ProgramYayasan: React.FC = () => {
               {/* <Image src="/images/yayasan/1 (1).jpg" alt="Coffee" className="w-full" /> */}
               <div className="py-8 px-6">
                 <h3>
-                  <a href="#" className="mb-3 block truncate text-xl font-semibold text-dark hover:text-primary dark:text-white">Pembangunan TPQ</a>
+                  <a href="#" className="mb-3 block truncate text-xl font-semibold text-dark hover:text-primary dark:text-white">Pengajian Mingguan</a>
                 </h3>
                 <p className="mb-6 text-base font-medium text-secondary">Lorem ipsum dolor sit amet consectetur adipisicing elit. Impedit, totam ipsum ea quam sequi velit sunt.</p>
               </div>

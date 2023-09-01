@@ -3,6 +3,7 @@ import { ImageSize, TextAlign, ListType } from "../src/shared/enums";
 import { PageLayout, Text, List, Image, LinkTo, Seperator, Slider } from "../src/components";
 import { CURRENT_YEAR } from "../src/constants/appConstants";
 import { iSEO } from "../src/shared/interfaces";
+import Anggota from "../src/components/newsConten/anggota";
 
 const AboutUs = () => {
     const PAGE_SEO: iSEO = {
@@ -11,10 +12,21 @@ const AboutUs = () => {
         keywords: 'webexpx, contact us, webexpe13@gmail.com, next js blog template',
         author: 'Mayur Nalwala, Rupali Yadav'
     }
+
+    
     return (
         <PageLayout PAGE_SEO={PAGE_SEO} home>
             <section id="home" className="pt-36 dark:bg-dark container mx-auto py-8">
-            <h1 className="text-3xl font-bold mb-4">Yayasan Nurul Iman</h1>
+            <h1 className="text-3xl font-bold mb-4">Struktur Organisasi Yayasan</h1>
+            <Image src="/images/yayasan/struktur.svg" alt="Yayasan Nurul Iman"/>
+
+          <div className="w-full px-4">
+          <div className="mx-auto mb-4 max-w-xl text-center">
+            <h5 className="mb-2 text-3xl font-bold text-dark dark:text-white sm:text-4xl lg:text-5xl">Profil Anggota</h5>
+          </div>
+          </div>
+          <Anggota/>
+        <h1 className="text-3xl font-bold mb-4">Yayasan Nurul Iman</h1>
         <p className="text-gray-700 mb-8">Perum Taman Singaperbangsa Karawang</p>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
           <div className="bg-white p-6 shadow">
@@ -146,8 +158,7 @@ const AboutUs = () => {
       </div>
     </section>
     {/* Blog Section End */}
-    
-    
+
     
         </PageLayout>
     )

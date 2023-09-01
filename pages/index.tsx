@@ -15,6 +15,7 @@ import 'slick-carousel/slick/slick-theme.css';
 import ProgramYayasan from "../src/components/newsConten/program";
 import VisiMisi from "../src/components/VisiMisi/visiMisi"
 
+
 const Home = () => {
   const settings = {
     dots: true,
@@ -28,9 +29,7 @@ const Home = () => {
 
   return (
     <PageLayout home PAGE_SEO={DEFAULT_SEO}>
-    
     <section className="relative container mx-auto px-4 sm:px-6 lg:px-8">
-
       <div className="max-w-6xl mx-auto px-4 sm:px-6">
      
         {/* Hero content */}

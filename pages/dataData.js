@@ -5,6 +5,8 @@ import Siswa from '../src/components/Search/siswa';
 import { PageLayout } from "../src/components";
 import FeaturedArticleSection from "../src/components/Misc/FeaturedArticleSection";
 import HomeNonFeatureArticles from "../src/components/Misc/HomeNonFeatureAricles";
+import FinancialReport from '../src/components/Laporan/laporan';
+import FinancialForm from '../src/components/Laporan/pemasukan';
 
 const DataDataPencarian = () => {
   const [selectedOption, setSelectedOption] = useState('siswa');
@@ -34,6 +36,7 @@ const DataDataPencarian = () => {
         {selectedOption === 'guru' ? <Guru /> : null}
         {/* {selectedOption === 'Jadwal Sholat' ? <JadwalSholat /> : null}  */}
     </div>
+    <FinancialReport/>
     </div>
 
     <div className="container mx-auto lg:px-[15px] px-0">

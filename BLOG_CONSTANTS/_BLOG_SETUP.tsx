@@ -97,9 +97,9 @@ export const PRIMARY_NAV: iNavSetup = {
         },
         {
             // to open a link in new tab pass newTab: true
-            label: 'Dukung Kami',
-            path: '#',
-            newTab: true
+            label: 'Cari Data',
+            path: '/dataData',
+            newTab: false
         },
         {
             label: 'Donasi Pembangunan',
