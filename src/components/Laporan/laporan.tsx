@@ -1,62 +1,59 @@
 import React, { useEffect, useState} from 'react';
 import { getDatabase, ref, push, onValue } from 'firebase/database';
 import firebaseApp from '../../utils/firebase';
+import GoogleSheetsEmbed from '../Laporan/googleSheet';
 
 const FinancialReport = () => {
-const [mode, setMode] = useState('harian'); // 'harian' atau 'bulanan'
-  const [reportData, setReportData] = useState<any[]>([]);
+  const [totalPemasukan, setTotalPemasukan] = useState(0);
+  const [ totalPengeluaran,setTotalPengeluaran ] = useState(0);
+  const [ saldoBulanan, setSaldoBulanan ] = useState(0);
+  const [ financialData, setFinancialData] = useState ([]);
 
-  const fetchData = (mode: string) => {
+  useEffect (() => {
     const database = getDatabase(firebaseApp);
-    const financialRef = ref(database, 'laporan-keuangan');
+    const pemasukanRef = ref(database, 'pemasukan');
+    const pengeluaranRef = ref(database, 'pengeluaran');
 
-    onValue(financialRef, (snapshot) => {
-      const data = snapshot.val();
-      if (data) {
-        const dataArray = Object.values(data);
-        const filteredData = mode === 'harian' ? filterDaily(dataArray) : filterMonthly(dataArray);
-        setReportData(filteredData);
-      }
+    // mengambil data masukan dari firebase 
+    onValue(pemasukanRef, (snapshot) => {
+      let totalPemasukan = 0;
+      snapshot.forEach((childSnapshot) => {
+        totalPemasukan += childSnapshot.val().amount;
+      })
+
+      setTotalPemasukan(totalPemasukan);
     });
-  };
 
-  const filterDaily = (data: any[]) => {
-    // Filter data untuk tampilkan laporan harian
-    // Misalnya, sesuai dengan tanggal hari ini
-    const today = new Date().toISOString().split('T')[0];
-    return data.filter((item) => item.tanggal === today);
-  };
+    // mengambil data pengeluaran dari firebase
+    onValue(pengeluaranRef, (snapshot) => {
+      let totalPengeluaran = 0;
+      snapshot.forEach((childSnapshot) => {
+        totalPengeluaran += childSnapshot.val().amount;
+    });
+      setTotalPengeluaran(totalPengeluaran);
+    });
+  },[]);
 
-  const filterMonthly = (data: any[]) => {
-    // Filter data untuk tampilkan laporan bulanan
-    // Misalnya, sesuai dengan bulan dan tahun saat ini
-    const today = new Date();
-    const thisMonth = today.toISOString().substring(0, 7);
-    return data.filter((item) => item.tanggal && item.tanggal.startsWith(thisMonth));
+  // mengambil data untuk rincian pemasukan dan pengeluaran
+  
 
-  };
-
-  useEffect(() => {
-    fetchData(mode);
-  }, [mode]);
+  useEffect (() => {
+  // saldo bulanan
+  const saldo = totalPemasukan - totalPengeluaran;
+  setSaldoBulanan(saldo);
+  }, [totalPemasukan,totalPengeluaran]);
 
   return (
+
+
     <div>
       <h2>Laporan Keuangan</h2>
+      <GoogleSheetsEmbed/>
       <div>
-        <label>Pilih Mode Tampilan:</label>
-        <select value={mode} onChange={(e) => setMode(e.target.value)}>
-          <option value="harian">Harian</option>
-          <option value="bulanan">Bulanan</option>
-        </select>
-      </div>
-      <ul>
-        {reportData.map((item, index) => (
-          <li key={index}>
-            Tanggal: {item.tanggal}, Deskripsi: {item.deskripsi}, Jumlah: {item.jumlah}
-          </li>
-        ))}
-      </ul>
+            <h2>Total Pemasukan: {totalPemasukan}</h2>
+            <h2>Total Pengeluaran: {totalPengeluaran}</h2>
+            <h2>Saldo Bulanan: {saldoBulanan}</h2>
+        </div>
     </div>
   );
 };

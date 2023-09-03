@@ -46,7 +46,7 @@ const PencarianData = () => {
         {selectedOption === 'guru' ? <DataGuru /> : null}
         {selectedOption === 'Jadwal Sholat' ? <JadwalSholat /> : null} {/* Tambahkan kondisi untuk halaman baru */}
     </div>
-
+    
     <FinancialForm/>
     </div> 
   );

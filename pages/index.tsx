@@ -13,8 +13,8 @@ import Slider from 'react-slick';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 import ProgramYayasan from "../src/components/newsConten/program";
-import VisiMisi from "../src/components/VisiMisi/visiMisi"
-
+import VisiMisi from "../src/components/VisiMisi/visiMisi";
+import GoogleMap from "../src/components/newsConten/googleMaps";
 
 const Home = () => {
   const settings = {
@@ -85,7 +85,7 @@ const Home = () => {
       </Slider>
       <VisiMisi/>
 
-        <ProgramYayasan/>
+      <ProgramYayasan/>
 
     </section>
       <div className="container mx-auto lg:px-[15px] px-0">
@@ -96,7 +96,9 @@ const Home = () => {
           <HomeNonFeatureArticles />
         </div>
       </div>
+      <GoogleMap/>
     </PageLayout>
+    
   )
 }
 

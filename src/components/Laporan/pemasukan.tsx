@@ -12,7 +12,7 @@ const FinancialForm = () => {
 
         try {
             const database = getDatabase(firebaseApp);
-            const financialRef = ref(database,'pemasukan');
+            const financialRef = ref(database,type);
 
             await push(financialRef, {
                 type,
@@ -31,10 +31,11 @@ const FinancialForm = () => {
 
     return(
         <form onSubmit={handleSubmit} className="mt-4">
-      <select value={type} className="px-4 py-2 border rounded-r-md focus:outline-none" onChange={(e) => setType(e.target.value)} >
-        <option value="pemasukan">Pemasukan</option>
-        <option value="pengeluaran">Pengeluaran</option>
-      </select>
+          <h2 className="text-2xl font-semibold mb-4">Tambah Data Keuangan</h2>
+        <select value={type} className="px-4 py-2 border rounded-r-md focus:outline-none" onChange={(e) => setType(e.target.value)} >
+          <option value="pemasukan">Pemasukan</option>
+          <option value="pengeluaran">Pengeluaran</option>
+        </select>
       <input
         type="number"
         value={amount}

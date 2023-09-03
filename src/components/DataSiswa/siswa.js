@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { getDatabase, ref, push, child, get, remove,onValue } from 'firebase/database';
 import firebaseApp from '../../utils/firebase';
 
+
 const MyPage = () => {
   const [dataList, setDataList] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
@@ -115,6 +116,26 @@ const closeDeleteModal = () => {
   setDataToDelete(null);
 }
 
+// perulangan form input
+const inputConfigs = [
+  { placeholder: 'Nomor Induk', stateKey: 'nomor_induk' },
+  { placeholder: 'Nama Siswa', stateKey: 'nama_siswa' },
+  { placeholder: 'Tanggal lahir', stateKey: 'tanggal_lahir' },
+  { placeholder: 'Tempat Lahir', stateKey: 'tempat_ahir' },
+  { placeholder: 'Nama Ayah', stateKey: 'nama_ayah' },
+  { placeholder: 'Jenis Kelamin', stateKey: 'jenis_kelamin' },
+]
+
+// perulangan Tabel Header
+  const tableHeaders = [
+    'Nomor Induk Siswa',
+    'Nama Siswa',
+    'Tanggal Lahir',
+    'Tempat Lahir',
+    'Nama Ayah',
+    'Jenis Kelamin'
+  ]
+
   useEffect(() => {
     getValue();
   }, []);
@@ -148,42 +169,13 @@ const closeDeleteModal = () => {
   <table className="min-w-full divide-y divide-gray-200 ">
   <thead className="bg-blue-600">
     <tr>
-      <th
-        scope="col"
+      {tableHeaders.map((header, index) => (
+        <th
+        key={index}
+        scope='col'
         className="px-6 py-3 text-left text-xs font-medium text-white uppercase tracking-wider"
-      >
-        Nomor Induk Siswa
-      </th>
-      <th
-        scope="col"
-        className="px-6 py-3 text-left text-xs font-medium text-white uppercase tracking-wider"
-      >
-        Nama Siswa
-      </th>
-      <th
-        scope="col"
-        className="px-6 py-3 text-left text-xs font-medium text-white uppercase tracking-wider"
-      >
-        Tanggal Lahir
-      </th>
-      <th
-        scope="col"
-        className="px-6 py-3 text-left text-xs font-medium text-white uppercase tracking-wider"
-      >
-        Tempat Lahir
-      </th>
-      <th
-        scope="col"
-        className="px-6 py-3 text-left text-xs font-medium text-white uppercase tracking-wider"
-      >
-        Nama Ayah
-      </th>
-      <th
-        scope="col"
-        className="px-6 py-3 text-left text-xs font-medium text-white uppercase tracking-wider"
-      >
-        Jenis Kelamin
-      </th>
+        >{header}</th>
+      ))}
     </tr>
   </thead>
   <tbody className="bg-white divide-y divide-gray-200">
@@ -220,53 +212,18 @@ const closeDeleteModal = () => {
         }}
         className="mt-4"
       >
-        <input
-          type="text"
+        {inputConfigs.map((config, index) => (
+          <input
+          key={index}
+          type='text'
           className="px-4 py-2 border rounded-r-md w-1/2 focus:outline-none"
-          placeholder="Nomor Induk"
-          value={newData.nomor_induk}
-          onChange={(e) => setNewData({ ...newData, nomor_induk: e.target.value })}
+          placeholder={config.placeholder}
+          value={newData[config.stateKey] || ''}
+          onChange={(e) => 
+          setNewData({...newData, [config.stateKey]: e.target.value})
+        }
         />
-
-        <input
-          type="text"
-          className="px-4 py-2 border rounded-r-md w-1/2 focus:outline-none"
-          placeholder="Nama Siswa"
-          value={newData.nama_siswa}
-          onChange={(e) => setNewData({ ...newData, nama_siswa: e.target.value })}
-        />
-
-      <input
-          type="text"
-          className="px-4 py-2 border rounded-r-md w-1/2 focus:outline-none"
-          placeholder="Tanggal Lahir"
-          value={newData.tanggal_lahir}
-          onChange={(e) => setNewData({ ...newData, tanggal_lahir: e.target.value })}
-        />
-
-      <input
-          type="text"
-          className="px-4 py-2 border rounded-r-md w-1/2 focus:outline-none"
-          placeholder="Tempat Lahir"
-          value={newData.tempat_ahir}
-          onChange={(e) => setNewData({ ...newData, tempat_ahir: e.target.value })}
-        />
-
-      <input
-          type="text"
-          className="px-4 py-2 border rounded-r-md w-1/2 focus:outline-none"
-          placeholder="Nama Ayah"
-          value={newData.nama_ayah}
-          onChange={(e) => setNewData({ ...newData, nama_ayah: e.target.value })}
-        />
-
-      <input
-          type="text"
-          className="px-4 py-2 border rounded-r-md w-1/2 focus:outline-none"
-          placeholder="Jenis Kelamin"
-          value={newData.jenis_kelamin}
-          onChange={(e) => setNewData({ ...newData, jenis_kelamin: e.target.value })}
-        />
+        ))}
 
         {/* ...other input fields */}
         
