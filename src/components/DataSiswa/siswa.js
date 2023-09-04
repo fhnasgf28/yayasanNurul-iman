@@ -83,6 +83,61 @@ const MyPage = () => {
     setSearchResults(results);
   };
 
+  // bagian untuk mengedit data siswa
+  // bagian untuk mengedit Data
+  const editDataItem = async (field, value, newData) => {
+    try {
+      const database = getDatabase(firebaseApp);
+      const dataRef = ref(database, 'status-alat');
+      const snapshot = await get(dataRef);
+
+      snapshot.forEach((childSnapshot) => {
+        const childData = childSnapshot.val();
+        if (childData[field] === value) {
+          update(childSnapshot.ref, newData); // Menggunakan update untuk mengganti data
+          console.log('Data berhasil diperbaharui.');
+        }
+      });
+    } catch (error) {
+      console.error('Error:', error.message);
+    }
+}
+
+const handleInputChange = (e) => {
+  const { name, value } = e.target;
+  setEditData({
+    ...editData,
+    [name]: value,
+  });
+};
+
+const handleEditClick = () => {
+  // Memanggil fungsi editDataByCondition dengan kriteria dan data yang sesuai
+  editDataItem('nomor_induk', editData.nomor_guru, {
+    nomor_guru: editData.nomor_guru,
+    nama_guru: editData.nama_guru,
+    mata_pelajaran: editData.mata_pelajaran,
+  });
+  // Mengosongkan input setelah pengeditan
+  setEditData({
+    nomor_guru: '',
+    nama_guru: '',
+    mata_pelajaran: '',
+  });
+};
+
+const openEditModal = (data) => { 
+  setIsModalOpen(true);
+  setEditData(data);
+};
+const closeEditModal = () => { 
+  setIsEditModalOpen(false);
+  setEditData(null);
+};
+
+useEffect(() => {
+  getValue();
+}, []);
   // bagian untuk menghaps data
   const deleteDataByCondition = async (field, value) => {
     try {

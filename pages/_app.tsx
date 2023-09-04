@@ -15,6 +15,7 @@ import firebase from "firebase/app";
 import "firebase/auth";
 import "@uiw/react-textarea-code-editor/dist.css";
 import 'react-medium-image-zoom/dist/styles.css';
+import { AuthProvider } from '../src/components/LoginPage/auth';
 
 
 function MyApp({ Component, pageProps }: AppProps) {
@@ -69,7 +70,9 @@ function MyApp({ Component, pageProps }: AppProps) {
           : null
       } */}
       <ThemeProvider enableSystem={true} attribute="class">
+        <AuthProvider>
         <Component {...pageProps} />
+        </AuthProvider>
         <Footer />
       </ThemeProvider>
     </>

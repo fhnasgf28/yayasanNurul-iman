@@ -111,7 +111,7 @@ export const PRIMARY_NAV: iNavSetup = {
             path: '/contact-us'
         },
         {
-            label: 'Login',
+            label: 'Admin',
             path: '/login'
         }
     ],
