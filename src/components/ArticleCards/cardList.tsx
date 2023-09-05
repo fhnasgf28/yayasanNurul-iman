@@ -19,7 +19,7 @@ const CardList: React.FC<CardListProps> = ({ data }) => {
     <div className="flex flex-wrap -mx-4">
       {data.map((card, index) => (
         <div key={index} className="w-full sm:w-1/2 px-4 lg:w-1/5 xl:w-1/3">
-          <div className="mb-10 overflow-hidden rounded-xl bg-white shadow-lg dark:bg-slate-800 transform transition-transform hover:-translate-y-1 hover:shadow-xl">
+          <div className="mb-4 overflow-hidden rounded-xl bg-white shadow-lg dark:bg-slate-800 transform transition-transform hover:-translate-y-1 hover:shadow-xl">
             <Image src={card.imageSrc} alt={card.title} className="w-full"  // Sesuaikan dengan lebar gambar asli
             />
             <div className="py-8 px-6">

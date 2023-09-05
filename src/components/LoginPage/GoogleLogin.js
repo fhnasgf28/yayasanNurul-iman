@@ -18,7 +18,7 @@ const GoogleLoginButton = () => {
       // Lakukan navigasi atau tindakan lain setelah login berhasil
       checkUserEmail(user.email);
     } catch (error) {
-      console.error("Google login error:", error);
+      alert("Google login error:", error);
     }
   };
   const checkUserEmail = (email) => {
@@ -27,7 +27,7 @@ const GoogleLoginButton = () => {
       router.push("/pencarianData");
     }else {
       // akun google tidak diizinkan, keluarkan pengguna
-      console.log("Login gagal masuk");
+      alert("Gagal Masuk, Email tidak diizinkan");
       router.push("/login");
     }
    

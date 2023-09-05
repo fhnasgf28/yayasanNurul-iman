@@ -65,7 +65,7 @@ const FinancialReport = () => {
 
 
     <div>
-      <h2>Laporan Keuangan</h2>
+      
       <GoogleSheetsEmbed/>
       <div className="bg-white rounded-lg shadow-lg p-4">
   <h2 className="text-2xl font-semibold mb-4">Laporan Keuangan Realtime - {bulanTahun}</h2>
