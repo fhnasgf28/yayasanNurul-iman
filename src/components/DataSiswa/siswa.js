@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
-import { getDatabase, ref, push, child, get, remove,onValue } from 'firebase/database';
+import { getDatabase, ref, push, child, get, remove,onValue, update } from 'firebase/database';
 import firebaseApp from '../../utils/firebase';
+import { config } from 'process';
 
 
 const MyPage = () => {
@@ -12,11 +13,23 @@ const MyPage = () => {
   const [dataToDelete, setDataToDelete] = useState(null);
   const rootReference = ref(getDatabase(firebaseApp))
   const [isDeleteSuccess, setIsDeleteSuccess] = useState(false);
+  const [isEditSuccess, setIsEditSuccess] = useState(false);
   const [newData, setNewData] = useState({nomor_induk: '', nama_siswa: '', tanggal_lahir: '', tempat_ahir:'', nama_ayah:'', jenis_kelamin:''})
   const [isInputEmpty, setIsInputEmpty] = useState(false);
   const [isNotificationVisible, setIsNotificationVisible] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+  const [editData, setEditData] = useState({
+      nomor_induk:'',
+      nama_siswa : '',
+      tanggal_lahir: '',
+      tempat_ahir: '',
+      nama_ayah:'',
+      jenis_kelamin: '',
+  });
 
+  
+        
   const onDataChange = (snapshot) => {
     const dbvalue = snapshot.val();
     if (dbvalue) {
@@ -82,6 +95,77 @@ const MyPage = () => {
 
     setSearchResults(results);
   };
+
+  // bagian untuk mengedit data siswa
+  const editDataItem = async (field, value, newData) => {
+    try {
+      const database = getDatabase(firebaseApp);
+      const dataRef = ref(database, 'status-alat');
+      const snapshot = await get(dataRef);
+
+      snapshot.forEach((childSnapshot) => {
+        const childData = childSnapshot.val();
+        if (childData[field] === value) {
+          update(childSnapshot.ref, newData); // Menggunakan update untuk mengganti data
+          console.log('Data berhasil diperbaharui.');
+        }
+        setIsEditSuccess(true);
+      setTimeout(() => {
+        setIsEditSuccess(false);
+      },3000);
+      });
+    } catch (error) {
+      console.error('Error:', error.message);
+    }
+}
+
+const handleInputChange = (e) => {
+  const { name, value } = e.target;
+  setEditData({
+    ...editData,
+    [name]: value,
+  });
+};
+
+const handleEditClick = () => {
+  const isConfirmed = window.confirm("Apakah anda Yakin ingin mengedit data ini?")
+  // Memanggil fungsi editDataByCondition dengan kriteria dan data yang sesuai
+
+  if (isConfirmed){
+  editDataItem('nomor_induk', editData.nomor_induk, {
+      nomor_induk: editData.nomor_induk,
+      nama_siswa : editData.nama_siswa,
+      tanggal_lahir: editData.tanggal_lahir,
+      tempat_ahir: editData.tempat_ahir,
+      nama_ayah: editData.nama_ayah,
+      jenis_kelamin: editData.jenis_kelamin,
+  });
+  // Mengosongkan input setelah pengeditan
+  setEditData({
+      nomor_induk: '',
+      nama_siswa : '',
+      tanggal_lahir: '',
+      tempat_ahir: '',
+      nama_ayah:'',
+      jenis_kelamin: '',
+  });
+} else {
+  alert('Tidak ada Perubahan');
+  }
+}
+
+const openEditModal = (data) => { 
+  setIsModalOpen(true);
+  setEditData(data);
+};
+const closeEditModal = () => { 
+  setIsEditModalOpen(false);
+  setEditData(null);
+};
+
+useEffect(() => {
+  getValue();
+}, []);
 
   // bagian untuk menghaps data
   const deleteDataByCondition = async (field, value) => {
@@ -189,6 +273,8 @@ const inputConfigs = [
         <td className="px-6 py-4 whitespace-nowrap">{item.jenis_kelamin}</td>
 
         <td className="px-6 py-4 whitespace-nowrap">
+          <button className="bg-green-500 hover:bg-blue-600 text-white px-2 mr-2 py-1 rounded-md" 
+        onClick={() => openEditModal(item)}>Edit</button>
           <button className="bg-red-500 hover:bg-red-600 text-white px-2 py-1 rounded-md"
             onClick={() => openDeleteModal(item)}>
             Hapus
@@ -248,6 +334,23 @@ const inputConfigs = [
         )}
       </form>
       {/* akhir form */}
+      
+      {editData && (
+        <div className='mt-4'>
+          {inputConfigs.map((config) => (
+          <input
+            type="text"
+            placeholder={config.placeholder}
+            name = {config.stateKey}
+            value={editData[config.stateKey]}
+            className="px-4 py-2 border rounded-r-md w-1/2 focus:outline-none"
+            onChange={handleInputChange}
+            key={config.stateKey}
+          />
+          ))}
+          <button className="bg-green-300 hover:bg-gray-400 text-gray-800 px-4 py-2 rounded-md" onClick={handleEditClick}>Edit Data</button>
+        </div>
+      )}
 
       {/* Modal Konfirmasi Hapus */}
       {isDeleteModalOpen && (
@@ -293,6 +396,26 @@ const inputConfigs = [
               />
             </svg>
             Data Berhasil Dihapus
+          </div>
+          )}
+
+            {isEditSuccess && (
+          <div className="bg-green-500 text-white p-4 mt-4 rounded flex items-center">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              className="h-6 w-6 mr-2"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M5 13l4 4L19 7"
+              />
+            </svg>
+            Data Berhasil Di Edit
           </div>
           )}
   </div>

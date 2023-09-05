@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import { getDatabase, ref, child, get, push, onValue, remove} from 'firebase/database';
+import { getDatabase, ref, child, get, push, onValue, remove, update} from 'firebase/database';
 import firebaseApp from '../../utils/firebase';
+import { Seperator } from '../Seperator';
 
 const DataGuru = () => {
   const [dataList, setDataList] = useState([]);
@@ -15,6 +16,12 @@ const DataGuru = () => {
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const [dataToDelete, setDataToDelete] = useState(null);
   const [isDeleteSuccess, setIsDeleteSuccess] = useState(false);
+  const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+  const [editData, setEditData] = useState({
+    nomor_guru: '', // Nomor guru yang akan diedit
+    nama_guru: '', // Data baru yang ingin Anda set
+    mata_pelajaran: '', // Data baru yang ingin Anda set
+  });
 
   const onDataChange = (snapshot) => {
     const dbvalue = snapshot.val();
@@ -82,6 +89,60 @@ const DataGuru = () => {
     setSearchResults(results);
   };
 
+  // bagian untuk mengedit Data
+  const editDataItem = async (field, value, newData) => {
+    try {
+      const database = getDatabase(firebaseApp);
+      const dataRef = ref(database, 'data-guru');
+      const snapshot = await get(dataRef);
+
+      snapshot.forEach((childSnapshot) => {
+        const childData = childSnapshot.val();
+        if (childData[field] === value) {
+          update(childSnapshot.ref, newData); // Menggunakan update untuk mengganti data
+          console.log('Data berhasil diperbaharui.');
+        }
+      });
+    } catch (error) {
+      console.error('Error:', error.message);
+    }
+}
+
+const handleInputChange = (e) => {
+  const { name, value } = e.target;
+  setEditData({
+    ...editData,
+    [name]: value,
+  });
+};
+
+const handleEditClick = () => {
+  // Memanggil fungsi editDataByCondition dengan kriteria dan data yang sesuai
+  editDataItem('nomor_guru', editData.nomor_guru, {
+    nomor_guru: editData.nomor_guru,
+    nama_guru: editData.nama_guru,
+    mata_pelajaran: editData.mata_pelajaran,
+  });
+  // Mengosongkan input setelah pengeditan
+  setEditData({
+    nomor_guru: '',
+    nama_guru: '',
+    mata_pelajaran: '',
+  });
+};
+
+const openEditModal = (data) => { 
+  setIsModalOpen(true);
+  setEditData(data);
+};
+const closeEditModal = () => { 
+  setIsEditModalOpen(false);
+  setEditData(null);
+};
+
+useEffect(() => {
+  getValue();
+}, []);
 // bagian untuk menghaps data
   const deleteDataByCondition = async (field, value) => {
     try {
@@ -162,12 +223,15 @@ const closeDeleteModal = () => {
             <td className="px-6 py-4 whitespace-nowrap">{item.mata_pelajaran}</td>
 
         <td className="px-6 py-4 whitespace-nowrap">
+        <button className="bg-green-500 hover:bg-blue-600 text-white px-2 mr-2 py-1 rounded-md" 
+        onClick={() => openEditModal(item)}>Edit</button>
           <button
             className="bg-red-500 hover:bg-red-600 text-white px-2 py-1 rounded-md"
             onClick={() => openDeleteModal(item)}
           >
             Hapus
           </button>
+
       </td>
           </tr>
         ))}
@@ -262,6 +326,31 @@ const closeDeleteModal = () => {
           </div>
         )}
 
+        {/* Formuler Pengeditan */}
+
+        {editData && (
+        <div className='mt-4'>
+      
+          <input
+            type="text"
+            placeholder="Nama Guru"
+            name = "nama_guru"
+            value={editData.nama_guru}
+            className="px-4 py-2 border rounded-r-md w-1/2 focus:outline-none"
+            onChange={handleInputChange}
+          />
+          <input
+            type="text"
+            name = "mata_pelajaran"
+            placeholder="Mata Pelajaran"
+            className="px-4 py-2 border rounded-r-md w-1/2 focus:outline-none"
+            value={editData.mata_pelajaran}
+            onChange={handleInputChange}
+          />
+          
+          <button className="bg-green-300 hover:bg-gray-400 text-gray-800 px-4 py-2 rounded-md" onClick={handleEditClick}>Edit Data</button>
+        </div>
+      )}
         {/* modal untuk data berhasil dihapus */}
             {isDeleteSuccess && (
           <div className="bg-green-500 text-white p-4 mt-4 rounded flex items-center">

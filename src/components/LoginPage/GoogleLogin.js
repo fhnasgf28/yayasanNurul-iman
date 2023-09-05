@@ -1,27 +1,36 @@
 import React from "react";
-import { getAuth, GoogleAuthProvider, signInWithPopup } from "firebase/auth";
+import { getAuth, GoogleAuthProvider, signInWithPopup, User } from "firebase/auth";
 import firebaseApp from "../../utils/firebase"; // Import konfigurasi Firebase dari file yang sesuai
-
-
+import { useRouter } from "next/router";
+import { useAuth } from "./auth";
 
 const GoogleLoginButton = () => {
   const auth = getAuth(firebaseApp); // Menggunakan konfigurasi Firebase
   const provider = new GoogleAuthProvider();
-  
+  const router = useRouter();
+  const { user } = useAuth();
+
   const handleGoogleLogin = async () => {
     try {
       const result = await signInWithPopup(auth, provider);
       const user = result.user;
       console.log("User successfully logged in with Google:", user);
       // Lakukan navigasi atau tindakan lain setelah login berhasil
-      redirectToDataSiswaPencarianData();
+      checkUserEmail(user.email);
     } catch (error) {
-      console.error("Google login error:", error);
+      alert("Google login error:", error);
     }
   };
-  const redirectToDataSiswaPencarianData = () => {
-    // Implementasi manual navigasi ke halaman yang diinginkan
-    window.location.href = "/pencarianData";
+  const checkUserEmail = (email) => {
+    if (email === "assegaffarhan4@gmail.com") {
+      console.log("Login Berhasil");
+      router.push("/pencarianData");
+    }else {
+      // akun google tidak diizinkan, keluarkan pengguna
+      alert("Gagal Masuk, Email tidak diizinkan");
+      router.push("/login");
+    }
+   
   };
 
   return (

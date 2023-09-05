@@ -14,6 +14,8 @@ import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 import ProgramYayasan from "../src/components/newsConten/program";
 import VisiMisi from "../src/components/VisiMisi/visiMisi";
+import GoogleMap from "../src/components/newsConten/googleMaps";
+import FloatingWhatsApp from "../src/components/newsConten/whatsApp";
 
 const Home = () => {
   const settings = {
@@ -28,6 +30,7 @@ const Home = () => {
 
   return (
     <PageLayout home PAGE_SEO={DEFAULT_SEO}>
+      <FloatingWhatsApp/>
     <section className="relative container mx-auto px-4 sm:px-6 lg:px-8">
       <div className="max-w-6xl mx-auto px-4 sm:px-6">
      
@@ -68,7 +71,7 @@ const Home = () => {
         
         <div className="bg-gray-100 h-50 rounded-lg overflow-hidden">
           <Image
-            src="/images/yayasanContoh.jpg"
+            src="/images/yayasan1.jpg"
             alt="Slide 1"
             className="w-full h-full object-cover"
           />

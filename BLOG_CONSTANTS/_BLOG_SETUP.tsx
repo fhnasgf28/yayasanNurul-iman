@@ -111,14 +111,14 @@ export const PRIMARY_NAV: iNavSetup = {
             path: '/contact-us'
         },
         {
-            label: 'Login',
+            label: 'Admin',
             path: '/login'
         }
     ],
     // sideNavLinks are the links which appear when you open the side menu after clicking the burger menu icon.
     sideNavLinks: [
         {
-            label: 'Login',
+            label: 'Admin',
             path: '/login'
         },
         {
@@ -136,14 +136,14 @@ export const PRIMARY_NAV: iNavSetup = {
             path: '/about-us'
         },
         {
-            label: 'Dukung Kami',
-            path: '#',
-            newTab: true
+            label: 'Cari Data',
+            path: '/dataData',
+            newTab: false,
         },
         {
             label: 'Donasi Pembangunan',
-            path: '#',
-            newTab: true
+            path: '/donationPage',
+            
         },
         {
             label: 'Hubungi Kami',

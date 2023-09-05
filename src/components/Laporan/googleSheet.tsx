@@ -4,7 +4,7 @@ import React from 'react';
 const GoogleSheetsEmbed = () => {
   return (
     <div className="max-w-10xl mx-auto p-4">
-      <h2 className="text-xl font-semibold mb-4">Data dari Google Sheets</h2>
+      <h2 className="text-xl font-semibold mb-4">Laporan Keuangan</h2>
       <div className=" bg-white p-4 rounded-lg shadow-md">
         <div className="aspect-w-16 aspect-h-9 w-full h-full ">
       <iframe

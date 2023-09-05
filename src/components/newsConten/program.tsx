@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import CardList from '../ArticleCards/cardList';
 import { cards, Card} from "../ArticleCards/cards";
-
 import {
   PageLayout,
   Text,

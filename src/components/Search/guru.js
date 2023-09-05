@@ -57,7 +57,7 @@ const Guru = () => {
             }
           }}
           className="px-3 py-2 border rounded-l-md w-50 focus:outline-none"
-          placeholder="Cari"
+          placeholder="Klik Enter"
         />
         <button onClick={handleSearch} className="bg-blue-500 hover:bg-blue-600 text-white px-3 py-1 rounded-r-md">
           Search
