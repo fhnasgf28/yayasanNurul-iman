@@ -1,12 +1,14 @@
 import { WEBSITE_NAME } from "../../../BLOG_CONSTANTS/_BLOG_SETUP"
 import {Text } from "../index";
 import LinkTo from "../LinkTo"
+import GoogleMap from "../newsConten/googleMaps";
 
 const Footer = () => {
     const year = new Date().getFullYear()
     return (
  
         <footer>
+          <GoogleMap/>
         <div className="max-w-6xl mx-auto px-4 sm:px-6">
   
           {/* Top area: Blocks */}

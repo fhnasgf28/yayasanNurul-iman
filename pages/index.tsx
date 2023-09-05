@@ -14,7 +14,6 @@ import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 import ProgramYayasan from "../src/components/newsConten/program";
 import VisiMisi from "../src/components/VisiMisi/visiMisi";
-import GoogleMap from "../src/components/newsConten/googleMaps";
 
 const Home = () => {
   const settings = {
@@ -96,7 +95,6 @@ const Home = () => {
           <HomeNonFeatureArticles />
         </div>
       </div>
-      <GoogleMap/>
     </PageLayout>
     
   )
