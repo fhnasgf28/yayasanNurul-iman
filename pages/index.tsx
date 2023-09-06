@@ -98,7 +98,6 @@ const Home = () => {
           <HomeNonFeatureArticles />
         </div>
       </div>
-      <GoogleMap/>
     </PageLayout>
     
   )
