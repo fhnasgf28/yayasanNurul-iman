@@ -4,6 +4,7 @@ import MyPage from '../src/components/DataSiswa/siswa';
 import DataGuru from '../src/components/DataSiswa/dataGuru';
 import JadwalSholat from '../src/components/DataSiswa/jadwalSholat';
 import FinancialForm from '../src/components/Laporan/pemasukan';
+import Tutorial from '../src/components/newsConten/tutorial';
 
 const PencarianData = () => {
   const [selectedOption, setSelectedOption] = useState('siswa');
@@ -45,9 +46,10 @@ const PencarianData = () => {
       {selectedOption === 'siswa' ? <MyPage /> : null}
         {selectedOption === 'guru' ? <DataGuru /> : null}
         {selectedOption === 'Jadwal Sholat' ? <JadwalSholat /> : null} {/* Tambahkan kondisi untuk halaman baru */}
+    <Tutorial/>
+    <FinancialForm/>
     </div>
     
-    <FinancialForm/>
     </div> 
   );
 };

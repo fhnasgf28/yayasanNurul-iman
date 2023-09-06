@@ -50,7 +50,7 @@ return (
                   Visi
                 </Text>
                 <Text p className='text-lg'>
-                  Menjadi lembaga pendidikan dan sosial yang unggul, berdaya saing, serta berlandaskan keimanan dan ketaqwaan kepada Allah SWT.
+                "Mewujudkan generasi yang cerdas dalam Membangun Sumber Daya Manusia yang unggul, mandiri, berkarakter dan berakhlaq mulia serta berlandaskan keimanan dan ketaqwaan kepada Allah SWT."
                 </Text>
               </div>
             </div>
