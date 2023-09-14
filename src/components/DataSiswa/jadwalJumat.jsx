@@ -1,28 +1,33 @@
-import React, { useEffect, useState } from 'react';
-import { getDatabase, ref, child, get, push, onValue, remove, update} from 'firebase/database';
+import { useEffect, useState } from 'react';
+import Text from '../Text';
+import { getDatabase, ref, push, child, get, remove,onValue, update } from 'firebase/database';
 import firebaseApp from '../../utils/firebase';
-import { Seperator } from '../Seperator';
+import { config } from 'process';
 
-const DataGuru = () => {
+
+const JadwalJumat = () => {
   const [dataList, setDataList] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [searchTerm, setSearchTerm] = useState('');
   const [searchResults, setSearchResults] = useState([]);
-  const [newData, setNewData] = useState({nomor_guru: '', nama_guru: '', mata_pelajaran: ''})
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [isNotificationVisible, setIsNotificationVisible] = useState(false);
-  const rootReference = ref(getDatabase(firebaseApp))
-  const [isInputEmpty, setIsInputEmpty] = useState(false);
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const [dataToDelete, setDataToDelete] = useState(null);
+  const rootReference = ref(getDatabase(firebaseApp))
   const [isDeleteSuccess, setIsDeleteSuccess] = useState(false);
+  const [isEditSuccess, setIsEditSuccess] = useState(false);
+  const [newData, setNewData] = useState({nama_khatib: '', bulan: '', tanggal: '',})
+  const [isInputEmpty, setIsInputEmpty] = useState(false);
+  const [isNotificationVisible, setIsNotificationVisible] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const [editData, setEditData] = useState({
-    nomor_guru: '', // Nomor guru yang akan diedit
-    nama_guru: '', // Data baru yang ingin Anda set
-    mata_pelajaran: '', // Data baru yang ingin Anda set
+      nama_khatib:'',
+      bulan : '',
+      tanggal: '',
   });
 
+  
+        
   const onDataChange = (snapshot) => {
     const dbvalue = snapshot.val();
     if (dbvalue) {
@@ -44,11 +49,10 @@ const DataGuru = () => {
       setIsLoading(true);
       const database = getDatabase(firebaseApp);
       const rootReference = ref(database);
-      const dbGet = await get(child(rootReference, 'data-guru'));
+      const dbGet = await get(child(rootReference, 'jadwal-jumat'));
       const dbvalue = dbGet.val();
       if (dbvalue) {
         setDataList(Object.values(dbvalue));
-        handleSearch();
       }
       const isExist = dbGet.exists();
     } catch (getError) {
@@ -61,7 +65,7 @@ const DataGuru = () => {
   const addData = async (newData) => {
     try {
       const database = getDatabase(firebaseApp);
-      const rootReference = ref(database, 'data-guru');
+      const rootReference = ref(database, 'jadwal-jumat');
       await push(rootReference, newData);
       console.log('data berhasil ditambahkan');
       setIsModalOpen(false);
@@ -79,9 +83,10 @@ const DataGuru = () => {
     const results = [];
     for (const item of dataList) {
       if (
-        (item.nama_guru && item.nama_guru.toLowerCase().includes(searchTerm.toLowerCase())) ||
-        (item.mata_pelajaran && item.mata_pelajaran.toLowerCase().includes(searchTerm.toLowerCase()))
-      ) {
+        (item.bulan && item.bulan.toLowerCase().includes(searchTerm.toLowerCase())) ||
+      (item.nama_khatib && item.nama_khatib.toLowerCase().includes(searchTerm.toLowerCase()))
+      )
+      {
         results.push(item);
       }
     }
@@ -89,11 +94,11 @@ const DataGuru = () => {
     setSearchResults(results);
   };
 
-  // bagian untuk mengedit Data
+  // bagian untuk mengedit data siswa
   const editDataItem = async (field, value, newData) => {
     try {
       const database = getDatabase(firebaseApp);
-      const dataRef = ref(database, 'data-guru');
+      const dataRef = ref(database, 'jadwal-jumat');
       const snapshot = await get(dataRef);
 
       snapshot.forEach((childSnapshot) => {
@@ -102,6 +107,10 @@ const DataGuru = () => {
           update(childSnapshot.ref, newData); // Menggunakan update untuk mengganti data
           console.log('Data berhasil diperbaharui.');
         }
+        setIsEditSuccess(true);
+      setTimeout(() => {
+        setIsEditSuccess(false);
+      },3000);
       });
     } catch (error) {
       console.error('Error:', error.message);
@@ -117,19 +126,25 @@ const handleInputChange = (e) => {
 };
 
 const handleEditClick = () => {
+  const isConfirmed = window.confirm("Apakah anda Yakin ingin mengedit data ini?")
   // Memanggil fungsi editDataByCondition dengan kriteria dan data yang sesuai
-  editDataItem('nomor_guru', editData.nomor_guru, {
-    nomor_guru: editData.nomor_guru,
-    nama_guru: editData.nama_guru,
-    mata_pelajaran: editData.mata_pelajaran,
+
+  if (isConfirmed){
+  editDataItem('nama_khatib', editData.nama_khatib, {
+      nama_khatib: editData.nama_khatib,
+      bulan : editData.bulan,
+      tanggal: editData.tanggal,
   });
   // Mengosongkan input setelah pengeditan
   setEditData({
-    nomor_guru: '',
-    nama_guru: '',
-    mata_pelajaran: '',
+      nama_khatib: '',
+      bulan : '',
+      tanggal: '',
   });
-};
+} else {
+  alert('Tidak ada Perubahan');
+  }
+}
 
 const openEditModal = (data) => { 
   setIsModalOpen(true);
@@ -143,11 +158,12 @@ const closeEditModal = () => {
 useEffect(() => {
   getValue();
 }, []);
-// bagian untuk menghaps data
+
+  // bagian untuk menghaps data
   const deleteDataByCondition = async (field, value) => {
     try {
       const database = getDatabase(firebaseApp);
-      const dataRef = ref(database, 'data-guru');
+      const dataRef = ref(database, 'jadwal-jumat');
       const snapshot = await get(dataRef);
 
       snapshot.forEach((childSnaphot) => {
@@ -176,13 +192,27 @@ const closeDeleteModal = () => {
   setDataToDelete(null);
 }
 
+// perulangan form input
+const inputConfigs = [
+  { placeholder: 'Nama Khatib', stateKey: 'nama_khatib' },
+  { placeholder: 'Bulan', stateKey: 'bulan' },
+  { placeholder: 'Tanggal', stateKey: 'tanggal' },
+]
+
+// perulangan Tabel Header
+  const tableHeaders = [
+    'Nama Khatib',
+    'Bulan',
+    'Tanggal',
+  ]
+
   useEffect(() => {
     getValue();
   }, []);
 
   return (
     <div className="bg-gray-100 p-8">
-      <h1 className="text-2xl font-semibold mb-4">Data Guru</h1>
+    <h1 className="text-2xl font-semibold mb-4">Jadwal Khatib Jumat, Tahun {new Date().getFullYear()}</h1>
     <div className="flex mb-4">
     <input
       type="text"
@@ -195,90 +225,75 @@ const closeDeleteModal = () => {
       }}
       className="px-3 py-2 border rounded-l-md w-50 focus:outline-none"
       placeholder="Cari"
+
     />
     <button
       onClick={handleSearch}
-      className="bg-blue-500 hover:bg-blue-600 text-white px-3 py-1 rounded-r-md"
+      className="bg-blue-500 hover:bg-green-400 text-white px-3 py-1 rounded-r-md transition duration-300 ease-in-out "
     >
       Search
     </button>
   </div>
-   {/* Tabel Data */}
-   <div className="overflow-x-auto">
-    <table className="table-auto min-w-full divide-y divide-gray-200">
-      <thead className="bg-blue-600">
-        <tr>
-          <th scope="col"
-        className="px-6 py-3 text-left text-xs font-medium text-white uppercase tracking-wider">Nomor Induk Guru</th>
-          <th scope="col"
-        className="px-6 py-3 text-left text-xs font-medium text-white uppercase tracking-wider">Nama Guru</th>
-          <th scope="col"
-        className="px-6 py-3 text-left text-xs font-medium text-white uppercase tracking-wider">Mata Pelajaran</th>
-        </tr>
-      </thead>
-      
-      <tbody>
-        {searchResults.map((item, index) => (
-          <tr key={index} className={index % 2 === 0 ? 'bg-white' : 'bg-gray-100'}>
-            <td className="px-6 py-4 ">{item.nomor_guru}</td>
-            <td className="px-6 py-4 ">{item.nama_guru}</td>
-            <td className="px-6 py-4 ">{item.mata_pelajaran}</td>
+  <Text>Gunakan tanda "/" untuk memisahkan tanggal ataupun bulan </Text>
+  <div className="overflow-x-scroll">
+    {/* tabel data */}
+  <table className="min-w-full divide-y divide-gray-200 ">
+  <thead className="bg-blue-600">
+    <tr>
+      {tableHeaders.map((header, index) => (
+        <th
+        key={index}
+        scope='col'
+        className="px-6 py-3 text-left text-xs font-medium text-white uppercase tracking-wider"
+        >{header}</th>
+      ))}
+    </tr>
+  </thead>
+  <tbody className="bg-white divide-y divide-gray-200">
+    {searchResults.map((item, index) => (
+      <tr key={index} className={index % 2 === 0 ? 'bg-white' : 'bg-gray-100'}>
+        <td className="px-6 py-4 whitespace-nowrap">{item.nama_khatib}</td>
+        <td className="px-6 py-4 whitespace-nowrap">{item.bulan}</td>
+        <td className="px-6 py-4 whitespace-nowrap">{item.tanggal}</td>
 
-        <td className="px-6 py-4 ">
-        <button className="bg-green-500 hover:bg-blue-600 text-white px-2 mr-2 py-1 rounded-md" 
+        <td className="px-6 py-4 whitespace-nowrap">
+          <button className="bg-green-500 hover:bg-blue-600 text-white px-2 mr-2 py-1 rounded-md" 
         onClick={() => openEditModal(item)}>Edit</button>
-          <button
-            className="bg-red-500 hover:bg-red-600 text-white px-2 py-1 rounded-md"
-            onClick={() => openDeleteModal(item)}
-          >
+          <button className="bg-red-500 hover:bg-red-600 text-white px-2 py-1 rounded-md"
+            onClick={() => openDeleteModal(item)}>
             Hapus
           </button>
-
-      </td>
-          </tr>
-        ))}
-      </tbody>
-    </table>
-    </div>
-  
-          {/* akhir tabel data */}
-
-          {/* awal Form */}
+        </td>
+      </tr>
+    ))}
+  </tbody>
+</table>
+      {/* Akhir Tabel Data */}
+      {/* awal Form */}
     <form
         onSubmit={(e) => {
           e.preventDefault();
-          if (newData.nomor_guru && newData.nama_guru && newData.mata_pelajaran) {
+          if (newData.nama_khatib && newData.bulan && newData.tanggal) {
             addData(newData);
-            setNewData({ nomor_guru: '', nama_guru: '', mata_pelajaran: '' });
+            setNewData({ nama_khatib: '', bulan: '', tanggal: '',});
           } else {
             setIsInputEmpty(true);
           }
         }}
         className="mt-4"
       >
-        <input
-          type="text"
+        {inputConfigs.map((config, index) => (
+          <input
+          key={index}
+          type='text'
           className="px-4 py-2 border rounded-r-md w-1/2 focus:outline-none"
-          placeholder="Nomor Guru"
-          value={newData.nomor_guru}
-          onChange={(e) => setNewData({ ...newData, nomor_guru: e.target.value })}
+          placeholder={config.placeholder}
+          value={newData[config.stateKey] || ''}
+          onChange={(e) => 
+          setNewData({...newData, [config.stateKey]: e.target.value})
+        }
         />
-
-        <input
-          type="text"
-          className="px-4 py-2 border rounded-r-md w-1/2 focus:outline-none"
-          placeholder="Nama Guru"
-          value={newData.nama_guru}
-          onChange={(e) => setNewData({ ...newData, nama_guru: e.target.value })}
-        />
-
-      <input
-          type="text"
-          className="px-4 py-2 border rounded-r-md w-1/2 focus:outline-none"
-          placeholder="Mata Pelajaran"
-          value={newData.mata_pelajaran}
-          onChange={(e) => setNewData({ ...newData, mata_pelajaran: e.target.value })}
-        />
+        ))}
 
         {/* ...other input fields */}
         
@@ -303,9 +318,26 @@ const closeDeleteModal = () => {
         )}
       </form>
       {/* akhir form */}
+      
+      {editData && (
+        <div className='mt-4'>
+          {inputConfigs.map((config) => (
+          <input
+            type="text"
+            placeholder={config.placeholder}
+            name = {config.stateKey}
+            value={editData[config.stateKey]}
+            className="px-4 py-2 border rounded-r-md w-1/2 focus:outline-none"
+            onChange={handleInputChange}
+            key={config.stateKey}
+          />
+          ))}
+          <button className="bg-green-300 hover:bg-gray-400 text-gray-800 px-4 py-2 rounded-md" onClick={handleEditClick}>Edit Data</button>
+        </div>
+      )}
 
       {/* Modal Konfirmasi Hapus */}
-        {isDeleteModalOpen && (
+      {isDeleteModalOpen && (
           <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
             <div className="bg-white p-4 rounded shadow-md">
               <p className="mb-2">Apakah Anda yakin ingin menghapus data?</p>
@@ -313,7 +345,7 @@ const closeDeleteModal = () => {
                 <button
                   className="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-md mr-2"
                   onClick={() => {
-                    deleteDataByCondition('nama_guru', dataToDelete.nama_guru);
+                    deleteDataByCondition('bulan', dataToDelete.bulan);
                     closeDeleteModal();
                   }}
                 >
@@ -330,31 +362,6 @@ const closeDeleteModal = () => {
           </div>
         )}
 
-        {/* Formuler Pengeditan */}
-
-        {editData && (
-        <div className='mt-4'>
-      
-          <input
-            type="text"
-            placeholder="Nama Guru"
-            name = "nama_guru"
-            value={editData.nama_guru}
-            className="px-4 py-2 border rounded-r-md w-1/2 focus:outline-none"
-            onChange={handleInputChange}
-          />
-          <input
-            type="text"
-            name = "mata_pelajaran"
-            placeholder="Mata Pelajaran"
-            className="px-4 py-2 border rounded-r-md w-1/2 focus:outline-none"
-            value={editData.mata_pelajaran}
-            onChange={handleInputChange}
-          />
-          
-          <button className="bg-green-300 hover:bg-gray-400 text-gray-800 px-4 py-2 rounded-md" onClick={handleEditClick}>Edit Data</button>
-        </div>
-      )}
         {/* modal untuk data berhasil dihapus */}
             {isDeleteSuccess && (
           <div className="bg-green-500 text-white p-4 mt-4 rounded flex items-center">
@@ -375,8 +382,29 @@ const closeDeleteModal = () => {
             Data Berhasil Dihapus
           </div>
           )}
-    </div>
+
+            {isEditSuccess && (
+          <div className="bg-green-500 text-white p-4 mt-4 rounded flex items-center">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              className="h-6 w-6 mr-2"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M5 13l4 4L19 7"
+              />
+            </svg>
+            Data Berhasil Di Edit
+          </div>
+          )}
+  </div>
+</div>
   );
 };
 
-export default DataGuru;
+export default JadwalJumat;

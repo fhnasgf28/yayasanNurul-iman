@@ -3,12 +3,12 @@ import { ListType } from "../../shared/enums";
 import firebase from 'firebase/app';
 import React, { useEffect, useState } from 'react';
 import firebaseApp from "../../utils/firebase"
-import { getDatabase, ref, child, get, push, onValue} from 'firebase/database';
+import { getDatabase, ref, child, get,} from 'firebase/database';
 
 
 const VisiMisi: React.FC = () => {
 
-  const [dataList, setDataList] = useState<string[]>([] as string[]);
+  const [dataList, setDataList] = useState<{misi: string }[]>([]);
   const [isLoading, setIsLoading] = useState(false);
 
   const getValue = async () => {
@@ -19,9 +19,7 @@ const VisiMisi: React.FC = () => {
       const dbGet = await get(child(rootReference, 'misi'));
       const dbvalue = dbGet.val();
       if (dbvalue) {
-        const misiArray = Object.values(dbvalue);
-        const misiText = misiArray.join('/n');
-        setDataList(misiText.split('/n'));
+        setDataList(Object.values(dbvalue));
       }
       const isExist = dbGet.exists();
     } catch (getError: any) {
@@ -59,11 +57,12 @@ return (
                 <Text subtitle className='text-3xl font-medium'>
                   Misi
                 </Text>
-                <List type={ListType.disc}>
-                  {dataList.map((item, index) => (
-                    <li key={index}>{item}</li>
-                  ))}
+                <List>
+                {dataList.map((item, index) => (
+                <li key={index}>{item.misi}</li>
+              ))}
                 </List>
+                
               </div>
             </div>
           </div>    

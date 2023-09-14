@@ -50,7 +50,7 @@ const Siswa= () => {
 
     return (
       <div className="bg-gray-100 p-8">
-    <h1 className="text-2xl font-semibold mb-4">Data Siswa</h1>
+    <h1 className="text-2xl font-semibold mb-4">Data Siswa DTA</h1>
     <div className="flex mb-4">
       <input
         type="text"
