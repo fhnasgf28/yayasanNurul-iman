@@ -8,6 +8,8 @@ import { PageLayout } from "../src/components";
 import FeaturedArticleSection from "../src/components/Misc/FeaturedArticleSection";
 import HomeNonFeatureArticles from "../src/components/Misc/HomeNonFeatureAricles";
 import FinancialReport from '../src/components/Laporan/laporan';
+import Donatur from '../src/components/Search/donatur';
+import YayasanReport from '../src/components/Laporan/laporanYayasan';
 
 const DataDataPencarian = () => {
   const [selectedOption, setSelectedOption] = useState('siswa');
@@ -29,6 +31,7 @@ const DataDataPencarian = () => {
       >
         <option value="siswa">Data Siswa</option>
         <option value="guru">Data Guru</option>
+        <option value="donatur">Data Donatur Pembangunan Yayasan</option>
         <option value="Jadwal Sholat">Jadwal Sholat Harian</option>
         <option value="Jadwal Khatib Sholat Jumat">Jadwal Khatib Sholat Jumat</option>
       </select>
@@ -36,10 +39,12 @@ const DataDataPencarian = () => {
       <div className='bg-white p-4 rounded-md shadow-md'>
       {selectedOption === 'siswa' ? <Siswa /> : null}
         {selectedOption === 'guru' ? <Guru /> : null}
+        {selectedOption === 'donatur' ? <Donatur /> : null}
         {selectedOption === 'Jadwal Sholat' ? <JadwalSholat /> : null} 
         {selectedOption === 'Jadwal Khatib Sholat Jumat' ? <JadwalSholatJumat /> : null} 
     </div>
     <FinancialReport/>
+    <YayasanReport/>
     </div>
 
     <div className="container mx-auto lg:px-[15px] px-0">
