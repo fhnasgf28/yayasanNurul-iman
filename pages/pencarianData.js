@@ -15,6 +15,7 @@ import TambahData from './api/data/TambahData';
 import EditData from './api/data/editData';
 import HapusData from './api/data/hapusData';
 import PemasukanYayasan from '../src/components/Laporan/pemasukanYayasan';
+import JadwalAgama from '../src/components/DataSiswa/jadwalKegiatanAgama';
 
 
 const PencarianData = () => {
@@ -45,11 +46,12 @@ const PencarianData = () => {
         <option value="Donatur">Data Donatur Pembangunan Yayasan</option>
         <option value="Jadwal Sholat">Jadwal Sholat</option>
         <option value="Jadwal Khatib Jumat">Jadwal Khatib Jumat</option>
+        <option value="Jadwal Keagamaan">Jadwal Keagamaan</option>
         <option value="Misi">Misi Yayasan</option>
         <option value="SejarahYayasan">Sejarah Yayasan</option>
-        <option value="Tambah">Tambah Data Kegiatan Keagamaan</option>
-        <option value="Edit">Edit Data Kegiatan Keagamaan</option>
-        <option value="Hapus">Hapus Data Kegiatan Keagamaan</option>
+        {/* <option value="Tambah">Tambah Data Kegiatan Keagamaan</option> */}
+        {/* <option value="Edit">Edit Data Kegiatan Keagamaan</option>
+        <option value="Hapus">Hapus Data Kegiatan Keagamaan</option> */}
       </select>
 
       <button
@@ -65,13 +67,14 @@ const PencarianData = () => {
         {selectedOption === 'guru' ? <DataGuru /> : null}
         {selectedOption === 'Jadwal Sholat' ? <JadwalSholat /> : null} {/* Tambahkan kondisi untuk halaman baru */}
         {selectedOption === 'Jadwal Khatib Jumat' ? <JadwalJumat /> : null}
+        {selectedOption === 'Jadwal Keagamaan' ? <JadwalAgama /> : null}
         {selectedOption === 'Donatur' ? <DataDonatur /> : null}
         {selectedOption === 'Misi' ? <MisiYayasan /> : null}
         {selectedOption === 'SejarahYayasan' ? <SejarahYayasan /> : null}
-        {selectedOption === 'Tambah' ? <TambahData /> : null}
+        {/* {selectedOption === 'Tambah' ? <TambahData /> : null}
         {selectedOption === 'Edit' ? <EditData /> : null}
         {selectedOption === 'Hapus' ? <HapusData /> : null}
-    <Tutorial/>
+    <Tutorial/> */}
     <FinancialForm/>
     <PemasukanYayasan/>
     </div>

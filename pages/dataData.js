@@ -4,6 +4,7 @@ import Guru from '../src/components/Search/guru';
 import Siswa from '../src/components/Search/siswa';
 import JadwalSholat from '../src/components/Search/jadwal-sholat';
 import JadwalSholatJumat from '../src/components/Search/jadwalJumat'
+import KegiatanAgama1 from '../src/components/Search/kegiatanAgama'; 
 import { PageLayout } from "../src/components";
 import FeaturedArticleSection from "../src/components/Misc/FeaturedArticleSection";
 import HomeNonFeatureArticles from "../src/components/Misc/HomeNonFeatureAricles";
@@ -34,6 +35,7 @@ const DataDataPencarian = () => {
         <option value="donatur">Data Donatur Pembangunan Yayasan</option>
         <option value="Jadwal Sholat">Jadwal Sholat Harian</option>
         <option value="Jadwal Khatib Sholat Jumat">Jadwal Khatib Sholat Jumat</option>
+        <option value="Jadwal Keagamaan">Jadwal Keagamaan Masjid Nurul Iman</option>
       </select>
       </div>
       <div className='bg-white p-4 rounded-md shadow-md'>
@@ -42,6 +44,7 @@ const DataDataPencarian = () => {
         {selectedOption === 'donatur' ? <Donatur /> : null}
         {selectedOption === 'Jadwal Sholat' ? <JadwalSholat /> : null} 
         {selectedOption === 'Jadwal Khatib Sholat Jumat' ? <JadwalSholatJumat /> : null} 
+        {selectedOption === 'Jadwal Keagamaan' ? <KegiatanAgama1 /> : null} 
     </div>
     <FinancialReport/>
     <YayasanReport/>
