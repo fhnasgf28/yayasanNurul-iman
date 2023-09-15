@@ -1,13 +1,12 @@
 import React, { useEffect, useState} from 'react';
 import { getDatabase, ref, push, onValue } from 'firebase/database';
 import firebaseApp from '../../utils/firebase';
-import GoogleSheetsEmbed from '../Laporan/googleSheet';
 
-const FinancialReport = () => {
+
+const YayasanReport = () => {
   const [totalPemasukan, setTotalPemasukan] = useState(0);
   const [ totalPengeluaran,setTotalPengeluaran ] = useState(0);
   const [ saldoBulanan, setSaldoBulanan ] = useState(0);
-  const [ financialData, setFinancialData] = useState ([]);
   const [bulanTahun, setBulanTahun] = useState ('');
   const FormatAngka = (angka: number) => {
     return angka.toLocaleString('id-ID')
@@ -15,8 +14,8 @@ const FinancialReport = () => {
 
   useEffect (() => {
     const database = getDatabase(firebaseApp);
-    const pemasukanRef = ref(database, 'pemasukan');
-    const pengeluaranRef = ref(database, 'pengeluaran');
+    const pemasukanRef = ref(database, 'pemasukanYayasan');
+    const pengeluaranRef = ref(database, 'pengeluaranYayasan');
     
     // fungsi untuk mendapatkan bulan dalam format "Januari", "Feb,...", "Mar..."
     const getMonthName = (month: number) => {
@@ -65,10 +64,8 @@ const FinancialReport = () => {
 
 
     <div>
-      
-      <GoogleSheetsEmbed/>
-      <div className="bg-white rounded-lg shadow-lg p-4">
-  <h2 className="text-2xl font-semibold mb-4">Laporan Keuangan Masjid Nurul Iman Realtime - {bulanTahun}</h2>
+      <div className="bg-white rounded-lg shadow-lg p-4 mt-4">
+  <h2 className="text-2xl font-semibold mb-4">Laporan Keuangan Pembangunan TPQ Yayasan Nurul Iman - {bulanTahun}</h2>
   <table className="w-full">
     <thead>
       <tr className="bg-gray-200">
@@ -97,4 +94,4 @@ const FinancialReport = () => {
   );
 };
 
-export default FinancialReport;
+export default YayasanReport;

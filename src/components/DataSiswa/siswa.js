@@ -250,6 +250,7 @@ const inputConfigs = [
   
   <div className="overflow-x-scroll">
     {/* tabel data */}
+    <div className="overflow-x-auto">
   <table className="min-w-full divide-y divide-gray-200 ">
   <thead className="bg-blue-600">
     <tr>
@@ -265,15 +266,15 @@ const inputConfigs = [
   <tbody className="bg-white divide-y divide-gray-200">
     {searchResults.map((item, index) => (
       <tr key={index} className={index % 2 === 0 ? 'bg-white' : 'bg-gray-100'}>
-        <td className="px-6 py-4 whitespace-nowrap">{item.nomor_induk}</td>
-        <td className="px-6 py-4 whitespace-nowrap">{item.nama_siswa}</td>
-        <td className="px-6 py-4 whitespace-nowrap">{item.tanggal_lahir}</td>
-        <td className="px-6 py-4 whitespace-nowrap">{item.tempat_ahir}</td>
-        <td className="px-6 py-4 whitespace-nowrap">{item.nama_ayah}</td>
-        <td className="px-6 py-4 whitespace-nowrap">{item.jenis_kelamin}</td>
+        <td className="px-6 py-4">{item.nomor_induk}</td>
+        <td className="px-6 py-4">{item.nama_siswa}</td>
+        <td className="px-6 py-4">{item.tanggal_lahir}</td>
+        <td className="px-6 py-4">{item.tempat_ahir}</td>
+        <td className="px-6 py-4">{item.nama_ayah}</td>
+        <td className="px-6 py-4">{item.jenis_kelamin}</td>
 
-        <td className="px-6 py-4 whitespace-nowrap">
-          <button className="bg-green-500 hover:bg-blue-600 text-white px-2 mr-2 py-1 rounded-md" 
+        <td className="px-6 py-4">
+          <button className="bg-green-500 hover:bg-blue-600 text-white mb-2 px-2 mr-2 py-1 rounded-md" 
         onClick={() => openEditModal(item)}>Edit</button>
           <button className="bg-red-500 hover:bg-red-600 text-white px-2 py-1 rounded-md"
             onClick={() => openDeleteModal(item)}>
@@ -284,6 +285,7 @@ const inputConfigs = [
     ))}
   </tbody>
 </table>
+</div>
       {/* Akhir Tabel Data */}
       {/* awal Form */}
     <form

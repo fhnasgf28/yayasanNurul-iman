@@ -2,8 +2,8 @@ import React, { useState} from 'react';
 import { getDatabase, ref, push } from 'firebase/database';
 import firebaseApp from '../../utils/firebase';
 
-const FinancialForm = () => {
-    const [type, setType] = useState('pemasukan');
+const PemasukanYayasan = () => {
+    const [type, setType] = useState('pemasukanYayasan');
     const [amount, setAmount] = useState('');
     const [description, setDescription] = useState('');
 
@@ -21,7 +21,7 @@ const FinancialForm = () => {
                 timestamp: new Date().toISOString(),
             });
 
-            setType('pemasukan');
+            setType('pemasukanYayasan');
             setAmount('');
             setDescription('');
         } catch (error: any) {
@@ -31,10 +31,10 @@ const FinancialForm = () => {
 
     return(
         <form onSubmit={handleSubmit} className="mt-4">
-          <h2 className="text-2xl font-semibold mb-4">Tambah Data Keuangan Masjid Nurul Iman</h2>
+          <h2 className="text-2xl font-semibold mb-4">Tambah Data Keuangan Pembangunan TPQ Yayasan Nurul Iman</h2>
         <select value={type} className="px-4 py-2 border rounded-r-md focus:outline-none" onChange={(e) => setType(e.target.value)} >
-          <option value="pemasukan">Pemasukan</option>
-          <option value="pengeluaran">Pengeluaran</option>
+          <option value="pemasukanYayasan">pemasukan Yayasan</option>
+          <option value="pengeluaranYayasan">pengeluaran Yayasan</option>
         </select>
       <input
         type="number"
@@ -55,4 +55,4 @@ const FinancialForm = () => {
   );
 };
 
-export default FinancialForm;
+export default PemasukanYayasan;

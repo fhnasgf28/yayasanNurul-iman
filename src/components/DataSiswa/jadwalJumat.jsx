@@ -1,10 +1,11 @@
 import { useEffect, useState } from 'react';
+import Text from '../Text';
 import { getDatabase, ref, push, child, get, remove,onValue, update } from 'firebase/database';
 import firebaseApp from '../../utils/firebase';
 import { config } from 'process';
 
 
-const DataDonatur = () => {
+const JadwalJumat = () => {
   const [dataList, setDataList] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [searchTerm, setSearchTerm] = useState('');
@@ -14,16 +15,15 @@ const DataDonatur = () => {
   const rootReference = ref(getDatabase(firebaseApp))
   const [isDeleteSuccess, setIsDeleteSuccess] = useState(false);
   const [isEditSuccess, setIsEditSuccess] = useState(false);
-  const [newData, setNewData] = useState({tanggal: '', namaDonatur: '', DanaMasuk: '', keterangan:''})
+  const [newData, setNewData] = useState({nama_khatib: '', bulan: '', tanggal: '',})
   const [isInputEmpty, setIsInputEmpty] = useState(false);
   const [isNotificationVisible, setIsNotificationVisible] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const [editData, setEditData] = useState({
-      tanggal:'',
-      namaDonatur : '',
-      DanaMasuk: '',
-      keterangan: '',
+      nama_khatib:'',
+      bulan : '',
+      tanggal: '',
   });
 
   
@@ -49,7 +49,7 @@ const DataDonatur = () => {
       setIsLoading(true);
       const database = getDatabase(firebaseApp);
       const rootReference = ref(database);
-      const dbGet = await get(child(rootReference, 'donatur'));
+      const dbGet = await get(child(rootReference, 'jadwal-jumat'));
       const dbvalue = dbGet.val();
       if (dbvalue) {
         setDataList(Object.values(dbvalue));
@@ -65,7 +65,7 @@ const DataDonatur = () => {
   const addData = async (newData) => {
     try {
       const database = getDatabase(firebaseApp);
-      const rootReference = ref(database, 'donatur');
+      const rootReference = ref(database, 'jadwal-jumat');
       await push(rootReference, newData);
       console.log('data berhasil ditambahkan');
       setIsModalOpen(false);
@@ -83,8 +83,8 @@ const DataDonatur = () => {
     const results = [];
     for (const item of dataList) {
       if (
-        (item.namaDonatur && item.namaDonatur.toLowerCase().includes(searchTerm.toLowerCase())) ||
-      (item.keterangan && item.keterangan.toLowerCase().includes(searchTerm.toLowerCase()))
+        (item.bulan && item.bulan.toLowerCase().includes(searchTerm.toLowerCase())) ||
+      (item.nama_khatib && item.nama_khatib.toLowerCase().includes(searchTerm.toLowerCase()))
       )
       {
         results.push(item);
@@ -98,7 +98,7 @@ const DataDonatur = () => {
   const editDataItem = async (field, value, newData) => {
     try {
       const database = getDatabase(firebaseApp);
-      const dataRef = ref(database, 'donatur');
+      const dataRef = ref(database, 'jadwal-jumat');
       const snapshot = await get(dataRef);
 
       snapshot.forEach((childSnapshot) => {
@@ -130,18 +130,16 @@ const handleEditClick = () => {
   // Memanggil fungsi editDataByCondition dengan kriteria dan data yang sesuai
 
   if (isConfirmed){
-  editDataItem('tanggal', editData.tanggal, {
+  editDataItem('nama_khatib', editData.nama_khatib, {
+      nama_khatib: editData.nama_khatib,
+      bulan : editData.bulan,
       tanggal: editData.tanggal,
-      namaDonatur : editData.namaDonatur,
-      DanaMasuk: editData.DanaMasuk,
-      keterangan: editData.keterangan,
   });
   // Mengosongkan input setelah pengeditan
   setEditData({
+      nama_khatib: '',
+      bulan : '',
       tanggal: '',
-      namaDonatur : '',
-      DanaMasuk: '',
-      keterangan: '',
   });
 } else {
   alert('Tidak ada Perubahan');
@@ -165,7 +163,7 @@ useEffect(() => {
   const deleteDataByCondition = async (field, value) => {
     try {
       const database = getDatabase(firebaseApp);
-      const dataRef = ref(database, 'donatur');
+      const dataRef = ref(database, 'jadwal-jumat');
       const snapshot = await get(dataRef);
 
       snapshot.forEach((childSnaphot) => {
@@ -196,18 +194,16 @@ const closeDeleteModal = () => {
 
 // perulangan form input
 const inputConfigs = [
-  { placeholder: 'Tanggal Donasi', stateKey: 'tanggal' },
-  { placeholder: 'Nama Donatur', stateKey: 'namaDonatur' },
-  { placeholder: 'Jumlah Dana Masuk', stateKey: 'DanaMasuk' },
-  { placeholder: 'Keterangan', stateKey: 'keterangan' },
+  { placeholder: 'Nama Khatib', stateKey: 'nama_khatib' },
+  { placeholder: 'Bulan', stateKey: 'bulan' },
+  { placeholder: 'Tanggal', stateKey: 'tanggal' },
 ]
 
 // perulangan Tabel Header
   const tableHeaders = [
-    'Tanggal Donasi',
-    'Nama Donatur',
-    'Jumlah Dana Masuk',
-    'Keterangan',
+    'Nama Khatib',
+    'Bulan',
+    'Tanggal',
   ]
 
   useEffect(() => {
@@ -216,7 +212,7 @@ const inputConfigs = [
 
   return (
     <div className="bg-gray-100 p-8">
-    <h1 className="text-2xl font-semibold mb-4">Data Donatur</h1>
+    <h1 className="text-2xl font-semibold mb-4">Jadwal Khatib Jumat, Tahun {new Date().getFullYear()}</h1>
     <div className="flex mb-4">
     <input
       type="text"
@@ -229,6 +225,7 @@ const inputConfigs = [
       }}
       className="px-3 py-2 border rounded-l-md w-50 focus:outline-none"
       placeholder="Cari"
+
     />
     <button
       onClick={handleSearch}
@@ -237,10 +234,9 @@ const inputConfigs = [
       Search
     </button>
   </div>
-  
+  <Text>Gunakan tanda "/" untuk memisahkan tanggal ataupun bulan </Text>
   <div className="overflow-x-scroll">
     {/* tabel data */}
-    <div className="overflow-x-auto">
   <table className="min-w-full divide-y divide-gray-200 ">
   <thead className="bg-blue-600">
     <tr>
@@ -256,12 +252,12 @@ const inputConfigs = [
   <tbody className="bg-white divide-y divide-gray-200">
     {searchResults.map((item, index) => (
       <tr key={index} className={index % 2 === 0 ? 'bg-white' : 'bg-gray-100'}>
-        <td className="px-6 py-4">{item.tanggal}</td>
-        <td className="px-6 py-4">{item.namaDonatur}</td>
-        <td className="px-6 py-4">{item.DanaMasuk}</td>
-        <td className="px-6 py-4">{item.keterangan}</td>
-        <td className="px-6 py-4">
-          <button className="bg-green-500 hover:bg-blue-600 text-white mb-2 px-2 mr-2 py-1 rounded-md" 
+        <td className="px-6 py-4 whitespace-nowrap">{item.nama_khatib}</td>
+        <td className="px-6 py-4 whitespace-nowrap">{item.bulan}</td>
+        <td className="px-6 py-4 whitespace-nowrap">{item.tanggal}</td>
+
+        <td className="px-6 py-4 whitespace-nowrap">
+          <button className="bg-green-500 hover:bg-blue-600 text-white px-2 mr-2 py-1 rounded-md" 
         onClick={() => openEditModal(item)}>Edit</button>
           <button className="bg-red-500 hover:bg-red-600 text-white px-2 py-1 rounded-md"
             onClick={() => openDeleteModal(item)}>
@@ -272,15 +268,14 @@ const inputConfigs = [
     ))}
   </tbody>
 </table>
-</div>
       {/* Akhir Tabel Data */}
       {/* awal Form */}
     <form
         onSubmit={(e) => {
           e.preventDefault();
-          if (newData.tanggal && newData.namaDonatur && newData.DanaMasuk && newData.keterangan) {
+          if (newData.nama_khatib && newData.bulan && newData.tanggal) {
             addData(newData);
-            setNewData({ tanggal: '', namaDonatur: '', DanaMasuk: '', keterangan: ''});
+            setNewData({ nama_khatib: '', bulan: '', tanggal: '',});
           } else {
             setIsInputEmpty(true);
           }
@@ -350,7 +345,7 @@ const inputConfigs = [
                 <button
                   className="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-md mr-2"
                   onClick={() => {
-                    deleteDataByCondition('namaDonatur', dataToDelete.namaDonatur);
+                    deleteDataByCondition('bulan', dataToDelete.bulan);
                     closeDeleteModal();
                   }}
                 >
@@ -412,4 +407,4 @@ const inputConfigs = [
   );
 };
 
-export default DataDonatur;
+export default JadwalJumat;

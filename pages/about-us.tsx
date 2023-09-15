@@ -4,6 +4,8 @@ import { PageLayout, Text, List, Image, LinkTo, Seperator, Slider } from "../src
 import { CURRENT_YEAR } from "../src/constants/appConstants";
 import { iSEO } from "../src/shared/interfaces";
 import Anggota from "../src/components/newsConten/anggota";
+import Sejarah from "../src/components/VisiMisi/sejarah";
+import VisiMisi from "../src/components/VisiMisi/visiMisi";
 
 const AboutUs = () => {
     const PAGE_SEO: iSEO = {
@@ -26,19 +28,13 @@ const AboutUs = () => {
           </div>
           </div>
           <Anggota/>
+          <VisiMisi></VisiMisi>
         <h1 className="text-3xl font-bold mb-4">Yayasan Nurul Iman</h1>
         <p className="text-gray-700 mb-8">Perum Taman Singaperbangsa Karawang</p>
+        
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-          <div className="bg-white p-6 shadow">
-            <h2 className="text-xl font-bold mb-4">Sejarah Yayasan</h2>
-            <p className="text-gray-700">
-              Yayasan Nurul Iman Perum Taman Singaperbangsa Karawang didirikan pada tahun 2016 sebagai lembaga non-profit yang berfokus pada bidang pendidikan dan sosial. Yayasan ini berkomitmen untuk memberikan kontribusi positif bagi masyarakat di sekitar wilayah Perum Taman Singaperbangsa Karawang.
-            </p>
-            <p className="text-gray-700 mt-4">
-              Sejarah awal yayasan dimulai dari keinginan sekelompok individu yang peduli terhadap pendidikan dan kesejahteraan sosial masyarakat di wilayah tersebut. Melihat potensi dan kebutuhan yang ada, mereka bersama-sama mendirikan Yayasan Nurul Iman dengan tujuan untuk meningkatkan akses dan kualitas pendidikan, serta memberdayakan masyarakat dalam meningkatkan kesejahteraan hidup.
-            </p>
-          </div>
-
+      
+        <Sejarah></Sejarah>
       <div className="bg-white p-6 shadow">
         <h2 className="text-xl font-bold mb-4">Program</h2>
         <ul className="list-disc list-inside text-gray-700">
@@ -71,46 +67,10 @@ const AboutUs = () => {
             </div>
         </section>
 
-        <section className='container px-3 md:pb-20 md:pt-10 pt-20'>
-
-           {/* Gambar */}
-           <div className="w-full md:w-2/3 lg:w-1/2 mx-auto" >
-            <Image src="/images/yayasanContoh.jpg" alt="Yayasan Nurul Iman" />
-           </div>
-          {/* Judul */}
-          <Text title className='mt-10 dark:text-sky-400 text-sky-600' >
-          Visi dan Misi Yayasan Nurul Iman
-          </Text>
-           {/* Visi dan Misi */}
-           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-10">
-            <div>
-              <div className="bg-white rounded-lg shadow-md p-6">
-                <Text subtitle className='text-3xl font-medium'>
-                  Visi
-                </Text>
-                <Text p className='text-lg'>
-                  Menjadi lembaga pendidikan dan sosial yang unggul, berdaya saing, serta berlandaskan keimanan dan ketaqwaan kepada Allah SWT.
-                </Text>
-              </div>
-            </div>
-            <div>
-              <div className="bg-white rounded-lg shadow-md p-6">
-                <Text subtitle className='text-3xl font-medium'>
-                  Misi
-                </Text>
-                <List type={ListType.disc}>
-                  <li>Mengembangkan karakter dan akhlakul karimah siswa-siswi yang berlandaskan nilai-nilai Islami.</li>
-                  <li>Mendorong peningkatan prestasi akademik dan non-akademik melalui program pembelajaran yang inovatif dan berbasis teknologi.</li>
-                  <li>Menyediakan lingkungan belajar yang aman, nyaman, dan mendukung perkembangan potensi siswa-siswi secara holistik.</li>
-                  {/* ... tambahkan misi lainnya ... */}
-                </List>
-              </div>
-            </div>
-          </div>    
-        </section>
+      
             
         {/* Blog Section Start  */}
-    <section id="blog" className="bg-slate-100 pt-36 pb-32 dark:bg-dark">
+    {/* <section id="blog" className="bg-slate-100 pt-36 pb-32 dark:bg-dark">
       <div className="container">
         <div className="w-full px-4">
           <div className="mx-auto mb-16 max-w-xl text-center">
@@ -156,7 +116,7 @@ const AboutUs = () => {
           </div>
         </div>
       </div>
-    </section>
+    </section> */}
     {/* Blog Section End */}
 
     

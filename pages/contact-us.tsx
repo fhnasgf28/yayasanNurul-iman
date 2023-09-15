@@ -2,6 +2,7 @@
 import { ImageSize, TextAlign, ListType } from "../src/shared/enums";
 import { PageLayout, Text, List, Image, LinkTo, Seperator, Slider } from "../src/components";
 import { iSEO } from "../src/shared/interfaces";
+import FloatingWhatsApp from "../src/components/newsConten/whatsApp";
 
 const ContactUs = () => {
   const PAGE_SEO: iSEO = {
@@ -12,6 +13,7 @@ const ContactUs = () => {
   };
   return (
     <PageLayout PAGE_SEO={PAGE_SEO} home>
+      <FloatingWhatsApp/>
       <section className="container px-3 pb-10 md:pt-20 pt-[80px]">
         <Text title className="!text-5xl !font-light">
           Contact Us

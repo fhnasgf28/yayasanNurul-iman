@@ -204,6 +204,7 @@ const closeDeleteModal = () => {
     </button>
   </div>
    {/* Tabel Data */}
+   <div className="overflow-x-auto">
     <table className="table-auto min-w-full divide-y divide-gray-200">
       <thead className="bg-blue-600">
         <tr>
@@ -215,14 +216,15 @@ const closeDeleteModal = () => {
         className="px-6 py-3 text-left text-xs font-medium text-white uppercase tracking-wider">Mata Pelajaran</th>
         </tr>
       </thead>
+      
       <tbody>
         {searchResults.map((item, index) => (
           <tr key={index} className={index % 2 === 0 ? 'bg-white' : 'bg-gray-100'}>
-            <td className="px-6 py-4 whitespace-nowrap">{item.nomor_guru}</td>
-            <td className="px-6 py-4 whitespace-nowrap">{item.nama_guru}</td>
-            <td className="px-6 py-4 whitespace-nowrap">{item.mata_pelajaran}</td>
+            <td className="px-6 py-4 ">{item.nomor_guru}</td>
+            <td className="px-6 py-4 ">{item.nama_guru}</td>
+            <td className="px-6 py-4 ">{item.mata_pelajaran}</td>
 
-        <td className="px-6 py-4 whitespace-nowrap">
+        <td className="px-6 py-4 ">
         <button className="bg-green-500 hover:bg-blue-600 text-white px-2 mr-2 py-1 rounded-md" 
         onClick={() => openEditModal(item)}>Edit</button>
           <button
@@ -237,6 +239,8 @@ const closeDeleteModal = () => {
         ))}
       </tbody>
     </table>
+    </div>
+  
           {/* akhir tabel data */}
 
           {/* awal Form */}

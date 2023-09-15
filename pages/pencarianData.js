@@ -3,8 +3,19 @@ import { useRouter } from 'next/router';
 import MyPage from '../src/components/DataSiswa/siswa';
 import DataGuru from '../src/components/DataSiswa/dataGuru';
 import JadwalSholat from '../src/components/DataSiswa/jadwalSholat';
+import JadwalJumat from '../src/components/DataSiswa/jadwalJumat';
 import FinancialForm from '../src/components/Laporan/pemasukan';
+import SejarahYayasan from '../src/components/VisiMisi/SejarahYayasan';
 import Tutorial from '../src/components/newsConten/tutorial';
+import MisiYayasan from '../src/components/VisiMisi/misi';
+import DataDonatur from '../src/components/DataSiswa/dataDonatur';
+
+// CRUD
+import TambahData from './api/data/TambahData';
+import EditData from './api/data/editData';
+import HapusData from './api/data/hapusData';
+import PemasukanYayasan from '../src/components/Laporan/pemasukanYayasan';
+
 
 const PencarianData = () => {
   const [selectedOption, setSelectedOption] = useState('siswa');
@@ -31,7 +42,14 @@ const PencarianData = () => {
       >
         <option value="siswa">Data Siswa</option>
         <option value="guru">Data Guru</option>
+        <option value="Donatur">Data Donatur Pembangunan Yayasan</option>
         <option value="Jadwal Sholat">Jadwal Sholat</option>
+        <option value="Jadwal Khatib Jumat">Jadwal Khatib Jumat</option>
+        <option value="Misi">Misi Yayasan</option>
+        <option value="SejarahYayasan">Sejarah Yayasan</option>
+        <option value="Tambah">Tambah Data Kegiatan Keagamaan</option>
+        <option value="Edit">Edit Data Kegiatan Keagamaan</option>
+        <option value="Hapus">Hapus Data Kegiatan Keagamaan</option>
       </select>
 
       <button
@@ -46,8 +64,16 @@ const PencarianData = () => {
       {selectedOption === 'siswa' ? <MyPage /> : null}
         {selectedOption === 'guru' ? <DataGuru /> : null}
         {selectedOption === 'Jadwal Sholat' ? <JadwalSholat /> : null} {/* Tambahkan kondisi untuk halaman baru */}
+        {selectedOption === 'Jadwal Khatib Jumat' ? <JadwalJumat /> : null}
+        {selectedOption === 'Donatur' ? <DataDonatur /> : null}
+        {selectedOption === 'Misi' ? <MisiYayasan /> : null}
+        {selectedOption === 'SejarahYayasan' ? <SejarahYayasan /> : null}
+        {selectedOption === 'Tambah' ? <TambahData /> : null}
+        {selectedOption === 'Edit' ? <EditData /> : null}
+        {selectedOption === 'Hapus' ? <HapusData /> : null}
     <Tutorial/>
     <FinancialForm/>
+    <PemasukanYayasan/>
     </div>
     
     </div> 

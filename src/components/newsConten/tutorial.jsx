@@ -1,7 +1,6 @@
 // tutorial.js
 import React, { useState } from 'react';
 import TambahBerita from './tambahBerita';
-import TambahSejarah from './sejarahYayasan';
 
 
 const Tutorial = () => {
@@ -20,10 +19,6 @@ const Tutorial = () => {
     <div>
     <div className='container'>
       <TambahBerita tambahBerita={tambahBerita} />
-    </div>
-
-    <div className='container'>
-      <TambahSejarah tambahBerita={tambahBerita} />
     </div>
     </div>
   );
