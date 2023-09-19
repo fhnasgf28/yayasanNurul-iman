@@ -8,7 +8,9 @@ import FinancialForm from '../src/components/Laporan/pemasukan';
 import SejarahYayasan from '../src/components/VisiMisi/SejarahYayasan';
 import Tutorial from '../src/components/newsConten/tutorial';
 import MisiYayasan from '../src/components/VisiMisi/misi';
+import VisiYayasan from '../src/components/VisiMisi/visiYayasan';
 import DataDonatur from '../src/components/DataSiswa/dataDonatur';
+import DataBerita from '../src/components/newsConten/berita';
 
 // CRUD
 import TambahData from './api/data/TambahData';
@@ -48,6 +50,8 @@ const PencarianData = () => {
         <option value="Jadwal Khatib Jumat">Jadwal Khatib Jumat</option>
         <option value="Jadwal Keagamaan">Jadwal Keagamaan</option>
         <option value="Misi">Misi Yayasan</option>
+        <option value="Visi">Visi Yayasan</option>
+        <option value="Berita">Isi Berita</option>
         <option value="SejarahYayasan">Sejarah Yayasan</option>
         {/* <option value="Tambah">Tambah Data Kegiatan Keagamaan</option> */}
         {/* <option value="Edit">Edit Data Kegiatan Keagamaan</option>
@@ -70,11 +74,13 @@ const PencarianData = () => {
         {selectedOption === 'Jadwal Keagamaan' ? <JadwalAgama /> : null}
         {selectedOption === 'Donatur' ? <DataDonatur /> : null}
         {selectedOption === 'Misi' ? <MisiYayasan /> : null}
+        {selectedOption === 'Visi' ? <VisiYayasan /> : null}
+        {selectedOption === 'Berita' ? <DataBerita /> : null}
         {selectedOption === 'SejarahYayasan' ? <SejarahYayasan /> : null}
         {/* {selectedOption === 'Tambah' ? <TambahData /> : null}
         {selectedOption === 'Edit' ? <EditData /> : null}
-        {selectedOption === 'Hapus' ? <HapusData /> : null}
-    <Tutorial/> */}
+        {selectedOption === 'Hapus' ? <HapusData /> : null} */}
+    <Tutorial/>
     <FinancialForm/>
     <PemasukanYayasan/>
     </div>

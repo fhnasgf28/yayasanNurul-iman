@@ -11,10 +11,6 @@ const Tutorial = () => {
     setBerita([...berita, beritaBaru]);
   };
 
-  const tambahSejarah = (beritaBaru) => {
-    setBerita([...berita, beritaBaru]);
-  };
-
   return (
     <div>
     <div className='container'>

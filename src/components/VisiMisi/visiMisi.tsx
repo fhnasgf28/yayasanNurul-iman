@@ -1,9 +1,8 @@
 import { PageLayout, Text, List,LinkTo } from "../../components";
-import { ListType } from "../../shared/enums";
-import firebase from 'firebase/app';
 import React, { useEffect, useState } from 'react';
 import firebaseApp from "../../utils/firebase"
 import { getDatabase, ref, child, get,} from 'firebase/database';
+import Visi from "./visi";
 
 
 const VisiMisi: React.FC = () => {
@@ -45,10 +44,7 @@ return (
             <div>
               <div className="bg-white rounded-lg shadow-md p-6">
                 <Text subtitle className='text-3xl font-medium'>
-                  Visi
-                </Text>
-                <Text p className='text-lg'>
-                "Mewujudkan generasi yang cerdas dalam Membangun Sumber Daya Manusia yang unggul, mandiri, berkarakter dan berakhlaq mulia serta berlandaskan keimanan dan ketaqwaan kepada Allah SWT."
+                  <Visi/>
                 </Text>
               </div>
             </div>
