@@ -4,7 +4,7 @@ import { PageLayout, Text, List, Image, LinkTo, Seperator, Slider } from "../../
 
 
 const BlogSetup = () => {
-    return (
+      return (
         <PageLayout blogwithsidebar>
             
         <section className="container bg-white rounded-lg shadow-lg p-8 mb-8">
@@ -41,7 +41,7 @@ const BlogSetup = () => {
       <p className="my-4">
         Acara ini merupakan momen bersejarah bagi Masjid Nurul Iman dan masyarakat setempat sebagai bentuk kepedulian dan solidaritas dalam menjalankan ajaran agama Islam. Semoga perayaan Idul Adha ini memberikan manfaat dan berkah bagi seluruh umat Muslim.
       </p>
-    </div>
+      </div>
         </section>
         </PageLayout>
     )

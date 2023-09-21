@@ -14,8 +14,7 @@ import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 import ProgramYayasan from "../src/components/newsConten/program";
 import VisiMisi from "../src/components/VisiMisi/visiMisi";
-import GoogleMap from "../src/components/newsConten/googleMaps";
-import FloatingWhatsApp from "../src/components/newsConten/whatsApp";
+import RealtimeChat from "../src/components/chatRealtime/realtimeChat";
 
 const Home = () => {
   const settings = {
@@ -30,7 +29,7 @@ const Home = () => {
 
   return (
     <PageLayout home PAGE_SEO={DEFAULT_SEO}>
-      <FloatingWhatsApp/>
+	<RealtimeChat/>
     <section className="relative container mx-auto px-4 sm:px-6 lg:px-8">
       <div className="max-w-6xl mx-auto px-4 sm:px-6">
      
@@ -98,7 +97,7 @@ const Home = () => {
           <HomeNonFeatureArticles />
         </div>
       </div>
-      <GoogleMap/>
+
     </PageLayout>
     
   )
