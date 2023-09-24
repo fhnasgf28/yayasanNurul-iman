@@ -32,7 +32,7 @@ const Donatur = () => {
   const handleSearch = () => {
     const results = [];
     for (const item of dataList) {
-      if ((item.namaDonatur && item.namaDonatur.toLowerCase().includes(searchTerm.toLowerCase())) || (item.keterangan && item.keterangan.toLowerCase().includes(searchTerm.toLowerCase()))) {
+      if ((item.namaDonatur && item.namaDonatur.toLowerCase().includes(searchTerm.toLowerCase())) || (item.tanggal && item.tanggal.toLowerCase().includes(searchTerm.toLowerCase()))) {
         results.push(item);
       }
     }
