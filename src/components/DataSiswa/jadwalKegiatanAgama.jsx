@@ -18,6 +18,7 @@ const JadwalAgama = () => {
   const [isInputEmpty, setIsInputEmpty] = useState(false);
   const [isNotificationVisible, setIsNotificationVisible] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [searchTime, setSearchTime] = useState(null);
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const [editData, setEditData] = useState({
     kegiatan_agama: "",
@@ -79,14 +80,23 @@ const JadwalAgama = () => {
   };
 
   const handleSearch = () => {
+    const startTime = new Date().getTime();
     const results = [];
-    for (const item of dataList) {
+    for (let i = 0; i < dataList.length; i++) {
+      const item = dataList[i]
+
       if ((item.hari && item.hari.toLowerCase().includes(searchTerm.toLowerCase())) || (item.kegiatan_agama && item.kegiatan_agama.toLowerCase().includes(searchTerm.toLowerCase()))) {
-        results.push(item);
+        results.push({
+          index:i,
+          data:item
+        });
       }
     }
+    const endTime = performance.now();
+    const searchDuration = endTime - startTime;
 
     setSearchResults(results);
+    setSearchTime (searchDuration);
   };
 
   // bagian untuk mengedit data siswa
@@ -241,13 +251,14 @@ const JadwalAgama = () => {
             </tr>
           </thead>
           <tbody className="bg-white divide-y divide-gray-200">
-            {searchResults.map((item, index) => (
-              <tr key={index} className={index % 2 === 0 ? "bg-white" : "bg-gray-100"}>
-                <td className="px-6 py-4">{item.kegiatan_agama}</td>
-                <td className="px-6 py-4">{item.hari}</td>
-                <td className="px-6 py-4">{item.waktu}</td>
-                <td className="px-6 py-4">{item.tempat}</td>
-                <td className="px-6 py-4">{item.keterangan}</td>
+            {searchResults.map((result) => (
+              <tr key={result.index} className={result.index % 2 === 0 ? "bg-white" : "bg-gray-100"}>
+                <td className="px-6 py-4">{result.data.kegiatan_agama}</td>
+                <td className="px-6 py-4">{result.data.hari}</td>
+                <td className="px-6 py-4">{result.data.waktu}</td>
+                <td className="px-6 py-4">{result.data.tempat}</td>
+                <td className="px-6 py-4">{result.data.keterangan}</td>
+                <td className="px-6 py-4">Data ditemukan pada indeks ke-{result.index}</td>
 
                 <td className="px-6 py-4 whitespace-nowrap">
                   <button className="bg-green-500 hover:bg-blue-600 text-white px-2 mr-2 py-1 rounded-md" onClick={() => openEditModal(item)}>
@@ -261,6 +272,13 @@ const JadwalAgama = () => {
             ))}
           </tbody>
         </table>
+
+        {searchTime !== null && (
+          <div className="mt-4 text-center">
+            <p className="text-lg font-semibold">Waktu yang dibutuhkan untuk pencarian:</p>
+            <p className="text-2xl text-blue-600">{searchTime.toFixed(2)} milidetik</p>
+          </div>
+        )}
         {/* Akhir Tabel Data */}
         {/* awal Form */}
         <form

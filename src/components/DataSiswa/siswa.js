@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { getDatabase, ref, push, child, get, remove,onValue, update } from 'firebase/database';
 import firebaseApp from '../../utils/firebase';
-import { config } from 'process';
+// import { config } from 'process';
 
 
 const MyPage = () => {
@@ -19,6 +19,7 @@ const MyPage = () => {
   const [isNotificationVisible, setIsNotificationVisible] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+  const [searchTime, setSearchTime] = useState(null);
   const [editData, setEditData] = useState({
       nomor_induk:'',
       nama_siswa : '',
@@ -82,18 +83,29 @@ const MyPage = () => {
   }
 
   const handleSearch = () => {
+    const startTime = new Date().getTime();
     const results = [];
-    for (const item of dataList) {
+
+    for (let i = 0; i < dataList.length; i++) {
+      const item = dataList[i]
+
       if (
         (item.nama_siswa && item.nama_siswa.toLowerCase().includes(searchTerm.toLowerCase())) ||
       (item.tanggal_ahir && item.tanggal_ahir.toLowerCase().includes(searchTerm.toLowerCase()))
       )
       {
-        results.push(item);
+        results.push({
+          index:i,
+          data:item
+        });
       }
     }
 
+    const endTime = performance.now();
+    const searchDuration = endTime - startTime;
+
     setSearchResults(results);
+    setSearchTime(searchDuration);
   };
 
   // bagian untuk mengedit data siswa
@@ -264,15 +276,15 @@ const inputConfigs = [
     </tr>
   </thead>
   <tbody className="bg-white divide-y divide-gray-200">
-    {searchResults.map((item, index) => (
-      <tr key={index} className={index % 2 === 0 ? 'bg-white' : 'bg-gray-100'}>
-        <td className="px-6 py-4">{item.nomor_induk}</td>
-        <td className="px-6 py-4">{item.nama_siswa}</td>
-        <td className="px-6 py-4">{item.tanggal_lahir}</td>
-        <td className="px-6 py-4">{item.tempat_ahir}</td>
-        <td className="px-6 py-4">{item.nama_ayah}</td>
-        <td className="px-6 py-4">{item.jenis_kelamin}</td>
-
+    {searchResults.map((result) => (
+      <tr key={result.index} className={result.index % 2 === 0 ? 'bg-white' : 'bg-gray-100'}>
+        <td className="px-6 py-4">{result.data.nomor_induk}</td>
+        <td className="px-6 py-4">{result.data.nama_siswa}</td>
+        <td className="px-6 py-4">{result.data.tanggal_lahir}</td>
+        <td className="px-6 py-4">{result.data.tempat_ahir}</td>
+        <td className="px-6 py-4">{result.data.nama_ayah}</td>
+        <td className="px-6 py-4">{result.data.jenis_kelamin}</td>
+        <td className="px-6 py-4">Data ditemukan pada indeks ke-{result.index}</td>
         <td className="px-6 py-4">
           <button className="bg-green-500 hover:bg-blue-600 text-white mb-2 px-2 mr-2 py-1 rounded-md" 
         onClick={() => openEditModal(item)}>Edit</button>
@@ -286,6 +298,14 @@ const inputConfigs = [
   </tbody>
 </table>
 </div>
+
+{searchTime !== null && (
+  <div className="mt-4 text-center">
+    <p className="text-lg font-semibold">Waktu yang dibutuhkan untuk pencarian:</p>
+    <p className="text-2xl text-blue-600">{searchTime.toFixed(2)} milidetik</p>
+  </div>
+)}
+
       {/* Akhir Tabel Data */}
       {/* awal Form */}
     <form

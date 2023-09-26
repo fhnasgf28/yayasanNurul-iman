@@ -22,7 +22,7 @@ const DataGuru = () => {
     nama_guru: '', // Data baru yang ingin Anda set
     mata_pelajaran: '', // Data baru yang ingin Anda set
   });
-
+  const [searchTime, setSearchTime] = useState(null);
   const onDataChange = (snapshot) => {
     const dbvalue = snapshot.val();
     if (dbvalue) {
@@ -76,17 +76,26 @@ const DataGuru = () => {
   }
 
   const handleSearch = () => {
+    const startTime = new Date().getTime(); //untuk mengukur waktu dari pencarian
     const results = [];
-    for (const item of dataList) {
+    for (let i = 0; i < dataList.length; i++) {
+      const item = dataList[i]
       if (
         (item.nama_guru && item.nama_guru.toLowerCase().includes(searchTerm.toLowerCase())) ||
         (item.mata_pelajaran && item.mata_pelajaran.toLowerCase().includes(searchTerm.toLowerCase()))
       ) {
-        results.push(item);
+        results.push({
+          index:i,
+          data:item
+        });
       }
     }
 
+    const endTime = performance.now();
+    const searchDuration = endTime - startTime;
+
     setSearchResults(results);
+    setSearchTime(searchDuration);
   };
 
   // bagian untuk mengedit Data
@@ -218,12 +227,12 @@ const closeDeleteModal = () => {
       </thead>
       
       <tbody>
-        {searchResults.map((item, index) => (
-          <tr key={index} className={index % 2 === 0 ? 'bg-white' : 'bg-gray-100'}>
-            <td className="px-6 py-4 ">{item.nomor_guru}</td>
-            <td className="px-6 py-4 ">{item.nama_guru}</td>
-            <td className="px-6 py-4 ">{item.mata_pelajaran}</td>
-
+        {searchResults.map((result) => (
+          <tr key={result.index} className={result.index % 2 === 0 ? 'bg-white' : 'bg-gray-100'}>
+            <td className="px-6 py-4 ">{result.data.nomor_guru}</td>
+            <td className="px-6 py-4 ">{result.data.nama_guru}</td>
+            <td className="px-6 py-4 ">{result.data.mata_pelajaran}</td>
+            <td className="px-6 py-4">Data ditemukan pada indeks ke-{result.index}</td>
         <td className="px-6 py-4 ">
         <button className="bg-green-500 hover:bg-blue-600 text-white px-2 mr-2 py-1 rounded-md" 
         onClick={() => openEditModal(item)}>Edit</button>
@@ -241,6 +250,12 @@ const closeDeleteModal = () => {
     </table>
     </div>
   
+    {searchTime !== null && (
+  <div className="mt-4 text-center">
+    <p className="text-lg font-semibold">Waktu yang dibutuhkan untuk pencarian:</p>
+    <p className="text-2xl text-blue-600">{searchTime.toFixed(2)} milidetik</p>
+  </div>
+)}
           {/* akhir tabel data */}
 
           {/* awal Form */}
