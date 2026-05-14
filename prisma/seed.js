@@ -23,12 +23,12 @@ async function main() {
     {
       slug: "pengelolaan-masjid-nurul-iman",
       title: "Pengelolaan & Kemakmuran Masjid Nurul Iman",
-      description: "Program utama yayasan dalam mengelola operasional Masjid Nurul Iman agar senantiasa menjadi tempat ibadah yang nyaman, bersih, dan memakmurkan umat.",
+      description: "Program utama yayasan dalam mengelola operasional Masjid Nurul Iman agar senantiasa menjadi tempat ibadah yang nyaman, bersih, and memakmurkan umat.",
       content: `
-        Program utama yayasan dalam mengelola operasional Masjid Nurul Iman agar senantiasa menjadi tempat ibadah yang nyaman, bersih, dan memakmurkan umat.
+        Program utama yayasan dalam mengelola operasional Masjid Nurul Iman agar senantiasa menjadi tempat ibadah yang nyaman, bersih, and memakmurkan umat.
         
         Kegiatan meliputi:
-        - Pemeliharaan kebersihan dan kenyamanan masjid
+        - Pemeliharaan kebersihan and kenyamanan masjid
         - Penyelenggaraan shalat berjamaah 5 waktu
         - Program kajian Islam rutin (ba'da Subuh, ba'da Maghrib)
         - Kegiatan Jumat: khutbah & shalat Jumat
@@ -44,9 +44,9 @@ async function main() {
     {
       slug: "kajian-islam-rutin",
       title: "Kajian Islam & Pengajian Rutin",
-      description: "Kegiatan kajian Islam dan pengajian rutin yang terbuka untuk seluruh jamaah dan masyarakat umum.",
+      description: "Kegiatan kajian Islam and pengajian rutin yang terbuka untuk seluruh jamaah and masyarakat umum.",
       content: `
-        Kegiatan kajian Islam dan pengajian rutin yang terbuka untuk seluruh jamaah dan masyarakat umum.
+        Kegiatan kajian Islam and pengajian rutin yang terbuka untuk seluruh jamaah and masyarakat umum.
         
         Jadwal:
         - Kajian ba'da Subuh: Setiap hari, kitab pilihan
@@ -64,7 +64,7 @@ async function main() {
       title: "DTA Nurul Iman — Pendidikan Agama Islam untuk Anak",
       description: "DTA Nurul Iman adalah program pendidikan agama Islam nonformal yang membina anak-anak agar mengenal Islam sejak dini.",
       content: `
-        DTA Nurul Iman adalah program pendidikan agama Islam nonformal yang membina anak-anak agar mengenal Islam sejak dini, lancar membaca Al-Qur'an, dan berakhlak mulia.
+        DTA Nurul Iman adalah program pendidikan agama Islam nonformal yang membina anak-anak agar mengenal Islam sejak dini, lancar membaca Al-Qur'an, and berakhlak mulia.
         
         Kurikulum:
         - Baca Tulis Al-Qur'an (BTQ) — Iqra hingga Al-Qur'an
@@ -76,7 +76,7 @@ async function main() {
         - Sejarah Islam (Sirah Nabawiyah)
         
         Jadwal: Sore hari ba'da Ashar, Senin – Sabtu
-        Pengajar: Ustadz/Ustadzah berpengalaman dan bersertifikat
+        Pengajar: Ustadz/Ustadzah berpengalaman and bersertifikat
       `,
       category: "Pendidikan",
       status: "ACTIVE",
@@ -118,7 +118,7 @@ async function main() {
       slug: "maulid-nabi-1446h",
       title: "Peringatan Maulid Nabi Muhammad SAW 1446 H di Masjid Nurul Iman",
       excerpt: "Ratusan jamaah memadati Masjid Nurul Iman dalam rangka memperingati Maulid Nabi Muhammad SAW 1446 H dengan penuh khidmat.",
-      content: "Alhamdulillah, Masjid Nurul Iman kembali menyelenggarakan peringatan Maulid Nabi Muhammad SAW 1446 H. Acara berlangsung meriah dihadiri oleh ratusan jamaah dari berbagai kalangan. Kegiatan diisi dengan pembacaan shalawat, tausiyah, dan santunan anak yatim.",
+      content: "Alhamdulillah, Masjid Nurul Iman kembali menyelenggarakan peringatan Maulid Nabi Muhammad SAW 1446 H. Acara berlangsung meriah dihadiri oleh ratusan jamaah dari berbagai kalangan. Kegiatan diisi dengan pembacaan shalawat, tausiyah, and santunan anak yatim.",
       category: "Kegiatan Masjid",
       tags: ["maulid", "masjid", "nurul iman"],
       published: true,
@@ -129,7 +129,7 @@ async function main() {
       slug: "wisuda-santri-dta-angkatan-10",
       title: "Wisuda Santri DTA Nurul Iman Angkatan ke-10",
       excerpt: "Sebanyak 50 santri DTA Nurul Iman resmi diwisuda setelah berhasil menyelesaikan program belajar.",
-      content: "Yayasan Nurul Iman dengan bangga menyelenggarakan Wisuda Santri DTA Nurul Iman Angkatan ke-10. Para wisudawan telah berhasil menyelesaikan hafalan Juz 30 dan lulus ujian praktik ibadah.",
+      content: "Yayasan Nurul Iman dengan bangga menyelenggarakan Wisuda Santri DTA Nurul Iman Angkatan ke-10. Para wisudawan telah berhasil menyelesaikan hafalan Juz 30 and lulus ujian praktik ibadah.",
       category: "DTA",
       tags: ["wisuda", "dta", "santri"],
       published: true,
@@ -146,6 +146,50 @@ async function main() {
       published: true,
       authorId: admin.id,
       thumbnail: "https://images.unsplash.com/photo-1542810634-71277d95dcbb?q=80&w=1200&auto=format&fit=crop",
+    },
+    {
+      slug: "laporan-kegiatan-jumat-berkah",
+      title: "Laporan Kegiatan Jumat Berkah: Berbagi 200 Paket Makanan",
+      excerpt: "Alhamdulillah, melalui donasi para jamaah, Masjid Nurul Iman kembali menyalurkan paket makanan setelah shalat Jumat.",
+      content: "Program Jumat Berkah kembali terlaksana dengan lancar. Pekan ini sebanyak 200 paket makanan telah disalurkan kepada jamaah and masyarakat sekitar masjid yang membutuhkan. Jazakumullahu Khairan kepada para muhsinin.",
+      category: "Kegiatan Masjid",
+      tags: ["jumat berkah", "sosial", "masjid"],
+      published: true,
+      authorId: admin.id,
+      thumbnail: "https://images.unsplash.com/photo-1593113598332-cd59a93c6132?q=80&w=1200&auto=format&fit=crop",
+    },
+    {
+      slug: "persiapan-ramadhan-1447h",
+      title: "Menyambut Ramadhan 1447 H: Masjid Nurul Iman Siapkan Rangkaian Ibadah",
+      excerpt: "Panitia Ramadhan Masjid Nurul Iman mulai menyiapkan agenda Tarawih, Ifthar, and Itikaf.",
+      content: "Insya Allah, menyambut bulan suci Ramadhan, Masjid Nurul Iman akan menyelenggarakan berbagai kegiatan diantaranya: Shalat Tarawih berjamaah, Ifthar (buka puasa) bersama setiap hari, Kajian Menjelang Buka, and Program Itikaf di 10 malam terakhir.",
+      category: "Kegiatan Masjid",
+      tags: ["ramadhan", "ibadah", "masjid"],
+      published: true,
+      authorId: admin.id,
+      thumbnail: "https://images.unsplash.com/photo-1564769662533-4f00a87b4056?q=80&w=1200&auto=format&fit=crop",
+    },
+    {
+      slug: "santri-dta-juara-lomba-tahfidz",
+      title: "Prestasi Santri DTA Nurul Iman di Lomba Tahfidz Tingkat Kecamatan",
+      excerpt: "Selamat kepada Ananda Ahmad yang berhasil meraih juara 1 lomba Tahfidz Juz 30.",
+      content: "Alhamdulillah, salah satu santri binaan DTA Nurul Iman berhasil menorehkan prestasi membanggakan dengan meraih Juara 1 Lomba Tahfidz Al-Qur'an tingkat kecamatan. Ini membuktikan kualitas pendidikan di DTA kita semakin meningkat.",
+      category: "DTA",
+      tags: ["prestasi", "tahfidz", "dta"],
+      published: true,
+      authorId: admin.id,
+      thumbnail: "https://images.unsplash.com/photo-1509062522246-3755977927d7?q=80&w=1200&auto=format&fit=crop",
+    },
+    {
+      slug: "penyaluran-beasiswa-yatim-dhuafa",
+      title: "Penyaluran Beasiswa Pendidikan untuk Anak Yatim & Dhuafa",
+      excerpt: "Yayasan Nurul Iman menyalurkan bantuan biaya pendidikan bagi 30 santri terpilih.",
+      content: "Sebagai bentuk kepedulian terhadap pendidikan umat, Yayasan Nurul Iman menyalurkan bantuan beasiswa berupa pelunasan SPP and perlengkapan sekolah bagi santri yatim and dhuafa agar tetap semangat menuntut ilmu.",
+      category: "Sosial",
+      tags: ["beasiswa", "sosial", "yatim dhuafa"],
+      published: true,
+      authorId: admin.id,
+      thumbnail: "https://images.unsplash.com/photo-1488521787991-ed7bbaae773c?q=80&w=1200&auto=format&fit=crop",
     },
   ];
 
@@ -181,7 +225,7 @@ async function main() {
     ],
   });
 
-  console.log("Database has been seeded with Islamic content.");
+  console.log("Database has been seeded with rich Islamic content.");
 }
 
 main()
