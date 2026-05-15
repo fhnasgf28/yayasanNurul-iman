@@ -14,6 +14,7 @@ const tunnelHostname = tunnelSiteUrl
 const nextConfig: NextConfig = {
   allowedDevOrigins: [
     "landingpage.clipperyt.online",
+    "yayasan.clipperyt.online",
     ...(tunnelHostname ? [tunnelHostname] : []),
   ],
   images: {

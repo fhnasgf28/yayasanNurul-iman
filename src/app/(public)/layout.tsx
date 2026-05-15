@@ -1,10 +1,7 @@
-import dynamic from "next/dynamic";
+import { Suspense } from "react";
 import Navbar from "@/components/public/Navbar";
 import Footer from "@/components/public/Footer";
-
-const BottomNavbar = dynamic(() => import("@/components/public/BottomNavbar"), {
-  ssr: false,
-});
+import BottomNavbar from "@/components/public/BottomNavbar";
 
 export default function PublicLayout({
   children,
@@ -15,7 +12,9 @@ export default function PublicLayout({
     <div className="flex flex-col min-h-screen">
       <Navbar />
       <div className="flex-grow pb-20 md:pb-0">{children}</div>
-      <BottomNavbar />
+      <Suspense fallback={null}>
+        <BottomNavbar />
+      </Suspense>
       <Footer />
     </div>
   );
