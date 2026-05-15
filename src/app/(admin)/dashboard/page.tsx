@@ -1,91 +1,220 @@
 import { db } from "@/lib/db";
+import Link from "next/link";
 import {
   Users,
   BookOpen,
   Newspaper,
   Image as ImageIcon,
   ArrowUpRight,
+  Plus,
+  TrendingUp,
 } from "lucide-react";
 
 async function getStats() {
-  const [programCount, newsCount, galleryCount] = await Promise.all([
+  const [programCount, newsCount, galleryCount, publishedCount] = await Promise.all([
     db.program.count(),
     db.news.count(),
     db.gallery.count(),
+    db.news.count({ where: { published: true } }),
   ]);
 
-  return [
-    { label: "Total Program", value: programCount.toString(), icon: BookOpen, color: "text-blue-600", bg: "bg-blue-50" },
-    { label: "Berita Publish", value: newsCount.toString(), icon: Newspaper, color: "text-green-600", bg: "bg-green-50" },
-    { label: "Total Galeri", value: galleryCount.toString(), icon: ImageIcon, color: "text-purple-600", bg: "bg-purple-50" },
-    { label: "Pengunjung", value: "0", icon: Users, color: "text-orange-600", bg: "bg-orange-50" },
-  ];
+  return { programCount, newsCount, galleryCount, publishedCount };
 }
 
 async function getRecentNews() {
   return await db.news.findMany({
     orderBy: { createdAt: "desc" },
-    take: 5,
+    take: 6,
     include: { author: { select: { name: true } } },
   });
 }
 
+async function getRecentPrograms() {
+  return await db.program.findMany({
+    orderBy: { createdAt: "desc" },
+    take: 4,
+    select: { id: true, title: true, category: true, status: true },
+  });
+}
+
+const statusColor: Record<string, string> = {
+  ACTIVE: "bg-green-100 text-green-700",
+  DRAFT: "bg-gray-100 text-gray-500",
+  COMPLETED: "bg-blue-100 text-blue-600",
+};
+
 export default async function DashboardPage() {
   const stats = await getStats();
   const recentNews = await getRecentNews();
+  const recentPrograms = await getRecentPrograms();
+
+  const statCards = [
+    {
+      label: "Total Program",
+      value: stats.programCount,
+      icon: BookOpen,
+      color: "text-blue-600",
+      bg: "bg-blue-50",
+      href: "/dashboard/programs",
+    },
+    {
+      label: "Total Berita",
+      value: stats.newsCount,
+      icon: Newspaper,
+      color: "text-green-600",
+      bg: "bg-green-50",
+      href: "/dashboard/news",
+    },
+    {
+      label: "Berita Terbit",
+      value: stats.publishedCount,
+      icon: TrendingUp,
+      color: "text-emerald-600",
+      bg: "bg-emerald-50",
+      href: "/dashboard/news",
+    },
+    {
+      label: "Total Galeri",
+      value: stats.galleryCount,
+      icon: ImageIcon,
+      color: "text-purple-600",
+      bg: "bg-purple-50",
+      href: "/dashboard/gallery",
+    },
+  ];
 
   return (
     <div className="space-y-8">
-      <div>
-        <h1 className="text-2xl font-serif font-bold text-primary">Overview Dashboard</h1>
-        <p className="text-gray-500">Pantau performa konten dan statistik yayasan Anda.</p>
+      {/* Page Header */}
+      <div className="flex items-center justify-between">
+        <div>
+          <h1 className="text-2xl font-serif font-bold text-primary">Overview Dashboard</h1>
+          <p className="text-gray-500 text-sm mt-1">Pantau performa konten dan statistik yayasan.</p>
+        </div>
       </div>
 
       {/* Stats Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-        {stats.map((stat) => (
-          <div key={stat.label} className="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 space-y-4">
-            <div className="flex items-center justify-between">
-              <div className={`${stat.bg} ${stat.color} p-3 rounded-xl`}>
-                <stat.icon size={24} />
-              </div>
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
+        {statCards.map((stat) => (
+          <Link
+            key={stat.label}
+            href={stat.href}
+            className="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 space-y-4 hover:shadow-md hover:border-primary/10 transition-all group"
+          >
+            <div className={`${stat.bg} ${stat.color} p-3 rounded-xl w-fit`}>
+              <stat.icon size={22} />
             </div>
             <div>
-              <p className="text-gray-400 text-sm font-medium">{stat.label}</p>
-              <h3 className="text-3xl font-bold text-primary">{stat.value}</h3>
+              <p className="text-gray-400 text-xs font-semibold uppercase tracking-wider">{stat.label}</p>
+              <h3 className="text-3xl font-bold text-primary mt-1">{stat.value}</h3>
             </div>
-          </div>
+          </Link>
         ))}
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-        {/* Recent Activity */}
-        <div className="lg:col-span-2 bg-white rounded-3xl p-8 shadow-sm border border-gray-100">
-          <div className="flex items-center justify-between mb-8">
-            <h3 className="text-xl font-serif font-bold text-primary">Berita Terbaru</h3>
-            <button className="text-accent text-sm font-bold flex items-center hover:underline">
-              Lihat Semua <ArrowUpRight size={16} className="ml-1" />
-            </button>
+      {/* Quick Actions */}
+      <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-6">
+        <h3 className="text-sm font-bold text-gray-400 uppercase tracking-wider mb-4">Aksi Cepat</h3>
+        <div className="flex flex-wrap gap-3">
+          <Link
+            href="/dashboard/news/new"
+            className="flex items-center space-x-2 px-4 py-2.5 bg-primary text-white rounded-xl text-sm font-bold hover:bg-primary/90 transition-colors"
+          >
+            <Plus size={16} />
+            <span>Berita Baru</span>
+          </Link>
+          <Link
+            href="/dashboard/programs/new"
+            className="flex items-center space-x-2 px-4 py-2.5 bg-white border border-primary/20 text-primary rounded-xl text-sm font-bold hover:bg-primary/5 transition-colors"
+          >
+            <Plus size={16} />
+            <span>Program Baru</span>
+          </Link>
+          <Link
+            href="/dashboard/gallery"
+            className="flex items-center space-x-2 px-4 py-2.5 bg-white border border-gray-200 text-gray-600 rounded-xl text-sm font-bold hover:bg-gray-50 transition-colors"
+          >
+            <ImageIcon size={16} />
+            <span>Kelola Galeri</span>
+          </Link>
+        </div>
+      </div>
+
+      {/* Content Grid */}
+      <div className="grid grid-cols-1 lg:grid-cols-5 gap-6">
+        {/* Recent News */}
+        <div className="lg:col-span-3 bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden">
+          <div className="flex items-center justify-between px-6 py-5 border-b border-gray-50">
+            <h3 className="font-serif font-bold text-primary">Berita Terbaru</h3>
+            <Link
+              href="/dashboard/news"
+              className="text-xs text-primary font-bold flex items-center hover:underline"
+            >
+              Lihat Semua <ArrowUpRight size={14} className="ml-0.5" />
+            </Link>
           </div>
-          
-          <div className="space-y-6">
+          <div className="divide-y divide-gray-50">
             {recentNews.map((news) => (
-              <div key={news.id} className="flex items-center justify-between py-4 border-b border-gray-50 last:border-0">
-                <div className="flex items-center space-x-4">
-                  <div className="w-12 h-12 rounded-xl bg-gray-50 flex items-center justify-center">
-                    <Newspaper size={20} className="text-gray-400" />
+              <div key={news.id} className="flex items-center justify-between px-6 py-4 hover:bg-gray-50/60 transition-colors">
+                <div className="flex items-center space-x-3 min-w-0">
+                  <div className="w-9 h-9 rounded-xl bg-gray-50 flex items-center justify-center shrink-0">
+                    <Newspaper size={16} className="text-gray-400" />
                   </div>
-                  <div>
-                    <p className="text-sm font-bold text-primary">{news.title}</p>
-                    <p className="text-xs text-gray-400">Oleh {news.author.name}</p>
+                  <div className="min-w-0">
+                    <p className="text-sm font-semibold text-primary truncate">{news.title}</p>
+                    <p className="text-xs text-gray-400 mt-0.5">{news.author.name}</p>
                   </div>
                 </div>
-                <span className="text-xs text-gray-400 font-medium">
-                  {new Date(news.createdAt).toLocaleDateString("id-ID")}
+                <div className="flex items-center space-x-3 shrink-0 ml-4">
+                  <span
+                    className={`px-2.5 py-1 rounded-full text-[10px] font-bold uppercase ${
+                      news.published ? "bg-green-100 text-green-600" : "bg-gray-100 text-gray-500"
+                    }`}
+                  >
+                    {news.published ? "Terbit" : "Draft"}
+                  </span>
+                  <span className="text-xs text-gray-400 hidden sm:block">
+                    {new Date(news.createdAt).toLocaleDateString("id-ID", { day: "numeric", month: "short" })}
+                  </span>
+                </div>
+              </div>
+            ))}
+            {recentNews.length === 0 && (
+              <div className="py-12 text-center text-gray-400 text-sm">Belum ada berita.</div>
+            )}
+          </div>
+        </div>
+
+        {/* Recent Programs */}
+        <div className="lg:col-span-2 bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden">
+          <div className="flex items-center justify-between px-6 py-5 border-b border-gray-50">
+            <h3 className="font-serif font-bold text-primary">Program Aktif</h3>
+            <Link
+              href="/dashboard/programs"
+              className="text-xs text-primary font-bold flex items-center hover:underline"
+            >
+              Lihat Semua <ArrowUpRight size={14} className="ml-0.5" />
+            </Link>
+          </div>
+          <div className="divide-y divide-gray-50">
+            {recentPrograms.map((program) => (
+              <div key={program.id} className="flex items-center justify-between px-6 py-4 hover:bg-gray-50/60 transition-colors">
+                <div className="min-w-0">
+                  <p className="text-sm font-semibold text-primary truncate">{program.title}</p>
+                  <p className="text-xs text-gray-400 mt-0.5">{program.category}</p>
+                </div>
+                <span
+                  className={`ml-3 px-2.5 py-1 rounded-full text-[10px] font-bold uppercase shrink-0 ${
+                    statusColor[program.status] ?? "bg-gray-100 text-gray-500"
+                  }`}
+                >
+                  {program.status}
                 </span>
               </div>
             ))}
-            {recentNews.length === 0 && <p className="text-center text-gray-400 py-10">Belum ada aktivitas berita.</p>}
+            {recentPrograms.length === 0 && (
+              <div className="py-12 text-center text-gray-400 text-sm">Belum ada program.</div>
+            )}
           </div>
         </div>
       </div>

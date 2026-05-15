@@ -1,6 +1,7 @@
 "use client";
 
 import { useEditor, EditorContent } from "@tiptap/react";
+import { useState, useEffect } from "react";
 import StarterKit from "@tiptap/starter-kit";
 import Image from "@tiptap/extension-image";
 import {
@@ -106,7 +107,11 @@ const MenuBar = ({ editor }: { editor: any }) => {
 };
 
 export default function RichTextEditor({ content, onChange }: RichTextEditorProps) {
+  const [mounted, setMounted] = useState(false);
+  useEffect(() => { setMounted(true); }, []);
+
   const editor = useEditor({
+    immediatelyRender: false,
     extensions: [StarterKit, Image],
     content: content,
     onUpdate: ({ editor }) => {
@@ -119,6 +124,8 @@ export default function RichTextEditor({ content, onChange }: RichTextEditorProp
       },
     },
   });
+
+  if (!mounted) return <div className="w-full border border-gray-100 rounded-xl min-h-[300px] bg-gray-50 animate-pulse" />;
 
   return (
     <div className="w-full border border-gray-100 rounded-xl overflow-hidden bg-white focus-within:border-accent transition-colors">

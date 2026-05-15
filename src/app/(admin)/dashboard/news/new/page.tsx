@@ -5,7 +5,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
 import { ArrowLeft, Save } from "lucide-react";
 import Link from "next/link";
-import { use, useState, useEffect } from "react";
+import { useState } from "react";
 import RichTextEditor from "@/components/admin/RichTextEditor";
 import ImageUploader from "@/components/admin/ImageUploader";
 import { slugify } from "@/lib/utils";
@@ -24,15 +24,8 @@ const newsSchema = z.object({
 
 type NewsFormValues = z.infer<typeof newsSchema>;
 
-export default function EditNewsPage({
-  params,
-}: {
-  params: Promise<{ id: string }>;
-}) {
-  const { id } = use(params);
-
+export default function CreateNewsPage() {
   const [isLoading, setIsLoading] = useState(false);
-  const [isFetching, setIsFetching] = useState(true);
   const router = useRouter();
 
   const {
@@ -40,56 +33,26 @@ export default function EditNewsPage({
     handleSubmit,
     setValue,
     watch,
-    reset,
     formState: { errors },
   } = useForm<NewsFormValues>({
     resolver: zodResolver(newsSchema),
+    defaultValues: { published: false, thumbnail: null },
   });
-
-  useEffect(() => {
-    if (!id) return;
-
-    const fetchNews = async () => {
-      try {
-        const response = await fetch(`/api/news`);
-        if (response.ok) {
-          const newsList = await response.json();
-          const news = newsList.find((n: any) => n.id === id);
-          if (news) {
-            reset({
-              ...news,
-              tags: Array.isArray(news.tags) ? news.tags.join(", ") : news.tags
-            });
-          }
-        }
-      } catch (error) {
-        console.error(error);
-      } finally {
-        setIsFetching(false);
-      }
-    };
-    fetchNews();
-  }, [id, reset]);
 
   const onSubmit = async (data: NewsFormValues) => {
     setIsLoading(true);
     try {
-      const response = await fetch(`/api/news/${id}`, {
-        method: "PATCH",
-        headers: {
-          "Content-Type": "application/json",
-        },
+      const response = await fetch("/api/news", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify(data),
       });
 
-      if (!response.ok) {
-        throw new Error("Gagal menyimpan berita");
-      }
+      if (!response.ok) throw new Error("Gagal menyimpan berita");
 
-      alert("Berita berhasil diperbarui!");
       router.push("/dashboard/news");
       router.refresh();
-    } catch (err) {
+    } catch {
       alert("Terjadi kesalahan saat menyimpan berita");
     } finally {
       setIsLoading(false);
@@ -102,8 +65,6 @@ export default function EditNewsPage({
     setValue("slug", slugify(val));
   };
 
-  if (isFetching) return <div className="p-8 text-center text-gray-500">Memuat data...</div>;
-
   return (
     <div className="space-y-8 pb-20">
       <div className="flex items-center justify-between">
@@ -115,32 +76,30 @@ export default function EditNewsPage({
             <ArrowLeft size={20} />
           </Link>
           <div>
-            <h1 className="text-2xl font-serif font-bold text-primary">Edit Berita</h1>
-            <p className="text-gray-500 text-sm">Perbarui konten artikel Anda.</p>
+            <h1 className="text-2xl font-serif font-bold text-primary">Tambah Berita</h1>
+            <p className="text-gray-500 text-sm">Buat artikel atau update kegiatan baru.</p>
           </div>
         </div>
-        
-        <div className="flex items-center space-x-4">
-           <button
-             onClick={handleSubmit(onSubmit)}
-             disabled={isLoading}
-             className="flex items-center space-x-2 px-8 py-2.5 bg-primary text-white rounded-xl font-bold text-sm hover:bg-primary/90 transition-all shadow-md disabled:opacity-70"
-           >
-             <Save size={18} />
-             <span>{isLoading ? "Menyimpan..." : "Simpan Perubahan"}</span>
-           </button>
-        </div>
+        <button
+          onClick={handleSubmit(onSubmit)}
+          disabled={isLoading}
+          className="flex items-center space-x-2 px-6 py-2.5 bg-primary text-white rounded-xl font-bold text-sm hover:bg-primary/90 transition-all shadow-md disabled:opacity-60"
+        >
+          <Save size={16} />
+          <span>{isLoading ? "Menyimpan..." : "Simpan Berita"}</span>
+        </button>
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-        <div className="lg:col-span-2 space-y-8">
+        <div className="lg:col-span-2 space-y-6">
           <div className="bg-white p-8 rounded-3xl border border-gray-100 shadow-sm space-y-6">
             <div className="space-y-2">
               <label className="text-sm font-bold text-primary">Judul Berita</label>
               <input
                 {...register("title")}
                 onChange={handleTitleChange}
-                className="w-full bg-base border border-gray-100 rounded-xl py-4 px-6 outline-none focus:border-accent transition-colors"
+                placeholder="Masukkan judul berita..."
+                className="w-full bg-gray-50 border border-gray-100 rounded-xl py-3.5 px-5 outline-none focus:border-primary/40 transition-colors text-sm"
               />
               {errors.title && <p className="text-xs text-red-500">{errors.title.message}</p>}
             </div>
@@ -149,17 +108,18 @@ export default function EditNewsPage({
               <label className="text-sm font-bold text-primary">Slug (URL)</label>
               <input
                 {...register("slug")}
-                className="w-full bg-gray-50 border border-gray-100 rounded-xl py-4 px-6 text-gray-400 outline-none"
+                className="w-full bg-gray-100 border border-gray-100 rounded-xl py-3.5 px-5 text-gray-400 text-sm outline-none"
                 readOnly
               />
             </div>
 
             <div className="space-y-2">
-              <label className="text-sm font-bold text-primary">Ringkasan (Excerpt)</label>
+              <label className="text-sm font-bold text-primary">Ringkasan</label>
               <textarea
                 {...register("excerpt")}
                 rows={3}
-                className="w-full bg-base border border-gray-100 rounded-xl py-4 px-6 outline-none focus:border-accent transition-colors resize-none"
+                placeholder="Ringkasan singkat berita..."
+                className="w-full bg-gray-50 border border-gray-100 rounded-xl py-3.5 px-5 outline-none focus:border-primary/40 transition-colors resize-none text-sm"
               />
               {errors.excerpt && <p className="text-xs text-red-500">{errors.excerpt.message}</p>}
             </div>
@@ -175,8 +135,8 @@ export default function EditNewsPage({
           </div>
         </div>
 
-        <div className="space-y-8">
-          <div className="bg-white p-8 rounded-3xl border border-gray-100 shadow-sm space-y-6">
+        <div className="space-y-6">
+          <div className="bg-white p-6 rounded-3xl border border-gray-100 shadow-sm space-y-6">
             <ImageUploader
               value={watch("thumbnail")}
               onChange={(url) => setValue("thumbnail", url)}
@@ -187,29 +147,34 @@ export default function EditNewsPage({
               <label className="text-sm font-bold text-primary">Kategori</label>
               <select
                 {...register("category")}
-                className="w-full bg-base border border-gray-100 rounded-xl py-4 px-4 outline-none focus:border-accent transition-colors appearance-none"
+                className="w-full bg-gray-50 border border-gray-100 rounded-xl py-3.5 px-4 outline-none focus:border-primary/40 transition-colors text-sm appearance-none"
               >
+                <option value="">Pilih kategori...</option>
                 <option value="Kegiatan Masjid">Kegiatan Masjid</option>
                 <option value="DTA">DTA</option>
                 <option value="Sosial">Sosial</option>
               </select>
+              {errors.category && <p className="text-xs text-red-500">{errors.category.message}</p>}
             </div>
 
             <div className="space-y-2">
-              <label className="text-sm font-bold text-primary">Tag (Pisahkan dengan koma)</label>
+              <label className="text-sm font-bold text-primary">Tag (pisah dengan koma)</label>
               <input
                 {...register("tags")}
-                className="w-full bg-base border border-gray-100 rounded-xl py-4 px-6 outline-none focus:border-accent transition-colors"
+                placeholder="masjid, kegiatan, ramadhan"
+                className="w-full bg-gray-50 border border-gray-100 rounded-xl py-3.5 px-5 outline-none focus:border-primary/40 transition-colors text-sm"
               />
             </div>
 
-            <div className="flex items-center justify-between p-4 bg-base rounded-2xl">
-               <span className="text-sm font-bold text-primary">Diterbitkan?</span>
-               <input
-                 type="checkbox"
-                 {...register("published")}
-                 className="w-5 h-5 accent-accent"
-               />
+            <div className="flex items-center justify-between p-4 bg-gray-50 rounded-2xl">
+              <div>
+                <span className="text-sm font-bold text-primary">Terbitkan Sekarang</span>
+                <p className="text-xs text-gray-400 mt-0.5">Berita langsung tampil di website</p>
+              </div>
+              <label className="relative inline-flex items-center cursor-pointer">
+                <input type="checkbox" {...register("published")} className="sr-only peer" />
+                <div className="w-11 h-6 bg-gray-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
+              </label>
             </div>
           </div>
         </div>
