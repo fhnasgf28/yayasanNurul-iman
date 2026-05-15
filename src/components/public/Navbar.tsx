@@ -51,7 +51,7 @@ export default function Navbar() {
               "text-2xl font-serif font-bold transition-colors duration-300",
               scrolled ? "text-primary" : "text-white"
             )}>
-              Nurul Iman
+              Yayasan Nurul Iman
             </span>
           </Link>
 

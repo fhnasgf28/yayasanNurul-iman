@@ -11,6 +11,11 @@ const adapter = new PrismaPg({ connectionString });
 
 const globalForPrisma = global as unknown as { prisma: PrismaClient };
 
+// Force fresh client (needed after prisma generate in dev)
+if (globalForPrisma.prisma && !(globalForPrisma.prisma as any).prestasi) {
+  (globalForPrisma as any).prisma = undefined;
+}
+
 export const db =
   globalForPrisma.prisma || new PrismaClient({ adapter });
 

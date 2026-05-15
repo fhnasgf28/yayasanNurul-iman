@@ -3,19 +3,29 @@ import StatCounter from "@/components/public/StatCounter";
 import ProgramCard from "@/components/public/ProgramCard";
 import NewsCard from "@/components/public/NewsCard";
 import DonationBanner from "@/components/public/DonationBanner";
+import AchievementSlider from "@/components/public/AchievementSlider";
 import { ArrowRight } from "lucide-react";
 import Link from "next/link";
 
 import { getPrograms, getNews } from "@/lib/data";
+import { db } from "@/lib/db";
 
 export default async function Home() {
-  const featuredPrograms = await getPrograms(3);
-  const latestNews = await getNews(2);
+  const [featuredPrograms, latestNews, prestasi] = await Promise.all([
+    getPrograms(3),
+    getNews(2),
+    db.prestasi.findMany({
+      where: { active: true },
+      orderBy: { order: "asc" },
+      select: { id: true, title: true, caption: true, imageUrl: true, badge: true },
+    }),
+  ]);
 
   return (
     <main className="flex flex-col min-h-screen">
       <Hero />
       <StatCounter />
+      <AchievementSlider items={prestasi} />
 
       {/* About Section */}
       <section className="py-24 px-6 bg-white bg-islamic">

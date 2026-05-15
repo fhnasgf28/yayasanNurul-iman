@@ -12,6 +12,7 @@ import {
   LogOut,
   ChevronLeft,
   ChevronRight,
+  Award,
 } from "lucide-react";
 import { useState } from "react";
 import { signOut } from "next-auth/react";
@@ -20,6 +21,7 @@ const menuItems = [
   { name: "Dashboard", href: "/dashboard", icon: LayoutDashboard, exact: true },
   { name: "Kelola Program", href: "/dashboard/programs", icon: BookOpen },
   { name: "Kelola Berita", href: "/dashboard/news", icon: Newspaper },
+  { name: "Kelola Prestasi", href: "/dashboard/prestasi", icon: Award },
   { name: "Kelola Galeri", href: "/dashboard/gallery", icon: ImageIcon },
   { name: "Pengaturan", href: "/dashboard/settings", icon: Settings },
 ];
