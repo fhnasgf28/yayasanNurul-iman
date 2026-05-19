@@ -4,14 +4,17 @@ import ProgramCard from "@/components/public/ProgramCard";
 import NewsCard from "@/components/public/NewsCard";
 import DonationBanner from "@/components/public/DonationBanner";
 import AchievementSlider from "@/components/public/AchievementSlider";
+import PrayerTimesSection from "@/components/public/PrayerTimesSection";
 import { ArrowRight } from "lucide-react";
 import Link from "next/link";
 
 import { getPrograms, getNews } from "@/lib/data";
 import { db } from "@/lib/db";
+import { getSettings } from "@/lib/settings";
+import { getPrayerTimes } from "@/lib/prayer-times";
 
 export default async function Home() {
-  const [featuredPrograms, latestNews, prestasi] = await Promise.all([
+  const [featuredPrograms, latestNews, prestasi, settings] = await Promise.all([
     getPrograms(3),
     getNews(2),
     db.prestasi.findMany({
@@ -19,11 +22,14 @@ export default async function Home() {
       orderBy: { order: "asc" },
       select: { id: true, title: true, caption: true, imageUrl: true, badge: true },
     }),
+    getSettings(),
   ]);
+  const prayerTimes = await getPrayerTimes(settings);
 
   return (
     <main className="flex flex-col min-h-screen">
       <Hero />
+      <PrayerTimesSection data={prayerTimes} />
       <StatCounter />
       <AchievementSlider items={prestasi} />
 
@@ -53,9 +59,19 @@ export default async function Home() {
                 <h4 className="font-serif font-bold text-primary text-xl mb-2">Visi Kami</h4>
                 <p className="text-sm text-gray-600">Menjadi yayasan keagamaan yang amanah dalam memakmurkan masjid dan melahirkan generasi Muslim yang berakhlak mulia.</p>
               </div>
-              <div className="p-6 bg-accent/30 rounded-2xl border border-secondary/20">
-                <h4 className="font-serif font-bold text-primary text-xl mb-2">Misi Kami</h4>
-                <p className="text-sm text-gray-600">Mengelola Masjid Nurul Iman sebagai pusat ibadah dan menyelenggarakan pendidikan DTA yang berkualitas.</p>
+              <div className="p-6 bg-accent/30 rounded-2xl border border-secondary/20 space-y-4">
+                <div>
+                  <h4 className="font-serif font-bold text-primary text-xl mb-2">Misi Kami</h4>
+                  <p className="text-sm text-gray-600 leading-relaxed">
+                    Mengelola Masjid Nurul Iman sebagai pusat ibadah dan menyelenggarakan pendidikan DTA yang berkualitas, terarah, dan berdampak nyata bagi santri.
+                  </p>
+                </div>
+                <div className="space-y-3">
+                  <div className="rounded-2xl bg-white/80 px-4 py-3 border border-secondary/10">
+                    <p className="text-sm font-semibold text-primary">Target 1 Tahun Santri DTA</p>
+                    <p className="text-sm text-gray-600 mt-1">Murid-murid DTA ditargetkan mampu adzan dengan baik dan hafal Juz 30 dalam jangka 1 tahun pembelajaran.</p>
+                  </div>
+                </div>
               </div>
             </div>
             <Link

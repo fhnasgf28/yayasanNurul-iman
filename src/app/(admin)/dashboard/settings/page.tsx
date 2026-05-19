@@ -13,8 +13,32 @@ export default function AdminSettingsPage() {
     contact_address: "Jl. Raya Nurul Iman No. 123, Jakarta",
     contact_phone: "+62 21 1234 5678",
     contact_email: "info@nuruliman.or.id",
+    prayer_location_label: "Jakarta, Indonesia",
+    prayer_city: "Jakarta",
+    prayer_country: "Indonesia",
+    prayer_method: "20",
   });
   const router = useRouter();
+
+  useEffect(() => {
+    const loadSettings = async () => {
+      try {
+        const response = await fetch("/api/settings");
+        if (!response.ok) {
+          return;
+        }
+
+        const data = (await response.json()) as { settings?: Record<string, string> };
+        if (data.settings) {
+          setSettings((prev) => ({ ...prev, ...data.settings }));
+        }
+      } catch {
+        console.error("loadSettings failed");
+      }
+    };
+
+    loadSettings();
+  }, []);
 
   const handleSave = async () => {
     setIsLoading(true);
@@ -31,7 +55,7 @@ export default function AdminSettingsPage() {
       } else {
         alert("Gagal menyimpan pengaturan");
       }
-    } catch (error) {
+    } catch {
       alert("Terjadi kesalahan sistem");
     } finally {
       setIsLoading(false);
@@ -129,6 +153,57 @@ export default function AdminSettingsPage() {
               </div>
             </div>
           </div>
+        </div>
+
+        <div className="bg-white p-8 rounded-3xl border border-gray-100 shadow-sm space-y-6 lg:col-span-2">
+          <div className="flex items-center space-x-3 text-primary mb-2">
+            <Share2 size={20} className="text-accent" />
+            <h3 className="text-lg font-serif font-bold">Jadwal Sholat</h3>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-4">
+            <div className="space-y-2">
+              <label className="text-sm font-bold text-primary">Label Lokasi</label>
+              <input
+                value={settings.prayer_location_label}
+                onChange={(e) => handleChange("prayer_location_label", e.target.value)}
+                className="w-full bg-base border border-gray-100 rounded-xl py-3 px-4 outline-none focus:border-accent"
+                placeholder="Contoh: Jakarta, Indonesia"
+              />
+            </div>
+            <div className="space-y-2">
+              <label className="text-sm font-bold text-primary">Kota</label>
+              <input
+                value={settings.prayer_city}
+                onChange={(e) => handleChange("prayer_city", e.target.value)}
+                className="w-full bg-base border border-gray-100 rounded-xl py-3 px-4 outline-none focus:border-accent"
+                placeholder="Contoh: Jakarta"
+              />
+            </div>
+            <div className="space-y-2">
+              <label className="text-sm font-bold text-primary">Negara</label>
+              <input
+                value={settings.prayer_country}
+                onChange={(e) => handleChange("prayer_country", e.target.value)}
+                className="w-full bg-base border border-gray-100 rounded-xl py-3 px-4 outline-none focus:border-accent"
+                placeholder="Contoh: Indonesia"
+              />
+            </div>
+            <div className="space-y-2">
+              <label className="text-sm font-bold text-primary">Metode Perhitungan</label>
+              <input
+                value={settings.prayer_method}
+                onChange={(e) => handleChange("prayer_method", e.target.value)}
+                className="w-full bg-base border border-gray-100 rounded-xl py-3 px-4 outline-none focus:border-accent"
+                placeholder="20"
+              />
+            </div>
+          </div>
+
+          <p className="text-sm text-gray-500 leading-relaxed">
+            Default yang dipakai adalah metode <strong>Kementerian Agama Republik Indonesia</strong> dengan kode <strong>20</strong>.
+            Ubah kota, negara, atau label lokasi jika jadwal sholat website harus mengikuti wilayah masjid yang berbeda.
+          </p>
         </div>
       </div>
     </div>

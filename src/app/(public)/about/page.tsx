@@ -11,7 +11,7 @@ export default function AboutPage() {
           <p className="text-white/70 text-lg md:text-xl italic font-arabic mt-4 text-secondary">
             بِسْمِ اللَّهِ الرَّحْمَنِ الرَّحِيمِ
           </p>
-          <p className="text-white/70 text-lg md:text-xl">Mengenal lebih dekat visi, misi, dan perjalanan Yayasan Nurul Iman dalam memakmurkan masjid dan membina generasi Qur'ani.</p>
+          <p className="text-white/70 text-lg md:text-xl">Mengenal lebih dekat visi, misi, dan perjalanan Yayasan Nurul Iman dalam memakmurkan masjid dan membina generasi Qur&apos;ani.</p>
         </div>
       </section>
 
@@ -30,7 +30,7 @@ export default function AboutPage() {
                 Yayasan Nurul Iman didirikan dengan semangat untuk menjaga dan memakmurkan Masjid Nurul Iman sebagai rumah ibadah umat Islam di lingkungan ini.
               </p>
               <p>
-                Seiring waktu, yayasan berkembang dengan menambahkan program pendidikan agama berupa DTA (Diniyah Takmiliyah Awaliyah) untuk membina anak-anak agar mengenal dan mencintai Al-Qur'an sejak dini.
+                Seiring waktu, yayasan berkembang dengan menambahkan program pendidikan agama berupa DTA (Diniyah Takmiliyah Awaliyah) untuk membina anak-anak agar mengenal dan mencintai Al-Qur&apos;an sejak dini.
               </p>
             </div>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8 pt-6">
@@ -40,7 +40,7 @@ export default function AboutPage() {
                 </div>
                 <div>
                   <h4 className="font-bold text-primary text-xl">Visi</h4>
-                  <p className="text-sm text-gray-600">Menjadi yayasan keagamaan yang amanah dalam memakmurkan masjid dan melahirkan generasi Muslim yang berakhlak mulia, cinta Al-Qur'an, dan bermanfaat bagi umat.</p>
+                  <p className="text-sm text-gray-600">Menjadi yayasan keagamaan yang amanah dalam memakmurkan masjid dan melahirkan generasi Muslim yang berakhlak mulia, cinta Al-Qur&apos;an, dan bermanfaat bagi umat.</p>
                 </div>
               </div>
               <div className="flex items-start space-x-4">
@@ -49,10 +49,19 @@ export default function AboutPage() {
                 </div>
                 <div>
                   <h4 className="font-bold text-primary text-xl">Misi</h4>
-                  <div className="text-sm text-gray-600 space-y-2 mt-2">
-                    <p>1. Mengelola dan memakmurkan Masjid Nurul Iman sebagai pusat ibadah.</p>
-                    <p>2. Menyelenggarakan pendidikan agama Islam (DTA) yang berkualitas.</p>
-                    <p>3. Membina generasi muda agar fasih memahami Al-Qur'an.</p>
+                  <div className="text-sm text-gray-600 space-y-3 mt-3">
+                    <div className="rounded-2xl bg-white p-4 border border-secondary/10 shadow-sm">
+                      <p>1. Mengelola dan memakmurkan Masjid Nurul Iman sebagai pusat ibadah.</p>
+                    </div>
+                    <div className="rounded-2xl bg-white p-4 border border-secondary/10 shadow-sm">
+                      <p>2. Menyelenggarakan pendidikan agama Islam (DTA) yang berkualitas.</p>
+                    </div>
+                    <div className="rounded-2xl bg-white p-4 border border-secondary/10 shadow-sm">
+                      <p>3. Membina generasi muda agar fasih memahami Al-Qur&apos;an.</p>
+                    </div>
+                    <div className="rounded-2xl bg-secondary/10 p-4 border border-secondary/20 shadow-sm">
+                      <p className="font-semibold text-primary">4. Menargetkan murid-murid DTA dalam jangka 1 tahun mampu adzan dengan baik dan hafal Juz 30.</p>
+                    </div>
                   </div>
                 </div>
               </div>

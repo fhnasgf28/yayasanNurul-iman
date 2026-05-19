@@ -3,6 +3,21 @@ import { getServerSession } from "next-auth/next";
 import { authOptions } from "@/lib/auth";
 import { db } from "@/lib/db";
 
+export async function GET() {
+  try {
+    const settings = await db.siteSettings.findMany();
+    const mapped = settings.reduce<Record<string, string>>((acc, item) => {
+      acc[item.key] = item.value;
+      return acc;
+    }, {});
+
+    return NextResponse.json({ settings: mapped });
+  } catch (error) {
+    console.error("[SETTINGS_GET]", error);
+    return new NextResponse("Internal Error", { status: 500 });
+  }
+}
+
 export async function POST(req: Request) {
   try {
     const session = await getServerSession(authOptions);

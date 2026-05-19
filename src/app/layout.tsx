@@ -23,8 +23,6 @@ export const metadata: Metadata = {
   description: "Menerangi Umat, Membentuk Generasi Qur'ani. Yayasan Nurul Iman berdedikasi memakmurkan Masjid Nurul Iman dan membina generasi muda melalui DTA.",
 };
 
-import { Providers } from "@/components/Providers";
-
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -40,7 +38,7 @@ export default function RootLayout({
           notoArabic.variable
         )}
       >
-        <Providers>{children}</Providers>
+        {children}
       </body>
     </html>
   );
