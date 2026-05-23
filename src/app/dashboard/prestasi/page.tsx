@@ -58,7 +58,7 @@ export default function AdminPrestasiPage() {
         <h1 className="text-2xl font-serif font-bold text-primary">Kelola Prestasi</h1>
         <p className="text-gray-500">Foto dan keterangan yang tampil di slider halaman depan.</p>
       </div>
-      <DataTable title="Daftar Prestasi" columns={columns} data={data} onDelete={handleDelete} createHref="/dashboard/prestasi" />
+      <DataTable title="Daftar Prestasi" columns={columns} data={data} onDelete={handleDelete} createHref="/dashboard/prestasi/new" />
     </div>
   );
 }

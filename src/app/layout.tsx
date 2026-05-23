@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Playfair_Display, DM_Sans, Noto_Naskh_Arabic } from "next/font/google";
 import "./globals.css";
 import { cn } from "@/lib/utils";
+import Providers from "@/components/Providers";
 
 const playfair = Playfair_Display({
   subsets: ["latin"],
@@ -38,7 +39,7 @@ export default function RootLayout({
           notoArabic.variable
         )}
       >
-        {children}
+        <Providers>{children}</Providers>
       </body>
     </html>
   );

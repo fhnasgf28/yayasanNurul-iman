@@ -149,7 +149,7 @@ export default function AdminNewsPage() {
         title="Daftar Berita"
         columns={columns}
         data={data}
-        createHref="/dashboard/news"
+        createHref="/dashboard/news/new"
         onDelete={handleDelete}
       />
     </div>

@@ -105,7 +105,7 @@ export default function AdminProgramsPage() {
         title="Daftar Program"
         columns={columns}
         data={data}
-        createHref="/dashboard/programs"
+        createHref="/dashboard/programs/new"
         onDelete={handleDelete}
       />
     </div>
