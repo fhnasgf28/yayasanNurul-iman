@@ -2,7 +2,6 @@
 
 import { useState, useEffect } from "react";
 import DataTable from "@/components/admin/DataTable";
-import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { formatDate } from "@/lib/utils";
 
@@ -13,7 +12,7 @@ const columns = [
     render: (value: string) => (
       <div className="relative w-16 h-10 rounded-lg overflow-hidden border border-gray-100 shadow-sm">
         {value ? (
-          <Image src={value} alt="Thumb" fill className="object-cover" />
+          <img src={value} alt="Thumb" className="h-full w-full object-cover" loading="lazy" />
         ) : (
           <div className="bg-gray-100 w-full h-full" />
         )}
