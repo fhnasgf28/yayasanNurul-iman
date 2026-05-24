@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { useEffect, useMemo, useState } from "react";
 import type { LucideIcon } from "lucide-react";
 import {
@@ -102,61 +103,140 @@ const slotMeta: Array<Pick<PrayerSlot, "id" | "label" | "arabic" | "icon" | "ton
   { id: "isya", label: "Isya", arabic: "العشاء", icon: Sparkles, tone: "from-slate-500/20 via-emerald-400/8 to-white" },
 ];
 
-function createDateWithTime(dateText: string, timeText: string) {
-  return new Date(`${dateText}T${timeText}:00`);
+function parseTimeParts(timeText: string | undefined) {
+  const match = timeText?.match(/^(\d{1,2}):(\d{2})(?::(\d{2}))?$/);
+  if (!match) return null;
+
+  const hour = Number(match[1]);
+  const minute = Number(match[2]);
+  const second = Number(match[3] ?? 0);
+
+  if (
+    !Number.isInteger(hour)
+    || !Number.isInteger(minute)
+    || !Number.isInteger(second)
+    || hour < 0
+    || hour > 23
+    || minute < 0
+    || minute > 59
+    || second < 0
+    || second > 59
+  ) {
+    return null;
+  }
+
+  return { hour, minute, second };
+}
+
+function shiftTime(timeText: string | undefined, offsetMinutes: number) {
+  const parts = parseTimeParts(timeText);
+  if (!parts) return null;
+
+  const totalMinutes = (parts.hour * 60 + parts.minute + offsetMinutes + 24 * 60) % (24 * 60);
+  const hour = String(Math.floor(totalMinutes / 60)).padStart(2, "0");
+  const minute = String(totalMinutes % 60).padStart(2, "0");
+
+  return `${hour}:${minute}`;
+}
+
+function createDateWithTime(dateParts: { year: string; month: string; day: string }, timeText: string) {
+  const timeParts = parseTimeParts(timeText);
+  if (!timeParts) return null;
+
+  const year = Number(dateParts.year);
+  const month = Number(dateParts.month);
+  const day = Number(dateParts.day);
+  if (!year || !month || !day) return null;
+
+  const date = new Date(year, month - 1, day, timeParts.hour, timeParts.minute, timeParts.second, 0);
+  return Number.isNaN(date.getTime()) ? null : date;
 }
 
 function getTimeZoneParts(timeZone: string, referenceDate: Date) {
-  const formatter = new Intl.DateTimeFormat("en-CA", {
-    timeZone,
-    year: "numeric",
-    month: "2-digit",
-    day: "2-digit",
-    hour: "2-digit",
-    minute: "2-digit",
-    second: "2-digit",
-    hourCycle: "h23",
-  });
+  try {
+    const formatter = new Intl.DateTimeFormat("en-CA", {
+      timeZone: timeZone || dummyKemenagData.timezone,
+      year: "numeric",
+      month: "2-digit",
+      day: "2-digit",
+      hour: "2-digit",
+      minute: "2-digit",
+      second: "2-digit",
+      hourCycle: "h23",
+    });
 
-  const partMap = formatter.formatToParts(referenceDate).reduce<Record<string, string>>((acc, part) => {
-    if (part.type !== "literal") {
-      acc[part.type] = part.value;
-    }
-    return acc;
-  }, {});
+    const partMap = formatter.formatToParts(referenceDate).reduce<Record<string, string>>((acc, part) => {
+      if (part.type !== "literal") {
+        acc[part.type] = part.value;
+      }
+      return acc;
+    }, {});
 
-  return {
-    year: partMap.year,
-    month: partMap.month,
-    day: partMap.day,
-    hour: partMap.hour,
-    minute: partMap.minute,
-    second: partMap.second,
-  };
+    return {
+      year: partMap.year,
+      month: partMap.month,
+      day: partMap.day,
+      hour: partMap.hour,
+      minute: partMap.minute,
+      second: partMap.second,
+    };
+  } catch {
+    const fallback = getTimeZoneParts(dummyKemenagData.timezone, referenceDate);
+    return fallback;
+  }
 }
 
 function buildCountdown(slots: PrayerSlot[], timezone: string, nowMs: number): CountdownState {
   const nowParts = getTimeZoneParts(timezone, new Date(nowMs));
-  const today = `${nowParts.year}-${nowParts.month}-${nowParts.day}`;
-  const tomorrow = new Date(`${today}T00:00:00`);
+  const tomorrow = new Date(Number(nowParts.year), Number(nowParts.month) - 1, Number(nowParts.day));
   tomorrow.setDate(tomorrow.getDate() + 1);
+  const tomorrowParts = {
+    year: String(tomorrow.getFullYear()),
+    month: String(tomorrow.getMonth() + 1).padStart(2, "0"),
+    day: String(tomorrow.getDate()).padStart(2, "0"),
+  };
 
-  const schedule = slots.map((slot) => ({
-    ...slot,
-    at: createDateWithTime(today, slot.time),
-  }));
+  const schedule = slots
+    .map((slot) => {
+      const at = createDateWithTime(nowParts, slot.time);
+      return at ? { ...slot, at } : null;
+    })
+    .filter((slot): slot is PrayerSlot & { at: Date } => Boolean(slot));
 
-  const now = createDateWithTime(today, `${nowParts.hour}:${nowParts.minute}:${nowParts.second}`);
+  const now = createDateWithTime(nowParts, `${nowParts.hour}:${nowParts.minute}:${nowParts.second}`);
+  const fallbackSlot = schedule[0] ?? slots[0];
+
+  if (!now || !fallbackSlot) {
+    return {
+      nowText: "--:--:--",
+      nextId: slots[0]?.id ?? "subuh",
+      nextLabel: slots[0]?.label ?? "Subuh",
+      nextTime: slots[0]?.time ?? "--:--",
+      remaining: "00:00:00",
+    };
+  }
+
   let target = schedule.find((slot) => slot.at.getTime() > now.getTime());
 
   if (!target) {
+    const tomorrowAt = createDateWithTime(tomorrowParts, fallbackSlot.time);
     target = {
-      ...slots[0],
-      at: createDateWithTime(tomorrow.toISOString().slice(0, 10), slots[0].time),
+      ...fallbackSlot,
+      at: tomorrowAt ?? now,
     };
   }
 
   const diffMs = Math.max(0, target.at.getTime() - now.getTime());
+  if (!Number.isFinite(diffMs)) {
+    return {
+      nowText: `${nowParts.hour}:${nowParts.minute}:${nowParts.second}`,
+      nextId: target.id,
+      nextLabel: target.label,
+      nextTime: target.time,
+      remaining: "00:00:00",
+    };
+  }
+
   const totalSeconds = Math.floor(diffMs / 1000);
   const hours = String(Math.floor(totalSeconds / 3600)).padStart(2, "0");
   const minutes = String(Math.floor((totalSeconds % 3600) / 60)).padStart(2, "0");
@@ -168,6 +248,18 @@ function buildCountdown(slots: PrayerSlot[], timezone: string, nowMs: number): C
     nextLabel: target.label,
     nextTime: target.time,
     remaining: `${hours}:${minutes}:${seconds}`,
+  };
+}
+
+function buildPendingCountdown(slots: PrayerSlot[]): CountdownState {
+  const fallbackSlot = slots.find((slot) => parseTimeParts(slot.time)) ?? slots[0];
+
+  return {
+    nowText: "--:--:--",
+    nextId: fallbackSlot?.id ?? "subuh",
+    nextLabel: fallbackSlot?.label ?? "Subuh",
+    nextTime: fallbackSlot?.time ?? "--:--",
+    remaining: "00:00:00",
   };
 }
 
@@ -187,7 +279,7 @@ function buildViewModel(data: PrayerTimesData | null): ViewModel {
   }
 
   const mappedTimes: Record<PrayerSlot["id"], string> = {
-    imsak: data.entries[0]?.time ?? dummyKemenagData.schedule.imsak,
+    imsak: shiftTime(data.entries.find((entry) => entry.name === "Subuh")?.time, -10) ?? dummyKemenagData.schedule.imsak,
     subuh: data.entries.find((entry) => entry.name === "Subuh")?.time ?? dummyKemenagData.schedule.subuh,
     terbit: dummyKemenagData.schedule.terbit,
     dzuhur: data.entries.find((entry) => entry.name === "Dzuhur")?.time ?? dummyKemenagData.schedule.dzuhur,
@@ -239,20 +331,26 @@ function PrayerScheduleSkeleton() {
 export default function PrayerTimesPage({ data }: Props) {
   const [selectedLocation, setSelectedLocation] = useState(locationOptions[0]);
   const [isLoadingMock, setIsLoadingMock] = useState(false);
-  const [clockMs, setClockMs] = useState(() => Date.now());
+  const [clockMs, setClockMs] = useState<number | null>(null);
 
   const viewModel = useMemo(() => buildViewModel(data), [data]);
   const countdown = useMemo(
-    () => buildCountdown(viewModel.slots, viewModel.timezone, clockMs),
+    () => (clockMs === null ? buildPendingCountdown(viewModel.slots) : buildCountdown(viewModel.slots, viewModel.timezone, clockMs)),
     [clockMs, viewModel.slots, viewModel.timezone]
   );
 
   useEffect(() => {
+    const updateClock = () => setClockMs(Date.now());
+    const timeout = window.setTimeout(updateClock, 0);
+
     const timer = window.setInterval(() => {
-      setClockMs(Date.now());
+      updateClock();
     }, 1000);
 
-    return () => window.clearInterval(timer);
+    return () => {
+      window.clearTimeout(timeout);
+      window.clearInterval(timer);
+    };
   }, []);
 
   function handleRefreshMock() {
@@ -267,10 +365,19 @@ export default function PrayerTimesPage({ data }: Props) {
   const showErrorState = !hasLiveData;
 
   return (
-    <main className="relative overflow-hidden bg-[#f6f8f6] pt-16 text-slate-900 md:pt-20">
-      <div className="absolute inset-x-0 top-0 h-[420px] bg-[radial-gradient(circle_at_top_left,_rgba(45,130,116,0.18),_transparent_38%),radial-gradient(circle_at_top_right,_rgba(14,116,144,0.12),_transparent_32%),linear-gradient(180deg,_#0f3d36_0%,_#15554c_36%,_#f6f8f6_100%)]" />
-      <div className="absolute left-[-40px] top-36 h-40 w-40 rounded-full bg-emerald-200/30 blur-3xl" />
-      <div className="absolute right-[-56px] top-28 h-48 w-48 rounded-full bg-cyan-200/30 blur-3xl" />
+    <main className="relative overflow-hidden bg-white bg-islamic pt-16 text-slate-900 md:pt-20">
+      <div className="absolute inset-x-0 top-0 h-[470px] overflow-hidden">
+        <Image
+          src="https://images.unsplash.com/photo-1542714599-423730594498?q=80&w=2070&auto=format&fit=crop"
+          alt="Masjid Nurul Iman"
+          fill
+          priority
+          sizes="100vw"
+          className="object-cover"
+        />
+        <div className="absolute inset-0 bg-gradient-to-b from-primary/85 via-primary/72 to-primary/90" />
+        <div className="absolute inset-0 bg-islamic opacity-[0.06]" />
+      </div>
 
       <section className="relative px-4 pb-6 pt-7 sm:px-6">
         <div className="mx-auto max-w-6xl space-y-5">
@@ -403,7 +510,7 @@ export default function PrayerTimesPage({ data }: Props) {
         </div>
       </section>
 
-      <section className="relative px-4 pb-24 sm:px-6">
+      <section className="relative bg-white bg-islamic px-4 pb-24 pt-8 sm:px-6">
         <div className="mx-auto max-w-6xl space-y-4">
           {isLoadingMock ? (
             <PrayerScheduleSkeleton />
