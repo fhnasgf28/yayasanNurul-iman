@@ -2,29 +2,29 @@
 
 import Link from "next/link";
 import { AnimatePresence, motion } from "framer-motion";
-import { BookOpen, Circle, House, Landmark, Menu, Newspaper, HandHeart, Image as ImageIcon, Mail } from "lucide-react";
+import { BookOpen, Circle, Clock3, House, Landmark, Menu, Newspaper, HandHeart, Image as ImageIcon, Mail } from "lucide-react";
 import { usePathname, useSearchParams } from "next/navigation";
 import { useState } from "react";
 import { cn } from "@/lib/utils";
 
 const primaryItems = [
   { label: "Beranda", href: "/", icon: House, isActive: (pathname: string) => pathname === "/" },
+  { label: "Jadwal", href: "/jadwal-sholat", icon: Clock3, isActive: (pathname: string) => pathname.startsWith("/jadwal-sholat") },
   {
     label: "Masjid",
     href: "/programs?category=Masjid",
     icon: Landmark,
     isActive: (pathname: string, category: string | null) => pathname === "/programs" && category === "Masjid",
   },
-  {
-    label: "DTA",
-    href: "/programs?category=Pendidikan",
-    icon: BookOpen,
-    isActive: (pathname: string, category: string | null) => pathname === "/programs" && category === "Pendidikan",
-  },
   { label: "Berita", href: "/news", icon: Newspaper, isActive: (pathname: string) => pathname.startsWith("/news") },
 ];
 
 const secondaryItems = [
+  {
+    label: "DTA",
+    href: "/programs?category=Pendidikan",
+    icon: BookOpen,
+  },
   { label: "Galeri", href: "/gallery", icon: ImageIcon },
   { label: "Kontak", href: "/contact", icon: Mail },
   { label: "Donasi", href: "/donate", icon: HandHeart },
@@ -35,7 +35,8 @@ export default function BottomNavbar() {
   const searchParams = useSearchParams();
   const [isMoreOpen, setIsMoreOpen] = useState(false);
   const category = searchParams.get("category");
-  const isMoreRoute = ["/gallery", "/contact", "/donate"].some((route) => pathname.startsWith(route));
+  const isMoreRoute = ["/gallery", "/contact", "/donate"].some((route) => pathname.startsWith(route))
+    || (pathname === "/programs" && category === "Pendidikan");
 
   return (
     <>
@@ -58,7 +59,7 @@ export default function BottomNavbar() {
               className="fixed inset-x-0 bottom-[88px] z-[80] mx-3 rounded-[30px] border border-white/40 bg-white/40 p-4 shadow-[0_24px_60px_rgba(26,77,46,0.18)] backdrop-blur-2xl supports-[backdrop-filter]:bg-white/30 md:hidden"
             >
               <div className="mx-auto mb-4 h-1.5 w-14 rounded-full bg-secondary/30" />
-              <div className="grid grid-cols-3 gap-3">
+              <div className="grid grid-cols-2 gap-3">
                 {secondaryItems.map((item) => {
                   const Icon = item.icon;
 

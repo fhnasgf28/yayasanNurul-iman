@@ -8,6 +8,7 @@ import { motion } from "framer-motion";
 
 const navLinks = [
   { name: "Beranda", href: "/" },
+  { name: "Jadwal Sholat", href: "/jadwal-sholat" },
   { name: "Tentang Kami", href: "/about" },
   { name: "Masjid", href: "/programs?category=Masjid" },
   { name: "DTA", href: "/programs?category=Pendidikan" },
@@ -18,20 +19,15 @@ const navLinks = [
 
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
-  const [mounted, setMounted] = useState(false);
   const pathname = usePathname();
 
   useEffect(() => {
-    setMounted(true);
-    setScrolled(window.scrollY > 50);
-
     const handleScroll = () => setScrolled(window.scrollY > 50);
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  // Sebelum mount: anggap solid supaya tidak invisible
-  const isHome = mounted ? pathname === "/" : false;
+  const isHome = pathname === "/";
 
   // 3 state: transparent (home atas), solid-flat (non-home atas), pill (scrolled)
   const navStyle = scrolled ? "pill" : isHome ? "transparent" : "solid";

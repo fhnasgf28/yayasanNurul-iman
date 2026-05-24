@@ -1,3 +1,4 @@
+import type { Adapter } from "next-auth/adapters";
 import { PrismaAdapter } from "@auth/prisma-adapter";
 import { NextAuthOptions } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
@@ -5,7 +6,9 @@ import { db } from "./db";
 import bcrypt from "bcryptjs";
 
 export const authOptions: NextAuthOptions = {
-  adapter: PrismaAdapter(db) as any,
+  secret: process.env.AUTH_SECRET ?? process.env.NEXTAUTH_SECRET,
+  trustHost: true,
+  adapter: PrismaAdapter(db) as Adapter,
   session: {
     strategy: "jwt",
   },
@@ -58,7 +61,7 @@ export const authOptions: NextAuthOptions = {
         return {
           ...token,
           id: user.id,
-          role: (user as any).role,
+          role: user.role,
         };
       }
       return token;

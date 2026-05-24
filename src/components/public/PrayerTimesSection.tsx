@@ -1,4 +1,5 @@
-import { Clock3, MapPin, MoonStar } from "lucide-react";
+import Link from "next/link";
+import { ArrowRight, Clock3, MapPin, MoonStar } from "lucide-react";
 import type { PrayerTimesData } from "@/lib/prayer-times";
 
 type Props = {
@@ -43,12 +44,12 @@ export default function PrayerTimesSection({ data }: Props) {
                       {data.locationLabel}
                     </h2>
                     <p className="text-sm leading-relaxed text-gray-600">
-                      Jadwal sholat harian untuk lokasi ini, ditampilkan langsung di bagian atas halaman utama.
+                      Jadwal sholat harian untuk lokasi ini, dengan tampilan ringkas di beranda dan halaman khusus untuk pengalaman yang lebih lengkap di mobile.
                     </p>
                   </div>
                 </div>
 
-                <div className="flex flex-wrap gap-3">
+                <div className="flex flex-wrap gap-3 lg:justify-end">
                   <span className="inline-flex items-center gap-2 rounded-full border border-primary/8 bg-accent px-4 py-2 text-sm text-primary shadow-[0_10px_20px_rgba(26,77,46,0.06)]">
                     <Clock3 size={14} className="text-secondary" />
                     {data.gregorianDate}
@@ -57,6 +58,13 @@ export default function PrayerTimesSection({ data }: Props) {
                     <MoonStar size={14} className="text-secondary" />
                     {data.hijriDate}
                   </span>
+                  <Link
+                    href="/jadwal-sholat"
+                    className="inline-flex items-center gap-2 rounded-full bg-primary px-4 py-2 text-sm font-semibold text-white shadow-[0_14px_28px_rgba(26,77,46,0.18)] transition-transform hover:-translate-y-0.5"
+                  >
+                    Lihat Detail
+                    <ArrowRight size={15} className="text-secondary" />
+                  </Link>
                 </div>
               </div>
             </div>
