@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import { getServerSession } from "next-auth/next";
 import { authOptions } from "@/lib/auth";
 import { db } from "@/lib/db";
+import { sanitizeHtml } from "@/lib/utils";
 
 export async function PATCH(
   req: Request,
@@ -25,8 +26,8 @@ export async function PATCH(
       data: {
         title,
         slug,
-        excerpt,
-        content,
+        excerpt: excerpt ? sanitizeHtml(excerpt) : undefined,
+        content: content ? sanitizeHtml(content) : undefined,
         thumbnail,
         category,
         tags: tags ? tags.split(",").map((tag: string) => tag.trim()) : [],

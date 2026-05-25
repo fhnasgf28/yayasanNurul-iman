@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import { getServerSession } from "next-auth/next";
 import { authOptions } from "@/lib/auth";
 import { db } from "@/lib/db";
+import { sanitizeHtml } from "@/lib/utils";
 
 export async function POST(req: Request) {
   try {
@@ -22,8 +23,8 @@ export async function POST(req: Request) {
       data: {
         title,
         slug,
-        description,
-        content,
+        description: sanitizeHtml(description),
+        content: sanitizeHtml(content),
         thumbnail,
         category,
         status,
