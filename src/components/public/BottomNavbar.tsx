@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { AnimatePresence, motion } from "framer-motion";
-import { BookOpen, Circle, Clock3, House, Landmark, Menu, Newspaper, HandHeart, Image as ImageIcon, Mail } from "lucide-react";
+import { BookOpen, Circle, Clock3, House, Landmark, Menu, Newspaper, HandHeart, Image as ImageIcon, Mail, Info } from "lucide-react";
 import { usePathname, useSearchParams } from "next/navigation";
 import { useState } from "react";
 import { cn } from "@/lib/utils";
@@ -21,6 +21,11 @@ const primaryItems = [
 
 const secondaryItems = [
   {
+    label: "Profil",
+    href: "/about",
+    icon: Info,
+  },
+  {
     label: "DTA",
     href: "/programs?category=Pendidikan",
     icon: BookOpen,
@@ -35,7 +40,7 @@ export default function BottomNavbar() {
   const searchParams = useSearchParams();
   const [isMoreOpen, setIsMoreOpen] = useState(false);
   const category = searchParams.get("category");
-  const isMoreRoute = ["/gallery", "/contact", "/donate"].some((route) => pathname.startsWith(route))
+  const isMoreRoute = ["/gallery", "/contact", "/donate", "/about"].some((route) => pathname.startsWith(route))
     || (pathname === "/programs" && category === "Pendidikan");
 
   return (
