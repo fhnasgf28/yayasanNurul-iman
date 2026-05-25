@@ -8,6 +8,7 @@ import {
   BookOpen,
   Newspaper,
   Image as ImageIcon,
+  Mail,
   Settings,
   LogOut,
   ChevronLeft,
@@ -23,6 +24,7 @@ const menuItems = [
   { name: "Kelola Berita", href: "/dashboard/news", icon: Newspaper },
   { name: "Kelola Prestasi", href: "/dashboard/prestasi", icon: Award },
   { name: "Kelola Galeri", href: "/dashboard/gallery", icon: ImageIcon },
+  { name: "Pesan Masuk", href: "/dashboard/messages", icon: Mail },
   { name: "Pengaturan", href: "/dashboard/settings", icon: Settings },
 ];
 

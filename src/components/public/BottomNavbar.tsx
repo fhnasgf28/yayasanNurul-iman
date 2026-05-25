@@ -21,7 +21,7 @@ const primaryItems = [
 
 const secondaryItems = [
   {
-    label: "Profil",
+    label: "Tentang Kami",
     href: "/about",
     icon: Info,
   },
@@ -38,7 +38,15 @@ const secondaryItems = [
 export default function BottomNavbar() {
   const pathname = usePathname();
   const searchParams = useSearchParams();
+  const [mounted, setMounted] = useState(false);
   const [isMoreOpen, setIsMoreOpen] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  if (!mounted) return null;
+
   const category = searchParams.get("category");
   const isMoreRoute = ["/gallery", "/contact", "/donate", "/about"].some((route) => pathname.startsWith(route))
     || (pathname === "/programs" && category === "Pendidikan");

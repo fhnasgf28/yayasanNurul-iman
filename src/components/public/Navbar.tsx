@@ -34,19 +34,21 @@ export default function Navbar() {
     setMounted(true);
     const handleScroll = () => setScrolled(window.scrollY > 50);
     window.addEventListener("scroll", handleScroll);
-    handleScroll(); // Check initial scroll
+    handleScroll();
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
   const isHome = pathname === "/";
-  // Default to solid for server and initial client hydration to prevent mismatch
-  const navStyle = !mounted ? "solid" : scrolled ? "pill" : isHome ? "transparent" : "solid";
+  
+  // Gaya default untuk Server-Side Rendering & Initial Hydration
+  const navStyle = !mounted ? "solid" : (scrolled ? "pill" : (isHome ? "transparent" : "solid"));
 
+  // Render sederhana untuk menyeimbangkan Hydration
+  // Kita pastikan strukturnya identik dengan versi interaktif
   return (
     <motion.nav
-      initial={{ y: -100 }}
+      initial={false}
       animate={{ y: 0 }}
-      transition={{ duration: 0.5 }}
       className={cn(
         "fixed left-0 right-0 z-50 hidden transition-all duration-500 ease-in-out md:block",
         navStyle === "pill" &&
@@ -76,12 +78,13 @@ export default function Navbar() {
           {navLinks.map((link) => (
             <div
               key={link.name}
-              className="relative"
-              onMouseEnter={() => link.dropdown && setActiveDropdown(link.name)}
-              onMouseLeave={() => setActiveDropdown(null)}
+              className="relative group"
+              onMouseEnter={() => mounted && link.dropdown && setActiveDropdown(link.name)}
+              onMouseLeave={() => mounted && setActiveDropdown(null)}
             >
               {link.dropdown ? (
                 <button
+                  type="button"
                   className={cn(
                     "flex items-center space-x-1 px-4 py-2 text-sm font-medium transition-all duration-300 rounded-full hover:bg-white/10 group",
                     navStyle === "transparent"
@@ -93,7 +96,7 @@ export default function Navbar() {
                   <ChevronDown
                     className={cn(
                       "w-4 h-4 transition-transform duration-300",
-                      activeDropdown === link.name && "rotate-180"
+                      mounted && activeDropdown === link.name && "rotate-180"
                     )}
                   />
                   <span className="absolute bottom-1 left-4 right-8 h-0.5 bg-secondary scale-x-0 group-hover:scale-x-100 transition-transform duration-300" />
@@ -113,9 +116,9 @@ export default function Navbar() {
                 </Link>
               )}
 
-              {/* Dropdown Menu */}
+              {/* Dropdown Menu - Hanya dirender setelah mounted untuk keamanan hydration */}
               <AnimatePresence>
-                {link.dropdown && activeDropdown === link.name && (
+                {mounted && link.dropdown && activeDropdown === link.name && (
                   <motion.div
                     initial={{ opacity: 0, y: 10, scale: 0.95 }}
                     animate={{ opacity: 1, y: 0, scale: 1 }}
