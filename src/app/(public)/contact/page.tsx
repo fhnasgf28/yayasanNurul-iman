@@ -73,7 +73,7 @@ export default function ContactPage() {
                   </div>
                   <div>
                     <h4 className="font-bold text-primary mb-1 text-xl font-serif">Alamat Sekretariat</h4>
-                    <p className="text-gray-600">Jl. Raya Ciawi - Cianjur, No. 1, Desa Ciawi, Kec. Ciawi, Bogor, Jawa Barat</p>
+                    <p className="text-gray-600">Guro II, Karawang Barat, Karawang, Jawa Barat 41311</p>
                   </div>
                 </div>
 
@@ -101,16 +101,17 @@ export default function ContactPage() {
 
               {/* Map Integration */}
               <div className="space-y-4">
-                <div className="h-80 bg-white rounded-3xl border border-secondary/10 overflow-hidden shadow-sm">
+                <div className="h-80 bg-white rounded-3xl border border-secondary/10 overflow-hidden shadow-sm relative z-10">
                   <iframe
-                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3962.964402660143!2d106.8550181!3d-6.6515159!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e69c97800000001%3A0xc0c6096700000000!2sMasjid%20Nurul%20Iman!5e0!3m2!1sid!2sid!4v1700000000000!5m2!1sid!2sid"
+                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3965.7348366914565!2d107.3064129758652!3d-6.326611093662993!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e6976347b7c0b49%3A0x31809b5844f365ba!2sMasjid%20Nurul%20Iman!5e0!3m2!1sid!2sid!4v1716719123456!5m2!1sid!2sid"
                     width="100%"
                     height="100%"
-                    style={{ border: 0 }}
+                    style={{ border: 0, pointerEvents: "auto" }}
                     allowFullScreen
                     loading="lazy"
                     referrerPolicy="no-referrer-when-downgrade"
                     title="Lokasi Masjid Nurul Iman"
+                    className="relative z-20"
                   ></iframe>
                 </div>
                 <a
