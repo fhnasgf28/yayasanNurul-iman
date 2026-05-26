@@ -20,6 +20,15 @@ export function formatDate(date: string | Date) {
   });
 }
 
+export function slugify(value: string) {
+  return value
+    .toLowerCase()
+    .trim()
+    .replace(/[^a-z0-9\s-]/g, "")
+    .replace(/\s+/g, "-")
+    .replace(/-+/g, "-");
+}
+
 /**
  * Sanitizes an HTML string to prevent XSS attacks.
  * Used for content coming from Rich Text Editors.

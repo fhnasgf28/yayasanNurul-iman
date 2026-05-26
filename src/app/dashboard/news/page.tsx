@@ -116,15 +116,15 @@ export default function AdminNewsPage() {
 
   return (
     <div className="space-y-8">
-      <div className="flex justify-between items-end">
+      <div className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
         <div>
-          <h1 className="text-2xl font-serif font-bold text-primary">Kelola Berita</h1>
-          <p className="text-gray-500">Tulis dan kelola artikel atau update kegiatan yayasan.</p>
+          <h1 className="text-2xl font-serif font-bold text-primary sm:text-3xl">Kelola Berita</h1>
+          <p className="mt-1 text-sm leading-6 text-gray-500 sm:text-base">Tulis dan kelola artikel atau update kegiatan yayasan.</p>
         </div>
         <button
           onClick={handleScrape}
           disabled={isScraping}
-          className={`flex items-center gap-2 px-4 py-2 rounded-xl font-bold text-sm transition-all ${
+          className={`flex w-full items-center justify-center gap-2 rounded-2xl px-4 py-3 text-sm font-bold transition-all sm:w-auto ${
             isScraping 
             ? "bg-gray-100 text-gray-400 cursor-not-allowed" 
             : "bg-secondary/10 text-secondary hover:bg-secondary/20"

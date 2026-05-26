@@ -9,8 +9,8 @@ export default async function MessagesPage() {
   return (
     <div className="space-y-8">
       <div>
-        <h1 className="text-3xl font-serif font-bold text-primary">Pesan Masuk</h1>
-        <p className="text-gray-500">Lihat dan kelola pesan dari pengunjung website.</p>
+        <h1 className="text-2xl font-serif font-bold text-primary sm:text-3xl">Pesan Masuk</h1>
+        <p className="mt-1 text-sm leading-6 text-gray-500 sm:text-base">Lihat dan kelola pesan dari pengunjung website.</p>
       </div>
 
       <MessageList initialMessages={messages} />

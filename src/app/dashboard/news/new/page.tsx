@@ -18,7 +18,7 @@ const newsSchema = z.object({
   content: z.string().min(50, "Konten berita minimal 50 karakter"),
   category: z.string().min(1, "Pilih kategori"),
   tags: z.any().optional(),
-  published: z.boolean().default(false),
+  published: z.boolean(),
   thumbnail: z.string().nullable(),
 });
 

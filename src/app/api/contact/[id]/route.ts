@@ -5,7 +5,7 @@ import { authOptions } from "@/lib/auth";
 
 export async function PATCH(
   req: Request,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   const session = await getServerSession(authOptions);
   if (!session) {
@@ -13,7 +13,7 @@ export async function PATCH(
   }
 
   try {
-    const { id } = params;
+    const { id } = await params;
     const body = await req.json();
     const { isRead } = body;
 
@@ -33,7 +33,7 @@ export async function PATCH(
 
 export async function DELETE(
   req: Request,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   const session = await getServerSession(authOptions);
   if (!session) {
@@ -41,7 +41,7 @@ export async function DELETE(
   }
 
   try {
-    const { id } = params;
+    const { id } = await params;
     await db.contactMessage.delete({
       where: { id },
     });

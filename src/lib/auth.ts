@@ -5,7 +5,11 @@ import CredentialsProvider from "next-auth/providers/credentials";
 import { db } from "./db";
 import bcrypt from "bcryptjs";
 
-export const authOptions: NextAuthOptions = {
+type AuthOptionsWithTrustHost = NextAuthOptions & {
+  trustHost?: boolean;
+};
+
+export const authOptions: AuthOptionsWithTrustHost = {
   secret: process.env.AUTH_SECRET ?? process.env.NEXTAUTH_SECRET,
   trustHost: true,
   adapter: PrismaAdapter(db) as Adapter,

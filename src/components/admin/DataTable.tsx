@@ -21,6 +21,10 @@ interface DataTableProps {
 export default function DataTable({ columns, data, onDelete, createHref, title }: DataTableProps) {
   const [searchTerm, setSearchTerm] = useState("");
   const [deleteTarget, setDeleteTarget] = useState<{ id: string; label: string } | null>(null);
+  const baseHref = createHref?.replace(/\/new$/, "");
+  const createUrl = createHref ? (createHref.endsWith("/new") ? createHref : `${createHref}/new`) : undefined;
+  const mediaColumn = columns.find((col) => ["thumbnail", "imageUrl"].includes(col.accessor));
+  const primaryColumn = columns.find((col) => col.accessor !== mediaColumn?.accessor) ?? columns[0];
 
   const filteredData = useMemo(() => {
     if (!searchTerm.trim()) return data;
@@ -37,8 +41,15 @@ export default function DataTable({ columns, data, onDelete, createHref, title }
     }
   };
 
+  const renderCell = (row: any, col: Column) =>
+    col.render ? col.render(row[col.accessor], row) : (
+      <span className="line-clamp-2 break-words">{row[col.accessor]}</span>
+    );
+
+  const getRowLabel = (row: any) => row.title || row.caption || row.name || row.subject || row.id;
+
   return (
-    <div className="space-y-6">
+    <div className="space-y-5 sm:space-y-6">
       {/* Delete Confirmation Modal */}
       {deleteTarget && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-sm">
@@ -74,17 +85,17 @@ export default function DataTable({ columns, data, onDelete, createHref, title }
       )}
 
       {/* Table Header */}
-      <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+      <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
         <h2 className="text-xl font-serif font-bold text-primary">{title}</h2>
-        <div className="flex items-center space-x-3 w-full md:w-auto">
-          <div className="relative flex-1 md:w-72">
+        <div className="flex w-full flex-col gap-3 sm:flex-row lg:w-auto">
+          <div className="relative w-full sm:flex-1 lg:w-72">
             <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" size={16} />
             <input
               type="text"
               placeholder="Cari data..."
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-              className="w-full bg-white border border-gray-200 rounded-xl py-2.5 pl-10 pr-10 text-sm outline-none focus:border-primary/40 transition-colors shadow-sm"
+              className="w-full rounded-2xl border border-gray-200 bg-white py-3 pl-10 pr-10 text-sm shadow-sm outline-none transition-colors focus:border-primary/40"
             />
             {searchTerm && (
               <button
@@ -95,10 +106,10 @@ export default function DataTable({ columns, data, onDelete, createHref, title }
               </button>
             )}
           </div>
-          {createHref && (
+          {createUrl && (
             <Link
-              href={`${createHref}/new`}
-              className="bg-primary text-white px-5 py-2.5 rounded-xl font-bold text-sm flex items-center space-x-2 hover:bg-primary/90 transition-all shadow-md shrink-0"
+              href={createUrl}
+              className="flex shrink-0 items-center justify-center space-x-2 rounded-2xl bg-primary px-5 py-3 text-sm font-bold text-white shadow-md transition-all hover:bg-primary/90"
             >
               <Plus size={16} />
               <span>Tambah Baru</span>
@@ -108,7 +119,7 @@ export default function DataTable({ columns, data, onDelete, createHref, title }
       </div>
 
       {/* Table */}
-      <div className="bg-white rounded-3xl border border-gray-100 overflow-hidden shadow-sm">
+      <div className="hidden overflow-hidden rounded-3xl border border-gray-100 bg-white shadow-sm md:block">
         <div className="overflow-x-auto">
           <table className="w-full text-left">
             <thead>
@@ -126,22 +137,22 @@ export default function DataTable({ columns, data, onDelete, createHref, title }
                 <tr key={row.id} className="hover:bg-gray-50/60 transition-colors group">
                   {columns.map((col) => (
                     <td key={col.header} className="px-6 py-4 text-sm text-gray-700">
-                      {col.render ? col.render(row[col.accessor], row) : (
-                        <span className="line-clamp-1">{row[col.accessor]}</span>
-                      )}
+                      {renderCell(row, col)}
                     </td>
                   ))}
                   <td className="px-6 py-4">
                     <div className="flex justify-end space-x-1">
-                      <Link
-                        href={`${createHref}/${row.id}/edit`}
-                        className="p-2 text-gray-400 hover:text-blue-500 hover:bg-blue-50 rounded-lg transition-all"
-                        title="Edit"
-                      >
-                        <Edit size={16} />
-                      </Link>
+                      {baseHref && (
+                        <Link
+                          href={`${baseHref}/${row.id}/edit`}
+                          className="p-2 text-gray-400 hover:text-blue-500 hover:bg-blue-50 rounded-lg transition-all"
+                          title="Edit"
+                        >
+                          <Edit size={16} />
+                        </Link>
+                      )}
                       <button
-                        onClick={() => setDeleteTarget({ id: row.id, label: row.title || row.caption || row.id })}
+                        onClick={() => setDeleteTarget({ id: row.id, label: getRowLabel(row) })}
                         className="p-2 text-gray-400 hover:text-red-500 hover:bg-red-50 rounded-lg transition-all"
                         title="Hapus"
                       >
@@ -154,9 +165,66 @@ export default function DataTable({ columns, data, onDelete, createHref, title }
             </tbody>
           </table>
         </div>
+      </div>
 
-        {filteredData.length === 0 && (
-          <div className="py-16 text-center space-y-3">
+      <div className="space-y-3 md:hidden">
+        {filteredData.map((row) => (
+          <article key={row.id} className="rounded-3xl border border-gray-100 bg-white p-4 shadow-sm">
+            <div className="flex items-start gap-3">
+              {mediaColumn && (
+                <div className="shrink-0 overflow-hidden rounded-2xl">
+                  {renderCell(row, mediaColumn)}
+                </div>
+              )}
+              <div className="min-w-0 flex-1">
+                <p className="text-[11px] font-bold uppercase tracking-[0.2em] text-gray-400">
+                  {primaryColumn.header}
+                </p>
+                <div className="mt-1 text-sm font-bold text-primary">
+                  {renderCell(row, primaryColumn)}
+                </div>
+              </div>
+            </div>
+
+            <div className="mt-4 grid gap-3 border-t border-gray-100 pt-4">
+              {columns
+                .filter((col) => col.accessor !== mediaColumn?.accessor && col.accessor !== primaryColumn.accessor)
+                .map((col) => (
+                  <div key={col.header} className="flex items-start justify-between gap-4">
+                    <span className="text-xs font-semibold text-gray-400">{col.header}</span>
+                    <div className="max-w-[65%] text-right text-sm text-gray-700">
+                      {renderCell(row, col)}
+                    </div>
+                  </div>
+                ))}
+            </div>
+
+            <div className="mt-4 flex gap-2">
+              {baseHref && (
+                <Link
+                  href={`${baseHref}/${row.id}/edit`}
+                  className="flex flex-1 items-center justify-center gap-2 rounded-2xl bg-blue-50 px-4 py-3 text-sm font-bold text-blue-600"
+                >
+                  <Edit size={16} />
+                  Edit
+                </Link>
+              )}
+              <button
+                type="button"
+                onClick={() => setDeleteTarget({ id: row.id, label: getRowLabel(row) })}
+                className="flex flex-1 items-center justify-center gap-2 rounded-2xl bg-red-50 px-4 py-3 text-sm font-bold text-red-500"
+              >
+                <Trash2 size={16} />
+                Hapus
+              </button>
+            </div>
+          </article>
+        ))}
+      </div>
+
+      {filteredData.length === 0 && (
+        <div className="rounded-3xl border border-gray-100 bg-white py-14 text-center shadow-sm md:rounded-none md:border-0 md:shadow-none">
+          <div className="space-y-3">
             <div className="w-14 h-14 bg-gray-50 rounded-full flex items-center justify-center mx-auto">
               <Search size={22} className="text-gray-300" />
             </div>
@@ -169,9 +237,11 @@ export default function DataTable({ columns, data, onDelete, createHref, title }
               </button>
             )}
           </div>
-        )}
+        </div>
+      )}
 
-        <div className="px-6 py-4 bg-gray-50/80 border-t border-gray-100 flex items-center justify-between">
+      <div className="rounded-2xl border border-gray-100 bg-white px-4 py-3 md:rounded-none md:border-x-0 md:border-b-0 md:bg-gray-50/80 md:px-6 md:py-4">
+        <div className="flex items-center justify-between">
           <p className="text-xs text-gray-400">
             Menampilkan{" "}
             <span className="font-semibold text-gray-600">{filteredData.length}</span>

@@ -64,6 +64,15 @@ type CountdownState = {
   remaining: string;
 };
 
+type TimeZoneParts = {
+  year: string;
+  month: string;
+  day: string;
+  hour: string;
+  minute: string;
+  second: string;
+};
+
 type Props = {
   data: PrayerTimesData | null;
 };
@@ -139,7 +148,7 @@ function shiftTime(timeText: string | undefined, offsetMinutes: number) {
   return `${hour}:${minute}`;
 }
 
-function createDateWithTime(dateParts: { year: string; month: string; day: string }, timeText: string) {
+function createDateWithTime(dateParts: Pick<TimeZoneParts, "year" | "month" | "day">, timeText: string) {
   const timeParts = parseTimeParts(timeText);
   if (!timeParts) return null;
 
@@ -152,7 +161,7 @@ function createDateWithTime(dateParts: { year: string; month: string; day: strin
   return Number.isNaN(date.getTime()) ? null : date;
 }
 
-function getTimeZoneParts(timeZone: string, referenceDate: Date) {
+function getTimeZoneParts(timeZone: string, referenceDate: Date): TimeZoneParts {
   try {
     const formatter = new Intl.DateTimeFormat("en-CA", {
       timeZone: timeZone || dummyKemenagData.timezone,
@@ -181,8 +190,7 @@ function getTimeZoneParts(timeZone: string, referenceDate: Date) {
       second: partMap.second,
     };
   } catch {
-    const fallback = getTimeZoneParts(dummyKemenagData.timezone, referenceDate);
-    return fallback;
+    return getTimeZoneParts(dummyKemenagData.timezone, referenceDate);
   }
 }
 
