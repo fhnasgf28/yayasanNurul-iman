@@ -1,4 +1,5 @@
 import { CheckCircle2, Target, Heart, ShieldCheck, BookOpen, Users, Star } from "lucide-react";
+import FAQ from "@/components/public/FAQ";
 
 export default function AboutPage() {
   return (
@@ -110,7 +111,7 @@ export default function AboutPage() {
       </section>
 
       {/* Timeline Visual */}
-      <section className="py-24 px-6 bg-islamic">
+      <section className="py-24 px-6 bg-islamic pb-32">
         <div className="max-w-5xl mx-auto space-y-16">
           <div className="text-center space-y-4">
             <span className="text-secondary font-bold tracking-widest uppercase text-sm">Timeline</span>
@@ -136,6 +137,8 @@ export default function AboutPage() {
           </div>
         </div>
       </section>
+
+      <FAQ />
     </main>
   );
 }

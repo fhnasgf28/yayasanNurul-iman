@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Playfair_Display, DM_Sans, Noto_Naskh_Arabic } from "next/font/google";
+import { Playfair_Display, Plus_Jakarta_Sans, Noto_Naskh_Arabic } from "next/font/google";
 import "./globals.css";
 import { cn } from "@/lib/utils";
 import Providers from "@/components/Providers";
@@ -9,9 +9,9 @@ const playfair = Playfair_Display({
   variable: "--font-playfair",
 });
 
-const dmSans = DM_Sans({
+const jakarta = Plus_Jakarta_Sans({
   subsets: ["latin"],
-  variable: "--font-dm-sans",
+  variable: "--font-jakarta",
 });
 
 const notoArabic = Noto_Naskh_Arabic({
@@ -35,7 +35,7 @@ export default function RootLayout({
         className={cn(
           "min-h-screen bg-[#FDFAF4] font-sans antialiased",
           playfair.variable,
-          dmSans.variable,
+          jakarta.variable,
           notoArabic.variable
         )}
       >
