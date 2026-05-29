@@ -4,19 +4,37 @@ import { Save, Globe, Mail, Phone, MapPin, Share2 } from "lucide-react";
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 
+const TELUKJAMBE_PRAYER_SETTINGS = {
+  prayer_location_label: "Telukjambe Timur, Karawang",
+  prayer_city: "Karawang",
+  prayer_country: "Indonesia",
+  prayer_method: "20",
+  prayer_latitude: "-6.3293",
+  prayer_longitude: "107.2892",
+};
+
+function normalizePrayerSettings(settings: Record<string, string>) {
+  const city = settings.prayer_city?.toLowerCase().trim();
+  const label = settings.prayer_location_label?.toLowerCase().replace(/\s+/g, " ").trim();
+  const isLegacyJakarta =
+    city === "jakarta" &&
+    (!label || label === "jakarta, indonesia") &&
+    !settings.prayer_latitude &&
+    !settings.prayer_longitude;
+
+  return isLegacyJakarta ? { ...settings, ...TELUKJAMBE_PRAYER_SETTINGS } : settings;
+}
+
 export default function AdminSettingsPage() {
   const [isLoading, setIsLoading] = useState(false);
   const [settings, setSettings] = useState<Record<string, string>>({
     site_name: "Yayasan Nurul Iman",
     site_tagline: "Membangun Ummat, Menebar Manfaat",
     site_description: "Membangun masa depan yang lebih baik melalui pendidikan, pemberdayaan ekonomi, dan bantuan kemanusiaan.",
-    contact_address: "Jl. Raya Nurul Iman No. 123, Jakarta",
+    contact_address: "Telukjambe Timur, Karawang, Jawa Barat",
     contact_phone: "+62 21 1234 5678",
     contact_email: "info@nuruliman.or.id",
-    prayer_location_label: "Jakarta, Indonesia",
-    prayer_city: "Jakarta",
-    prayer_country: "Indonesia",
-    prayer_method: "20",
+    ...TELUKJAMBE_PRAYER_SETTINGS,
   });
   const router = useRouter();
 
@@ -30,7 +48,8 @@ export default function AdminSettingsPage() {
 
         const data = (await response.json()) as { settings?: Record<string, string> };
         if (data.settings) {
-          setSettings((prev) => ({ ...prev, ...data.settings }));
+          const loadedSettings = data.settings;
+          setSettings((prev) => ({ ...prev, ...normalizePrayerSettings(loadedSettings) }));
         }
       } catch {
         console.error("loadSettings failed");
@@ -161,14 +180,14 @@ export default function AdminSettingsPage() {
             <h3 className="text-lg font-serif font-bold">Jadwal Sholat</h3>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-4">
+          <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
             <div className="space-y-2">
               <label className="text-sm font-bold text-primary">Label Lokasi</label>
               <input
                 value={settings.prayer_location_label}
                 onChange={(e) => handleChange("prayer_location_label", e.target.value)}
                 className="w-full bg-base border border-gray-100 rounded-xl py-3 px-4 outline-none focus:border-accent"
-                placeholder="Contoh: Jakarta, Indonesia"
+                placeholder="Contoh: Telukjambe Timur, Karawang"
               />
             </div>
             <div className="space-y-2">
@@ -177,7 +196,7 @@ export default function AdminSettingsPage() {
                 value={settings.prayer_city}
                 onChange={(e) => handleChange("prayer_city", e.target.value)}
                 className="w-full bg-base border border-gray-100 rounded-xl py-3 px-4 outline-none focus:border-accent"
-                placeholder="Contoh: Jakarta"
+                placeholder="Contoh: Karawang"
               />
             </div>
             <div className="space-y-2">
@@ -198,11 +217,29 @@ export default function AdminSettingsPage() {
                 placeholder="20"
               />
             </div>
+            <div className="space-y-2">
+              <label className="text-sm font-bold text-primary">Latitude</label>
+              <input
+                value={settings.prayer_latitude}
+                onChange={(e) => handleChange("prayer_latitude", e.target.value)}
+                className="w-full bg-base border border-gray-100 rounded-xl py-3 px-4 outline-none focus:border-accent"
+                placeholder="-6.3293"
+              />
+            </div>
+            <div className="space-y-2">
+              <label className="text-sm font-bold text-primary">Longitude</label>
+              <input
+                value={settings.prayer_longitude}
+                onChange={(e) => handleChange("prayer_longitude", e.target.value)}
+                className="w-full bg-base border border-gray-100 rounded-xl py-3 px-4 outline-none focus:border-accent"
+                placeholder="107.2892"
+              />
+            </div>
           </div>
 
           <p className="text-sm text-gray-500 leading-relaxed">
             Default yang dipakai adalah metode <strong>Kementerian Agama Republik Indonesia</strong> dengan kode <strong>20</strong>.
-            Ubah kota, negara, atau label lokasi jika jadwal sholat website harus mengikuti wilayah masjid yang berbeda.
+            Koordinat dipakai sebagai titik acuan utama agar jadwal lebih dekat dengan Telukjambe Timur, Karawang.
           </p>
         </div>
       </div>

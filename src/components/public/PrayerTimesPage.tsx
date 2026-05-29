@@ -7,13 +7,10 @@ import type { LucideIcon } from "lucide-react";
 import {
   AlarmClock,
   ArrowLeft,
-  ChevronDown,
   Clock3,
   Compass,
-  LoaderCircle,
   MapPin,
   MoonStar,
-  RefreshCcw,
   Sparkles,
   Sunrise,
   Sunset,
@@ -78,29 +75,21 @@ type Props = {
 };
 
 const dummyKemenagData: KemenagPrayerApiItem = {
-  cityId: "3171",
-  cityName: "Kota Jakarta",
+  cityId: "3215",
+  cityName: "Telukjambe Timur, Karawang",
   timezone: "Asia/Jakarta",
-  gregorianDate: "23 Mei 2026",
-  hijriDate: "06 Dzulhijjah 1447 H",
+  gregorianDate: "28 Mei 2026",
+  hijriDate: "11 Dzulhijjah 1447 H",
   schedule: {
-    imsak: "04:24",
-    subuh: "04:34",
-    terbit: "05:50",
-    dzuhur: "11:51",
-    ashar: "15:13",
-    maghrib: "17:45",
-    isya: "18:57",
+    imsak: "04:22",
+    subuh: "04:32",
+    terbit: "05:54",
+    dzuhur: "11:48",
+    ashar: "15:10",
+    maghrib: "17:42",
+    isya: "18:56",
   },
 };
-
-const locationOptions = [
-  "Kota Jakarta",
-  "Kota Bandung",
-  "Kota Semarang",
-  "Kota Surabaya",
-  "Kota Yogyakarta",
-];
 
 const slotMeta: Array<Pick<PrayerSlot, "id" | "label" | "arabic" | "icon" | "tone">> = [
   { id: "imsak", label: "Imsak", arabic: "إمساك", icon: AlarmClock, tone: "from-teal-500/18 via-teal-400/8 to-white" },
@@ -287,9 +276,12 @@ function buildViewModel(data: PrayerTimesData | null): ViewModel {
   }
 
   const mappedTimes: Record<PrayerSlot["id"], string> = {
-    imsak: shiftTime(data.entries.find((entry) => entry.name === "Subuh")?.time, -10) ?? dummyKemenagData.schedule.imsak,
+    imsak:
+      data.imsakTime !== "--:--"
+        ? data.imsakTime
+        : shiftTime(data.entries.find((entry) => entry.name === "Subuh")?.time, -10) ?? dummyKemenagData.schedule.imsak,
     subuh: data.entries.find((entry) => entry.name === "Subuh")?.time ?? dummyKemenagData.schedule.subuh,
-    terbit: dummyKemenagData.schedule.terbit,
+    terbit: data.sunriseTime !== "--:--" ? data.sunriseTime : dummyKemenagData.schedule.terbit,
     dzuhur: data.entries.find((entry) => entry.name === "Dzuhur")?.time ?? dummyKemenagData.schedule.dzuhur,
     ashar: data.entries.find((entry) => entry.name === "Ashar")?.time ?? dummyKemenagData.schedule.ashar,
     maghrib: data.entries.find((entry) => entry.name === "Maghrib")?.time ?? dummyKemenagData.schedule.maghrib,
@@ -309,36 +301,7 @@ function buildViewModel(data: PrayerTimesData | null): ViewModel {
   };
 }
 
-function PrayerScheduleSkeleton() {
-  return (
-    <div className="space-y-4" aria-hidden="true">
-      <div className="grid gap-4 lg:grid-cols-[1.2fr_0.8fr]">
-        <div className="rounded-[2rem] border border-emerald-950/5 bg-white/80 p-5 shadow-[0_20px_50px_rgba(7,54,46,0.08)]">
-          <div className="h-3 w-32 animate-pulse rounded-full bg-emerald-100" />
-          <div className="mt-5 h-12 w-52 animate-pulse rounded-2xl bg-emerald-100" />
-          <div className="mt-4 h-24 animate-pulse rounded-[1.8rem] bg-emerald-50" />
-        </div>
-        <div className="rounded-[2rem] border border-emerald-950/5 bg-white/80 p-5 shadow-[0_20px_50px_rgba(7,54,46,0.08)]">
-          <div className="h-3 w-28 animate-pulse rounded-full bg-emerald-100" />
-          <div className="mt-5 h-10 w-36 animate-pulse rounded-2xl bg-emerald-100" />
-          <div className="mt-4 grid grid-cols-2 gap-3">
-            <div className="h-16 animate-pulse rounded-2xl bg-emerald-50" />
-            <div className="h-16 animate-pulse rounded-2xl bg-emerald-50" />
-          </div>
-        </div>
-      </div>
-      <div className="space-y-3">
-        {Array.from({ length: 6 }).map((_, index) => (
-          <div key={index} className="h-24 animate-pulse rounded-[1.8rem] bg-white/75 shadow-[0_18px_40px_rgba(7,54,46,0.05)]" />
-        ))}
-      </div>
-    </div>
-  );
-}
-
 export default function PrayerTimesPage({ data }: Props) {
-  const [selectedLocation, setSelectedLocation] = useState(locationOptions[0]);
-  const [isLoadingMock, setIsLoadingMock] = useState(false);
   const [clockMs, setClockMs] = useState<number | null>(null);
 
   const viewModel = useMemo(() => buildViewModel(data), [data]);
@@ -360,13 +323,6 @@ export default function PrayerTimesPage({ data }: Props) {
       window.clearInterval(timer);
     };
   }, []);
-
-  function handleRefreshMock() {
-    setIsLoadingMock(true);
-    window.setTimeout(() => {
-      setIsLoadingMock(false);
-    }, 900);
-  }
 
   const hasLiveData = Boolean(data);
   const nextPrayerCard = viewModel.slots.find((slot) => slot.id === countdown.nextId);
@@ -455,7 +411,7 @@ export default function PrayerTimesPage({ data }: Props) {
               <div className="flex items-start justify-between gap-4">
                 <div>
                   <p className="text-[11px] font-semibold uppercase tracking-[0.24em] text-slate-500">Lokasi & Sumber</p>
-                  <h2 className="mt-2 text-2xl font-serif font-bold text-slate-900">Atur titik acuan jadwal sholat</h2>
+                  <h2 className="mt-2 text-2xl font-serif font-bold text-slate-900">Titik acuan jadwal sholat</h2>
                 </div>
                 <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-emerald-50 text-emerald-700">
                   <Clock3 size={18} />
@@ -463,26 +419,13 @@ export default function PrayerTimesPage({ data }: Props) {
               </div>
 
               <div className="mt-5 space-y-3">
-                <label className="block text-sm font-medium text-slate-700" htmlFor="mock-location">
-                  Lokasi pengguna
-                </label>
-                <div className="relative">
-                  <select
-                    id="mock-location"
-                    value={selectedLocation}
-                    onChange={(event) => setSelectedLocation(event.target.value)}
-                    className="h-13 w-full appearance-none rounded-2xl border border-emerald-950/8 bg-white px-4 pr-11 text-sm font-medium text-slate-800 outline-none transition-colors focus:border-emerald-500"
-                  >
-                    {locationOptions.map((location) => (
-                      <option key={location} value={location}>
-                        {location}
-                      </option>
-                    ))}
-                  </select>
-                  <ChevronDown size={18} className="pointer-events-none absolute right-4 top-1/2 -translate-y-1/2 text-slate-400" />
+                <div className="rounded-2xl border border-emerald-950/8 bg-white p-4">
+                  <p className="text-[10px] font-semibold uppercase tracking-[0.24em] text-slate-500">Lokasi Aktif</p>
+                  <p className="mt-2 text-lg font-serif font-bold text-slate-900">{viewModel.locationLabel}</p>
+                  <p className="mt-1 text-sm text-slate-500">Karawang, Jawa Barat</p>
                 </div>
                 <p className="text-sm leading-6 text-slate-500">
-                  Saat ini dropdown masih mockup UI. Nanti bisa langsung dihubungkan ke pencarian kota dari API Kemenag tanpa mengubah struktur komponen utama.
+                  Jadwal utama diarahkan ke Telukjambe Timur, Karawang. Jika yayasan berpindah titik, lokasi bisa disesuaikan dari dashboard pengaturan.
                 </p>
               </div>
 
@@ -498,17 +441,9 @@ export default function PrayerTimesPage({ data }: Props) {
               </div>
 
               <div className="mt-5 flex flex-wrap gap-3">
-                <button
-                  type="button"
-                  onClick={handleRefreshMock}
-                  className="inline-flex items-center gap-2 rounded-full bg-emerald-700 px-4 py-3 text-sm font-semibold text-white transition-colors hover:bg-emerald-800"
-                >
-                  {isLoadingMock ? <LoaderCircle size={16} className="animate-spin" /> : <RefreshCcw size={16} />}
-                  Refresh Mock
-                </button>
                 <Link
                   href="/dashboard/settings"
-                  className="inline-flex items-center gap-2 rounded-full border border-emerald-950/8 bg-white px-4 py-3 text-sm font-semibold text-slate-800 transition-colors hover:bg-emerald-50"
+                  className="inline-flex items-center gap-2 rounded-full bg-emerald-700 px-4 py-3 text-sm font-semibold text-white transition-colors hover:bg-emerald-800"
                 >
                   Buka Pengaturan
                 </Link>
@@ -520,9 +455,7 @@ export default function PrayerTimesPage({ data }: Props) {
 
       <section className="relative bg-white bg-islamic px-4 pb-24 pt-8 sm:px-6">
         <div className="mx-auto max-w-6xl space-y-4">
-          {isLoadingMock ? (
-            <PrayerScheduleSkeleton />
-          ) : showErrorState ? (
+          {showErrorState ? (
             <div className="grid gap-4 lg:grid-cols-[1.1fr_0.9fr]">
               <div className="rounded-[2rem] border border-amber-200/60 bg-white/88 p-6 shadow-[0_20px_54px_rgba(15,23,42,0.06)]">
                 <span className="inline-flex items-center gap-2 rounded-full bg-amber-50 px-4 py-2 text-[11px] font-semibold uppercase tracking-[0.26em] text-amber-700">

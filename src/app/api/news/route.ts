@@ -3,6 +3,7 @@ import { getServerSession } from "next-auth/next";
 import { authOptions } from "@/lib/auth";
 import { db } from "@/lib/db";
 import { sanitizeHtml } from "@/lib/utils";
+import { refreshNewsIfStale } from "@/lib/news-scraper";
 
 export async function POST(req: Request) {
   try {
@@ -42,6 +43,10 @@ export async function POST(req: Request) {
 
 export async function GET(req: Request) {
   try {
+    await refreshNewsIfStale().catch((error) => {
+      console.error("[NEWS_AUTO_REFRESH]", error);
+    });
+
     const { searchParams } = new URL(req.url);
     const published = searchParams.get("published") === "true";
 

@@ -1,4 +1,5 @@
 import { db } from "@/lib/db";
+import { refreshNewsIfStale } from "@/lib/news-scraper";
 
 export async function getPrograms(limit?: number) {
   try {
@@ -34,6 +35,10 @@ export async function getProgramBySlug(slug: string) {
 
 export async function getNews(limit?: number) {
   try {
+    await refreshNewsIfStale().catch((error) => {
+      console.error("refreshNewsIfStale", error);
+    });
+
     const news = await db.news.findMany({
       where: {
         published: true,
