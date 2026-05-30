@@ -9,11 +9,21 @@ if (!connectionString) {
 
 const adapter = new PrismaPg({ connectionString });
 
-const globalForPrisma = global as unknown as { prisma: PrismaClient };
+type PrismaClientWithGeneratedModels = PrismaClient & {
+  prestasi?: unknown;
+  contactMessage?: unknown;
+  studentRegistration?: unknown;
+};
+
+const globalForPrisma = global as unknown as { prisma?: PrismaClient };
+const currentClient = globalForPrisma.prisma as PrismaClientWithGeneratedModels | undefined;
 
 // Force fresh client (needed after prisma generate in dev)
-if (globalForPrisma.prisma && (!(globalForPrisma.prisma as any).prestasi || !(globalForPrisma.prisma as any).contactMessage)) {
-  (globalForPrisma as any).prisma = undefined;
+if (
+  currentClient &&
+  (!currentClient.prestasi || !currentClient.contactMessage || !currentClient.studentRegistration)
+) {
+  globalForPrisma.prisma = undefined;
 }
 
 export const db =

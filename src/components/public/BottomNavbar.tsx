@@ -2,10 +2,11 @@
 
 import Link from "next/link";
 import { AnimatePresence, motion } from "framer-motion";
-import { BookOpen, Circle, Clock3, House, Landmark, Menu, Newspaper, HandHeart, Image as ImageIcon, Mail, Info } from "lucide-react";
+import { BookOpen, Circle, Clock3, House, Landmark, Menu, Newspaper, HandHeart, Image as ImageIcon, Mail, Info, UserPlus } from "lucide-react";
 import { usePathname, useSearchParams } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { cn } from "@/lib/utils";
+import { useHydrated } from "@/lib/use-hydrated";
 
 const primaryItems = [
   { label: "Beranda", href: "/", icon: House, isActive: (pathname: string) => pathname === "/" },
@@ -30,6 +31,7 @@ const secondaryItems = [
     href: "/programs?category=Pendidikan",
     icon: BookOpen,
   },
+  { label: "Pendaftaran", href: "/pendaftaran-siswa", icon: UserPlus },
   { label: "Galeri", href: "/gallery", icon: ImageIcon },
   { label: "Kontak", href: "/contact", icon: Mail },
   { label: "Donasi", href: "/donate", icon: HandHeart },
@@ -38,17 +40,13 @@ const secondaryItems = [
 export default function BottomNavbar() {
   const pathname = usePathname();
   const searchParams = useSearchParams();
-  const [mounted, setMounted] = useState(false);
+  const mounted = useHydrated();
   const [isMoreOpen, setIsMoreOpen] = useState(false);
-
-  useEffect(() => {
-    setMounted(true);
-  }, []);
 
   if (!mounted) return null;
 
   const category = searchParams.get("category");
-  const isMoreRoute = ["/gallery", "/contact", "/donate", "/about"].some((route) => pathname.startsWith(route))
+  const isMoreRoute = ["/gallery", "/contact", "/donate", "/about", "/pendaftaran-siswa"].some((route) => pathname.startsWith(route))
     || (pathname === "/programs" && category === "Pendidikan");
 
   return (

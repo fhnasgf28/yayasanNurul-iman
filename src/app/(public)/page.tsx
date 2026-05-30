@@ -153,7 +153,7 @@ export default async function Home() {
       <section className="py-32 px-6 relative overflow-hidden bg-white/50 backdrop-blur-[2px]">
         <div className="absolute top-0 left-0 w-full h-full bg-islamic opacity-[0.03] pointer-events-none" />
         <div className="max-w-7xl mx-auto space-y-20 relative z-10">
-          <div className="text-center space-y-6 max-w-3xl mx-auto">
+npm          <div className="text-center space-y-6 max-w-3xl mx-auto">
              <div className="inline-flex items-center space-x-2 text-secondary font-bold tracking-widest uppercase text-xs bg-secondary/5 px-4 py-2 rounded-full border border-secondary/10">
                 <span>Update Terkini</span>
               </div>

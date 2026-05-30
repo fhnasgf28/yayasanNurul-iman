@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
 import { cn } from "@/lib/utils";
+import { useHydrated } from "@/lib/use-hydrated";
 import { motion, AnimatePresence } from "framer-motion";
 import { ChevronDown } from "lucide-react";
 
@@ -20,22 +21,32 @@ const navLinks = [
     ],
   },
   { name: "Masjid", href: "/programs?category=Masjid" },
-  { name: "DTA", href: "/programs?category=Pendidikan" },
+  {
+    name: "DTA",
+    href: "/programs?category=Pendidikan",
+    dropdown: [
+      { name: "Program DTA", href: "/programs?category=Pendidikan" },
+      { name: "Pendaftaran Siswa", href: "/pendaftaran-siswa" },
+    ],
+  },
   { name: "Berita", href: "/news" },
 ];
 
 export default function Navbar() {
-  const [mounted, setMounted] = useState(false);
+  const mounted = useHydrated();
   const [scrolled, setScrolled] = useState(false);
   const [activeDropdown, setActiveDropdown] = useState<string | null>(null);
   const pathname = usePathname();
 
   useEffect(() => {
-    setMounted(true);
     const handleScroll = () => setScrolled(window.scrollY > 50);
     window.addEventListener("scroll", handleScroll);
-    handleScroll();
-    return () => window.removeEventListener("scroll", handleScroll);
+    const frame = requestAnimationFrame(handleScroll);
+
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+      cancelAnimationFrame(frame);
+    };
   }, []);
 
   const isHome = pathname === "/";

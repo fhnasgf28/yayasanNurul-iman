@@ -1,24 +1,25 @@
 import { db } from "@/lib/db";
 import Link from "next/link";
 import {
-  Users,
   BookOpen,
   Newspaper,
   Image as ImageIcon,
   ArrowUpRight,
   Plus,
   TrendingUp,
+  UserPlus,
 } from "lucide-react";
 
 async function getStats() {
-  const [programCount, newsCount, galleryCount, publishedCount] = await Promise.all([
+  const [programCount, newsCount, galleryCount, publishedCount, registrationCount] = await Promise.all([
     db.program.count(),
     db.news.count(),
     db.gallery.count(),
     db.news.count({ where: { published: true } }),
+    db.studentRegistration.count(),
   ]);
 
-  return { programCount, newsCount, galleryCount, publishedCount };
+  return { programCount, newsCount, galleryCount, publishedCount, registrationCount };
 }
 
 async function getRecentNews() {
@@ -81,6 +82,14 @@ export default async function DashboardPage() {
       bg: "bg-purple-50",
       href: "/dashboard/gallery",
     },
+    {
+      label: "Pendaftar Siswa",
+      value: stats.registrationCount,
+      icon: UserPlus,
+      color: "text-amber-700",
+      bg: "bg-amber-50",
+      href: "/dashboard/registrations",
+    },
   ];
 
   return (
@@ -94,7 +103,7 @@ export default async function DashboardPage() {
       </div>
 
       {/* Stats Grid */}
-      <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
+      <div className="grid grid-cols-2 lg:grid-cols-5 gap-4">
         {statCards.map((stat) => (
           <Link
             key={stat.label}
@@ -136,6 +145,13 @@ export default async function DashboardPage() {
           >
             <ImageIcon size={16} />
             <span>Kelola Galeri</span>
+          </Link>
+          <Link
+            href="/dashboard/registrations"
+            className="flex items-center space-x-2 px-4 py-2.5 bg-white border border-gray-200 text-gray-600 rounded-xl text-sm font-bold hover:bg-gray-50 transition-colors"
+          >
+            <UserPlus size={16} />
+            <span>Pendaftaran Siswa</span>
           </Link>
         </div>
       </div>

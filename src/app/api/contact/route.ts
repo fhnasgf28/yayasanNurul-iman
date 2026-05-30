@@ -1,6 +1,8 @@
 import { NextResponse } from "next/server";
 import { db } from "@/lib/db";
 import { z } from "zod";
+import { getServerSession } from "next-auth";
+import { authOptions } from "@/lib/auth";
 
 const contactSchema = z.object({
   name: z.string().min(2, "Nama minimal 2 karakter"),
@@ -40,6 +42,12 @@ export async function POST(req: Request) {
 }
 
 export async function GET() {
+  const session = await getServerSession(authOptions);
+
+  if (!session) {
+    return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
+  }
+
   try {
     const messages = await db.contactMessage.findMany({
       orderBy: { createdAt: "desc" },
