@@ -156,10 +156,10 @@ export default function Header({ user, onMenuClick }: HeaderProps) {
             </button>
 
             {isNotificationOpen && (
-              <div className="absolute right-0 top-12 w-[min(calc(100vw-2rem),24rem)] overflow-hidden rounded-3xl border border-gray-100 bg-white shadow-2xl shadow-primary/10">
-                <div className="border-b border-gray-100 bg-light/60 p-4">
+              <div className="fixed inset-x-3 top-[72px] z-50 max-h-[calc(100dvh-92px)] overflow-hidden rounded-3xl border border-gray-100 bg-white shadow-2xl shadow-primary/10 sm:absolute sm:inset-auto sm:right-0 sm:top-12 sm:w-[24rem] sm:max-w-[calc(100vw-2rem)]">
+                <div className="border-b border-gray-100 bg-light/60 p-4 sm:p-4">
                   <div className="flex items-start justify-between gap-3">
-                    <div>
+                    <div className="min-w-0">
                       <p className="text-sm font-bold text-primary">Notifikasi</p>
                       <p className="mt-1 text-xs leading-5 text-gray-500">
                         {notifications.total > 0
@@ -197,7 +197,7 @@ export default function Header({ user, onMenuClick }: HeaderProps) {
                   </div>
                 </div>
 
-                <div className="max-h-96 overflow-y-auto p-2">
+                <div className="max-h-[calc(100dvh-235px)] overflow-y-auto overscroll-contain p-2 sm:max-h-96">
                   {notificationError && (
                     <div className="m-2 rounded-2xl bg-red-50 p-3 text-xs font-medium text-red-600">
                       {notificationError}
