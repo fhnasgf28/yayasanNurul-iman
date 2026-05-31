@@ -1,7 +1,8 @@
 "use client";
 
 import { useMemo, useState } from "react";
-import { Edit, Plus, Save, Trash2, X } from "lucide-react";
+import Link from "next/link";
+import { Download, Edit, FileText, Plus, Save, Trash2, X } from "lucide-react";
 import {
   donationCategories,
   donationCategoryLabels,
@@ -100,7 +101,7 @@ export default function DonationReportManager({
       });
 
       if (!response.ok) {
-        throw new Error("Gagal menyimpan laporan. Pastikan periode dan kategori belum dipakai.");
+        throw new Error("Gagal menyimpan laporan. Periksa kembali data nominal dan periode.");
       }
 
       const saved = (await response.json()) as DonationReportItem;
@@ -139,8 +140,8 @@ export default function DonationReportManager({
   };
 
   return (
-    <div className="grid gap-8 xl:grid-cols-[0.9fr_1.4fr]">
-      <section className="rounded-3xl border border-gray-100 bg-white p-6 shadow-sm">
+    <div className="grid gap-6 xl:grid-cols-[0.9fr_1.4fr] xl:gap-8">
+      <section className="rounded-3xl border border-gray-100 bg-white p-5 shadow-sm sm:p-6">
         <div className="mb-6 flex items-center justify-between gap-4">
           <div>
             <h2 className="text-xl font-serif font-bold text-primary">
@@ -261,18 +262,36 @@ export default function DonationReportManager({
         </form>
       </section>
 
-      <section className="space-y-5">
-        <div className="grid gap-4 sm:grid-cols-3">
-          {[
-            ["Pemasukan", summary.income],
-            ["Pengeluaran", summary.expense],
-            ["Saldo", summary.balance],
-          ].map(([label, value]) => (
-            <div key={label} className="rounded-3xl border border-gray-100 bg-white p-5 shadow-sm">
-              <p className="text-xs font-bold uppercase tracking-[0.18em] text-gray-400">{label}</p>
-              <p className="mt-2 text-xl font-bold text-primary">{formatCurrency(Number(value))}</p>
-            </div>
-          ))}
+      <section className="order-first space-y-5 xl:order-none">
+        <div className="grid gap-4 lg:grid-cols-[1fr_auto] lg:items-start">
+          <div className="grid gap-4 sm:grid-cols-3">
+            {[
+              ["Pemasukan", summary.income],
+              ["Pengeluaran", summary.expense],
+              ["Saldo", summary.balance],
+            ].map(([label, value]) => (
+              <div key={label} className="rounded-3xl border border-gray-100 bg-white p-5 shadow-sm">
+                <p className="text-xs font-bold uppercase tracking-[0.18em] text-gray-400">{label}</p>
+                <p className="mt-2 text-xl font-bold text-primary">{formatCurrency(Number(value))}</p>
+              </div>
+            ))}
+          </div>
+          <div className="grid grid-cols-2 gap-3 lg:w-64">
+            <Link
+              href="/api/donation-reports/pdf?includeDraft=true"
+              className="inline-flex items-center justify-center gap-2 rounded-2xl border border-primary/15 bg-white px-4 py-3 text-sm font-bold text-primary shadow-sm transition-colors hover:bg-primary/5"
+            >
+              <FileText size={17} />
+              PDF
+            </Link>
+            <Link
+              href="/api/donation-reports/export?includeDraft=true"
+              className="inline-flex items-center justify-center gap-2 rounded-2xl border border-primary/15 bg-white px-4 py-3 text-sm font-bold text-primary shadow-sm transition-colors hover:bg-primary/5"
+            >
+              <Download size={17} />
+              CSV
+            </Link>
+          </div>
         </div>
 
         <div className="overflow-hidden rounded-3xl border border-gray-100 bg-white shadow-sm">
@@ -281,9 +300,9 @@ export default function DonationReportManager({
             <p className="mt-1 text-sm text-gray-500">{reports.length} laporan tersimpan.</p>
           </div>
 
-          <div className="divide-y divide-gray-50">
+          <div className="max-h-[70dvh] divide-y divide-gray-50 overflow-y-auto">
             {reports.map((report) => (
-              <article key={report.id} className="p-5 transition-colors hover:bg-gray-50/60">
+              <article key={report.id} className="p-4 transition-colors hover:bg-gray-50/60 sm:p-5">
                 <div className="flex flex-col gap-4 lg:flex-row lg:items-start lg:justify-between">
                   <div className="min-w-0">
                     <div className="mb-2 flex flex-wrap items-center gap-2">
@@ -297,8 +316,8 @@ export default function DonationReportManager({
                         {report.published ? "Publik" : "Draft"}
                       </span>
                     </div>
-                    <h3 className="text-base font-bold text-primary">{report.title}</h3>
-                    {report.notes && <p className="mt-1 line-clamp-2 text-sm text-gray-500">{report.notes}</p>}
+                    <h3 className="line-clamp-1 text-sm font-bold text-primary sm:text-base">{report.title}</h3>
+                    {report.notes && <p className="mt-1 hidden text-sm text-gray-500 sm:line-clamp-2">{report.notes}</p>}
                   </div>
 
                   <div className="flex shrink-0 items-center gap-2">
@@ -321,7 +340,12 @@ export default function DonationReportManager({
                   </div>
                 </div>
 
-                <div className="mt-4 grid gap-3 text-sm sm:grid-cols-3">
+                <div className="mt-3 flex items-center justify-between gap-3 text-xs sm:hidden">
+                  <span className="font-semibold text-emerald-700">Masuk {formatCurrency(report.income)}</span>
+                  <span className="font-semibold text-primary">Saldo {formatCurrency(report.balance)}</span>
+                </div>
+
+                <div className="mt-4 hidden gap-3 text-sm sm:grid sm:grid-cols-3">
                   <div className="rounded-2xl bg-emerald-50 px-4 py-3">
                     <p className="text-xs font-bold uppercase text-emerald-700/70">Masuk</p>
                     <p className="mt-1 font-bold text-emerald-700">{formatCurrency(report.income)}</p>

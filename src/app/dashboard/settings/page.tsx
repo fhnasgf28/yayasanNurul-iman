@@ -1,6 +1,6 @@
 "use client";
 
-import { Save, Globe, Mail, Phone, MapPin, Share2 } from "lucide-react";
+import { Save, Globe, Mail, Phone, MapPin, Share2, Megaphone } from "lucide-react";
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 
@@ -34,6 +34,12 @@ export default function AdminSettingsPage() {
     contact_address: "Telukjambe Timur, Karawang, Jawa Barat",
     contact_phone: "+62 21 1234 5678",
     contact_email: "info@nuruliman.or.id",
+    admission_popup_enabled: "true",
+    admission_popup_badge: "Penerimaan Siswa Baru",
+    admission_popup_title: "Penerimaan Siswa Baru DTA Nurul Iman",
+    admission_popup_description: "Pendaftaran siswa baru untuk program DTA, Tahfidz, dan baca tulis Al-Qur'an telah dibuka.",
+    admission_popup_cta_label: "Daftar Sekarang",
+    admission_popup_cta_href: "/pendaftaran-siswa",
     ...TELUKJAMBE_PRAYER_SETTINGS,
   });
   const router = useRouter();
@@ -170,6 +176,68 @@ export default function AdminSettingsPage() {
                   className="w-full bg-base border border-gray-100 rounded-xl py-3 px-4 outline-none focus:border-accent" 
                 />
               </div>
+            </div>
+          </div>
+        </div>
+
+        <div className="bg-white p-8 rounded-3xl border border-gray-100 shadow-sm space-y-6 lg:col-span-2">
+          <div className="flex items-center justify-between gap-4">
+            <div className="flex items-center space-x-3 text-primary">
+              <Megaphone size={20} className="text-accent" />
+              <h3 className="text-lg font-serif font-bold">Popup Penerimaan Siswa Baru</h3>
+            </div>
+            <label className="flex cursor-pointer items-center gap-3 rounded-2xl border border-gray-100 bg-base px-4 py-3">
+              <span className="text-sm font-bold text-primary">Tampilkan</span>
+              <input
+                type="checkbox"
+                checked={settings.admission_popup_enabled === "true"}
+                onChange={(e) => handleChange("admission_popup_enabled", e.target.checked ? "true" : "false")}
+                className="h-5 w-5 accent-primary"
+              />
+            </label>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div className="space-y-2">
+              <label className="text-sm font-bold text-primary">Badge</label>
+              <input
+                value={settings.admission_popup_badge}
+                onChange={(e) => handleChange("admission_popup_badge", e.target.value)}
+                className="w-full bg-base border border-gray-100 rounded-xl py-3 px-4 outline-none focus:border-accent"
+              />
+            </div>
+            <div className="space-y-2">
+              <label className="text-sm font-bold text-primary">Judul</label>
+              <input
+                value={settings.admission_popup_title}
+                onChange={(e) => handleChange("admission_popup_title", e.target.value)}
+                className="w-full bg-base border border-gray-100 rounded-xl py-3 px-4 outline-none focus:border-accent"
+              />
+            </div>
+            <div className="space-y-2 md:col-span-2">
+              <label className="text-sm font-bold text-primary">Deskripsi</label>
+              <textarea
+                rows={3}
+                value={settings.admission_popup_description}
+                onChange={(e) => handleChange("admission_popup_description", e.target.value)}
+                className="w-full bg-base border border-gray-100 rounded-xl py-3 px-4 outline-none focus:border-accent resize-none"
+              />
+            </div>
+            <div className="space-y-2">
+              <label className="text-sm font-bold text-primary">Label Tombol</label>
+              <input
+                value={settings.admission_popup_cta_label}
+                onChange={(e) => handleChange("admission_popup_cta_label", e.target.value)}
+                className="w-full bg-base border border-gray-100 rounded-xl py-3 px-4 outline-none focus:border-accent"
+              />
+            </div>
+            <div className="space-y-2">
+              <label className="text-sm font-bold text-primary">Link Tombol</label>
+              <input
+                value={settings.admission_popup_cta_href}
+                onChange={(e) => handleChange("admission_popup_cta_href", e.target.value)}
+                className="w-full bg-base border border-gray-100 rounded-xl py-3 px-4 outline-none focus:border-accent"
+              />
             </div>
           </div>
         </div>

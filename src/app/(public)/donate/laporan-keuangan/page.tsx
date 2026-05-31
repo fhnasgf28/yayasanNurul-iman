@@ -1,10 +1,10 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { ArrowLeft, ArrowUpRight, BadgeCheck, HandCoins, TrendingDown, WalletCards } from "lucide-react";
+import { ArrowLeft, ArrowUpRight, BadgeCheck, Download, FileText, HandCoins, TrendingDown, WalletCards } from "lucide-react";
 import {
   donationCategoryLabels,
   formatCurrency,
-  formatMonth,
+  groupDonationReportsByMonth,
   summarizeDonationReports,
   summarizeDonationReportsByCategory,
 } from "@/lib/finance";
@@ -20,6 +20,7 @@ export default async function DonationTransparencyPage() {
   const reports = await getDonationReports({ publishedOnly: true });
   const summary = summarizeDonationReports(reports);
   const categorySummaries = summarizeDonationReportsByCategory(reports);
+  const monthlyGroups = groupDonationReportsByMonth(reports);
   const latestMonth = reports[0]?.month;
 
   const stats = [
@@ -69,11 +70,18 @@ export default async function DonationTransparencyPage() {
             <div className="rounded-3xl border border-white/12 bg-white/10 p-6 backdrop-blur">
               <p className="text-xs font-bold uppercase tracking-[0.18em] text-white/50">Laporan Terbaru</p>
               <p className="mt-2 text-3xl font-serif font-bold text-secondary">
-                {latestMonth ? formatMonth(latestMonth) : "Belum Ada Data"}
+                {latestMonth ? monthlyGroups[0]?.label : "Belum Ada Data"}
               </p>
               <p className="mt-3 text-sm leading-6 text-white/65">
                 Semua nominal ditampilkan berdasarkan laporan yang sudah ditandai publik oleh admin yayasan.
               </p>
+              <Link
+                href="/api/donation-reports/pdf"
+                className="mt-6 inline-flex items-center gap-2 rounded-2xl bg-secondary px-5 py-3 text-sm font-bold text-primary transition-transform hover:scale-[1.02]"
+              >
+                <FileText size={17} />
+                Unduh PDF
+              </Link>
             </div>
           </div>
         </div>
@@ -124,48 +132,104 @@ export default async function DonationTransparencyPage() {
             ))}
           </div>
 
-          <div className="overflow-hidden rounded-3xl border border-gray-100 bg-white shadow-sm">
+          <div className="rounded-3xl border border-gray-100 bg-white shadow-sm">
             <div className="flex flex-col gap-3 border-b border-gray-100 px-6 py-5 sm:flex-row sm:items-center sm:justify-between">
               <div>
-                <h2 className="text-xl font-serif font-bold text-primary">Daftar Laporan Bulanan</h2>
-                <p className="mt-1 text-sm text-gray-500">Rincian laporan yang sudah dipublikasikan oleh admin.</p>
+                <h2 className="text-xl font-serif font-bold text-primary">Laporan per Bulan</h2>
+                <p className="mt-1 text-sm text-gray-500">Donasi tambahan akan muncul sebagai entri baru di periode bulan yang sama.</p>
               </div>
-              <Link href="/donate" className="inline-flex items-center text-sm font-bold text-secondary hover:underline">
-                Donasi Sekarang <ArrowUpRight size={16} className="ml-1" />
-              </Link>
+              <div className="flex flex-wrap gap-3">
+                <Link href="/api/donation-reports/pdf" className="inline-flex items-center text-sm font-bold text-primary hover:underline">
+                  <FileText size={16} className="mr-1" />
+                  PDF
+                </Link>
+                <Link href="/api/donation-reports/export" className="inline-flex items-center text-sm font-bold text-primary hover:underline">
+                  <Download size={16} className="mr-1" />
+                  CSV
+                </Link>
+                <Link href="/donate" className="inline-flex items-center text-sm font-bold text-secondary hover:underline">
+                  Donasi Sekarang <ArrowUpRight size={16} className="ml-1" />
+                </Link>
+              </div>
             </div>
 
-            <div className="overflow-x-auto">
-              <table className="w-full min-w-[760px] text-left">
-                <thead>
-                  <tr className="bg-gray-50 text-xs font-bold uppercase tracking-[0.16em] text-gray-400">
-                    <th className="px-6 py-4">Periode</th>
-                    <th className="px-6 py-4">Kategori</th>
-                    <th className="px-6 py-4">Judul</th>
-                    <th className="px-6 py-4 text-right">Pemasukan</th>
-                    <th className="px-6 py-4 text-right">Pengeluaran</th>
-                    <th className="px-6 py-4 text-right">Saldo</th>
-                  </tr>
-                </thead>
-                <tbody className="divide-y divide-gray-50">
-                  {reports.map((report) => (
-                    <tr key={report.id} className="text-sm text-gray-600">
-                      <td className="px-6 py-4 font-semibold text-primary">{formatMonth(report.month)}</td>
-                      <td className="px-6 py-4">{donationCategoryLabels[report.category]}</td>
-                      <td className="px-6 py-4">
-                        <p className="font-semibold text-gray-700">{report.title}</p>
-                        {report.notes && <p className="mt-1 line-clamp-1 text-xs text-gray-400">{report.notes}</p>}
-                      </td>
-                      <td className="px-6 py-4 text-right font-bold text-emerald-700">{formatCurrency(report.income)}</td>
-                      <td className="px-6 py-4 text-right font-bold text-amber-700">{formatCurrency(report.expense)}</td>
-                      <td className="px-6 py-4 text-right font-bold text-primary">{formatCurrency(report.balance)}</td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
+            <div className="space-y-5 p-4 sm:p-6">
+              {monthlyGroups.map((group) => (
+                <section key={group.month} className="overflow-hidden rounded-3xl border border-secondary/10 bg-[#FDFAF4]">
+                  <div className="grid gap-4 border-b border-secondary/10 bg-white px-5 py-5 lg:grid-cols-[1fr_auto] lg:items-center">
+                    <div>
+                      <p className="text-xs font-bold uppercase tracking-[0.18em] text-secondary">Periode</p>
+                      <h3 className="mt-1 text-2xl font-serif font-bold text-primary">{group.label}</h3>
+                    </div>
+                    <div className="grid grid-cols-3 gap-3 text-right">
+                      <div>
+                        <p className="text-[11px] font-bold uppercase text-gray-400">Masuk</p>
+                        <p className="mt-1 text-sm font-bold text-emerald-700">{formatCurrency(group.summary.income)}</p>
+                      </div>
+                      <div>
+                        <p className="text-[11px] font-bold uppercase text-gray-400">Keluar</p>
+                        <p className="mt-1 text-sm font-bold text-amber-700">{formatCurrency(group.summary.expense)}</p>
+                      </div>
+                      <div>
+                        <p className="text-[11px] font-bold uppercase text-gray-400">Saldo</p>
+                        <p className="mt-1 text-sm font-bold text-primary">{formatCurrency(group.summary.balance)}</p>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="max-h-[20rem] divide-y divide-gray-100 overflow-y-auto bg-white md:hidden">
+                    {group.reports.map((report) => (
+                      <article key={report.id} className="px-4 py-3">
+                        <div className="flex items-start justify-between gap-3">
+                          <div className="min-w-0">
+                            <p className="truncate text-sm font-bold text-primary">{report.title}</p>
+                            <p className="mt-1 text-xs font-semibold text-secondary">{donationCategoryLabels[report.category]}</p>
+                          </div>
+                          <p className="shrink-0 text-sm font-bold text-primary">{formatCurrency(report.balance)}</p>
+                        </div>
+                        <div className="mt-2 flex items-center justify-between gap-3 text-xs">
+                          <span className="font-semibold text-emerald-700">Masuk {formatCurrency(report.income)}</span>
+                          <span className="font-semibold text-amber-700">Keluar {formatCurrency(report.expense)}</span>
+                        </div>
+                      </article>
+                    ))}
+                  </div>
+
+                  <div className="hidden gap-4 p-4 md:grid md:grid-cols-2 xl:grid-cols-3">
+                    {group.reports.map((report) => (
+                      <article key={report.id} className="rounded-2xl border border-gray-100 bg-white p-5 shadow-sm">
+                        <div className="mb-4 flex items-start justify-between gap-4">
+                          <div>
+                            <span className="rounded-full bg-secondary/10 px-3 py-1 text-xs font-bold text-secondary">
+                              {donationCategoryLabels[report.category]}
+                            </span>
+                            <h4 className="mt-3 text-base font-bold text-primary">{report.title}</h4>
+                          </div>
+                          <span className="rounded-full bg-primary/10 px-3 py-1 text-xs font-bold text-primary">
+                            {formatCurrency(report.balance)}
+                          </span>
+                        </div>
+
+                        <div className="grid grid-cols-2 gap-3 text-sm">
+                          <div className="rounded-2xl bg-emerald-50 px-4 py-3">
+                            <p className="text-[11px] font-bold uppercase text-emerald-700/70">Pemasukan</p>
+                            <p className="mt-1 font-bold text-emerald-700">{formatCurrency(report.income)}</p>
+                          </div>
+                          <div className="rounded-2xl bg-amber-50 px-4 py-3">
+                            <p className="text-[11px] font-bold uppercase text-amber-700/70">Pengeluaran</p>
+                            <p className="mt-1 font-bold text-amber-700">{formatCurrency(report.expense)}</p>
+                          </div>
+                        </div>
+
+                        {report.notes && <p className="mt-4 text-sm leading-6 text-gray-500">{report.notes}</p>}
+                      </article>
+                    ))}
+                  </div>
+                </section>
+              ))}
             </div>
 
-            {reports.length === 0 && (
+            {monthlyGroups.length === 0 && (
               <div className="px-6 py-16 text-center text-sm text-gray-400">
                 Belum ada laporan keuangan yang dipublikasikan.
               </div>

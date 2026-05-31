@@ -5,6 +5,7 @@ import { usePathname } from "next/navigation";
 import { cn } from "@/lib/utils";
 import {
   LayoutDashboard,
+  House,
   BookOpen,
   Newspaper,
   Image as ImageIcon,
@@ -90,6 +91,18 @@ export default function Sidebar({ isMobileOpen = false, onMobileClose }: Sidebar
         </div>
 
         <nav className="flex-1 space-y-1 overflow-y-auto px-3 py-5">
+          <Link
+            href="/"
+            onClick={onMobileClose}
+            className="mb-4 flex items-center space-x-3 rounded-2xl border border-white/10 bg-white/8 p-3 text-white/72 transition-all duration-150 hover:bg-white/12 hover:text-white"
+            title={isCollapsed ? "Beranda Website" : undefined}
+          >
+            <House size={20} className="shrink-0" />
+            <span className={cn("text-sm font-semibold md:inline", isCollapsed && "md:hidden")}>
+              Beranda Website
+            </span>
+          </Link>
+
           {menuItems.map((item) => {
             const active = isActive(item);
             return (

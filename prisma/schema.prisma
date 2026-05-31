@@ -148,7 +148,6 @@ model DonationReport {
   createdAt DateTime                @default(now())
   updatedAt DateTime                @updatedAt
 
-  @@unique([month, category])
   @@index([published])
   @@index([month])
 }

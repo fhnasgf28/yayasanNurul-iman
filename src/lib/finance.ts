@@ -107,3 +107,19 @@ export function summarizeDonationReportsByCategory(reports: DonationReportItem[]
     };
   });
 }
+
+export function groupDonationReportsByMonth(reports: DonationReportItem[]) {
+  const groups = new Map<string, DonationReportItem[]>();
+
+  for (const report of reports) {
+    const monthKey = toMonthInputValue(report.month);
+    groups.set(monthKey, [...(groups.get(monthKey) ?? []), report]);
+  }
+
+  return Array.from(groups.entries()).map(([month, monthReports]) => ({
+    month,
+    label: formatMonth(monthReports[0]?.month ?? `${month}-01T00:00:00.000Z`),
+    reports: monthReports,
+    summary: summarizeDonationReports(monthReports),
+  }));
+}
