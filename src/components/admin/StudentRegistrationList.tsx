@@ -5,6 +5,7 @@ import {
   CalendarDays,
   CheckCircle,
   Clock3,
+  Download,
   Mail,
   MapPin,
   Phone,
@@ -298,6 +299,14 @@ export default function StudentRegistrationList({ initialRegistrations }: Studen
               </div>
 
               <div className="flex shrink-0 flex-col gap-2 sm:flex-row xl:w-52 xl:flex-col">
+                <a
+                  href={`/api/student-registrations/${registration.id}/pdf`}
+                  download
+                  className="inline-flex min-h-11 flex-1 items-center justify-center gap-2 rounded-2xl bg-primary px-4 py-3 text-sm font-bold text-white transition-colors hover:bg-primary/90"
+                >
+                  <Download size={17} />
+                  <span>PDF</span>
+                </a>
                 <select
                   value={registration.status}
                   disabled={busyId === registration.id}
