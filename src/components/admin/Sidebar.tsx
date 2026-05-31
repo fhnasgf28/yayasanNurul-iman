@@ -15,6 +15,7 @@ import {
   ChevronRight,
   Award,
   UserPlus,
+  HandCoins,
   X,
 } from "lucide-react";
 import { useState } from "react";
@@ -27,6 +28,7 @@ const menuItems = [
   { name: "Kelola Prestasi", href: "/dashboard/prestasi", icon: Award },
   { name: "Kelola Galeri", href: "/dashboard/gallery", icon: ImageIcon },
   { name: "Pendaftaran Siswa", href: "/dashboard/registrations", icon: UserPlus },
+  { name: "Laporan Donasi", href: "/dashboard/donation-reports", icon: HandCoins },
   { name: "Pesan Masuk", href: "/dashboard/messages", icon: Mail },
   { name: "Pengaturan", href: "/dashboard/settings", icon: Settings },
 ];

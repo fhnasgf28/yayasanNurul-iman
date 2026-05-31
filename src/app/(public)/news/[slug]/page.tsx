@@ -1,18 +1,58 @@
+import type { Metadata } from "next";
 import Link from "next/link";
 import { Calendar, User, ArrowLeft, Share2 } from "lucide-react";
 import { notFound } from "next/navigation";
 import { formatDate } from "@/lib/utils";
 import { getNewsBySlug } from "@/lib/data";
+import { buildPageMetadata } from "@/lib/seo";
 
-export default async function NewsDetailPage({
-  params,
-}: {
+type NewsDetailPageProps = {
   params: Promise<{ slug: string }>;
-}) {
+};
+
+export async function generateMetadata({ params }: NewsDetailPageProps): Promise<Metadata> {
   const { slug } = await params;
   const post = await getNewsBySlug(slug);
 
-  if (!post) {
+  if (!post || !post.published) {
+    return buildPageMetadata({
+      title: "Berita Tidak Ditemukan",
+      description: "Berita yang Anda cari tidak tersedia atau belum diterbitkan.",
+      path: "/news",
+    });
+  }
+
+  return {
+    ...buildPageMetadata({
+      title: post.title,
+      description: post.excerpt,
+      path: `/news/${post.slug}`,
+      image: post.thumbnail,
+      type: "article",
+    }),
+    keywords: [post.category, ...post.tags, "Yayasan Nurul Iman", "Masjid Nurul Iman", "DTA Nurul Iman"],
+    authors: [{ name: post.author.name }],
+    openGraph: {
+      title: post.title,
+      description: post.excerpt,
+      url: `/news/${post.slug}`,
+      siteName: "Yayasan Nurul Iman",
+      locale: "id_ID",
+      type: "article",
+      publishedTime: post.createdAt.toISOString(),
+      modifiedTime: post.updatedAt.toISOString(),
+      authors: [post.author.name],
+      tags: post.tags,
+      images: post.thumbnail ? [{ url: post.thumbnail, alt: post.title }] : undefined,
+    },
+  };
+}
+
+export default async function NewsDetailPage({ params }: NewsDetailPageProps) {
+  const { slug } = await params;
+  const post = await getNewsBySlug(slug);
+
+  if (!post || !post.published) {
     notFound();
   }
 

@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { AnimatePresence, motion } from "framer-motion";
-import { BookOpen, Circle, Clock3, House, Landmark, Menu, Newspaper, HandHeart, Image as ImageIcon, Mail, Info, UserPlus } from "lucide-react";
+import { BookOpen, Circle, Clock3, House, Landmark, Menu, Newspaper, HandHeart, Image as ImageIcon, Mail, Info, UserPlus, WalletCards } from "lucide-react";
 import { usePathname, useSearchParams } from "next/navigation";
 import { useState } from "react";
 import { cn } from "@/lib/utils";
@@ -35,6 +35,7 @@ const secondaryItems = [
   { label: "Galeri", href: "/gallery", icon: ImageIcon },
   { label: "Kontak", href: "/contact", icon: Mail },
   { label: "Donasi", href: "/donate", icon: HandHeart },
+  { label: "Laporan Donasi", href: "/donate/laporan-keuangan", icon: WalletCards },
 ];
 
 export default function BottomNavbar() {

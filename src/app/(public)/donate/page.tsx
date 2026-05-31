@@ -1,4 +1,5 @@
-import { Heart, Wallet, Building2, BookOpen, Send, User } from "lucide-react";
+import Link from "next/link";
+import { Wallet, Building2, BookOpen, User } from "lucide-react";
 
 export default function DonatePage() {
   const donationOptions = [
@@ -96,7 +97,7 @@ export default function DonatePage() {
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-primary/80 to-transparent flex items-end p-8">
                     <p className="text-white font-serif text-2xl italic">
-                      "Harta tidak akan berkurang karena sedekah." (HR. Muslim)
+                      &ldquo;Harta tidak akan berkurang karena sedekah.&rdquo; (HR. Muslim)
                     </p>
                   </div>
                 </div>
@@ -106,7 +107,9 @@ export default function DonatePage() {
                   <p className="text-sm text-gray-600">
                     Setiap rupiah yang Anda donasikan akan kami laporkan secara berkala melalui website dan papan informasi masjid sebagai bentuk pertanggungjawaban amanah kami kepada umat.
                   </p>
-                  <button className="text-secondary font-bold text-sm hover:underline">Lihat Laporan Keuangan →</button>
+                  <Link href="/donate/laporan-keuangan" className="inline-flex text-secondary font-bold text-sm hover:underline">
+                    Lihat Laporan Keuangan →
+                  </Link>
                 </div>
               </div>
             </div>

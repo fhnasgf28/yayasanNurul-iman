@@ -1,5 +1,6 @@
 import { db } from "@/lib/db";
 import { refreshNewsIfStale } from "@/lib/news-scraper";
+import { cache } from "react";
 
 export async function getPrograms(limit?: number) {
   try {
@@ -19,7 +20,7 @@ export async function getPrograms(limit?: number) {
   }
 }
 
-export async function getProgramBySlug(slug: string) {
+export const getProgramBySlug = cache(async function getProgramBySlug(slug: string) {
   try {
     const program = await db.program.findUnique({
       where: {
@@ -31,7 +32,7 @@ export async function getProgramBySlug(slug: string) {
     console.error("getProgramBySlug", error);
     return null;
   }
-}
+});
 
 export async function getNews(limit?: number) {
   try {
@@ -62,7 +63,7 @@ export async function getNews(limit?: number) {
   }
 }
 
-export async function getNewsBySlug(slug: string) {
+export const getNewsBySlug = cache(async function getNewsBySlug(slug: string) {
   try {
     const post = await db.news.findUnique({
       where: {
@@ -81,7 +82,7 @@ export async function getNewsBySlug(slug: string) {
     console.error("getNewsBySlug", error);
     return null;
   }
-}
+});
 
 export async function getGallery() {
   try {

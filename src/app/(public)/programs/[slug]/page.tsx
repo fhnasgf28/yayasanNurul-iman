@@ -1,17 +1,49 @@
+import type { Metadata } from "next";
 import Link from "next/link";
-import { Calendar, Users, Target, Clock, ArrowLeft } from "lucide-react";
+import { Users, Clock, ArrowLeft } from "lucide-react";
 import { notFound } from "next/navigation";
 import { getProgramBySlug } from "@/lib/data";
+import { buildPageMetadata } from "@/lib/seo";
 
-export default async function ProgramDetailPage({
-  params,
-}: {
+type ProgramDetailPageProps = {
   params: Promise<{ slug: string }>;
-}) {
+};
+
+export async function generateMetadata({ params }: ProgramDetailPageProps): Promise<Metadata> {
   const { slug } = await params;
   const program = await getProgramBySlug(slug);
 
-  if (!program) {
+  if (!program || program.status === "DRAFT") {
+    return buildPageMetadata({
+      title: "Program Tidak Ditemukan",
+      description: "Program yang Anda cari tidak tersedia atau belum diterbitkan.",
+      path: "/programs",
+    });
+  }
+
+  return {
+    ...buildPageMetadata({
+      title: program.title,
+      description: program.description,
+      path: `/programs/${program.slug}`,
+      image: program.thumbnail,
+    }),
+    keywords: [
+      program.category,
+      program.title,
+      "Yayasan Nurul Iman",
+      "Masjid Nurul Iman",
+      "DTA Nurul Iman",
+      "program yayasan",
+    ],
+  };
+}
+
+export default async function ProgramDetailPage({ params }: ProgramDetailPageProps) {
+  const { slug } = await params;
+  const program = await getProgramBySlug(slug);
+
+  if (!program || program.status === "DRAFT") {
     notFound();
   }
 

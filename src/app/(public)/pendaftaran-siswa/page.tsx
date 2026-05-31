@@ -4,7 +4,7 @@ import { CalendarDays, GraduationCap, ShieldCheck } from "lucide-react";
 import StudentRegistrationForm from "@/components/public/StudentRegistrationForm";
 
 export const metadata: Metadata = {
-  title: "Pendaftaran Siswa Baru | Yayasan Nurul Iman",
+  title: "Pendaftaran Siswa Baru",
   description: "Form pendaftaran siswa baru DTA, Tahfidz, dan kelas baca tulis Al-Qur'an Yayasan Nurul Iman.",
 };
 

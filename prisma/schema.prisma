@@ -135,3 +135,27 @@ model ContactMessage {
   isRead    Boolean  @default(false)
   createdAt DateTime @default(now())
 }
+
+model DonationReport {
+  id        String                  @id @default(cuid())
+  title     String
+  month     DateTime
+  category  DonationReportCategory
+  income    Decimal                 @default(0) @db.Decimal(14, 2)
+  expense   Decimal                 @default(0) @db.Decimal(14, 2)
+  notes     String?                 @db.Text
+  published Boolean                 @default(true)
+  createdAt DateTime                @default(now())
+  updatedAt DateTime                @updatedAt
+
+  @@unique([month, category])
+  @@index([published])
+  @@index([month])
+}
+
+enum DonationReportCategory {
+  OPERASIONAL_MASJID
+  RENOVASI
+  BEASISWA_SANTRI
+  TAHFIDZ
+}

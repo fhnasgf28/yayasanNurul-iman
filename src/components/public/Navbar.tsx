@@ -37,6 +37,14 @@ const navLinks = [
     ],
   },
   { name: "Berita", href: "/news" },
+  {
+    name: "Donasi",
+    href: "/donate",
+    dropdown: [
+      { name: "Donasi & Infaq", href: "/donate" },
+      { name: "Laporan Keuangan", href: "/donate/laporan-keuangan" },
+    ],
+  },
 ];
 
 export default function Navbar() {
@@ -168,14 +176,6 @@ export default function Navbar() {
               </AnimatePresence>
             </div>
           ))}
-          <div className="ml-4">
-            <Link
-              href="/donate"
-              className="bg-secondary text-primary px-8 py-2.5 rounded-full text-sm font-bold hover:scale-105 transition-all shadow-lg active:scale-95"
-            >
-              Donasi
-            </Link>
-          </div>
         </div>
       </div>
     </motion.nav>
