@@ -10,7 +10,6 @@ import { useHydrated } from "@/lib/use-hydrated";
 
 const primaryItems = [
   { label: "Beranda", href: "/", icon: House, isActive: (pathname: string) => pathname === "/" },
-  { label: "Jadwal", href: "/jadwal-sholat", icon: Clock3, isActive: (pathname: string) => pathname.startsWith("/jadwal-sholat") },
   {
     label: "Masjid",
     href: "/programs?category=Masjid",
@@ -31,6 +30,7 @@ const secondaryItems = [
     href: "/programs?category=Pendidikan",
     icon: BookOpen,
   },
+  { label: "Jadwal Sholat", href: "/jadwal-sholat", icon: Clock3 },
   { label: "Pendaftaran", href: "/pendaftaran-siswa", icon: UserPlus },
   { label: "Galeri", href: "/gallery", icon: ImageIcon },
   { label: "Kontak", href: "/contact", icon: Mail },
@@ -46,7 +46,7 @@ export default function BottomNavbar() {
   if (!mounted) return null;
 
   const category = searchParams.get("category");
-  const isMoreRoute = ["/gallery", "/contact", "/donate", "/about", "/pendaftaran-siswa"].some((route) => pathname.startsWith(route))
+  const isMoreRoute = ["/gallery", "/contact", "/donate", "/about", "/pendaftaran-siswa", "/jadwal-sholat"].some((route) => pathname.startsWith(route))
     || (pathname === "/programs" && category === "Pendidikan");
 
   return (

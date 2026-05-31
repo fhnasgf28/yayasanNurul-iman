@@ -10,7 +10,6 @@ import { ChevronDown } from "lucide-react";
 
 const navLinks = [
   { name: "Beranda", href: "/" },
-  { name: "Jadwal Sholat", href: "/jadwal-sholat" },
   {
     name: "Tentang Kami",
     href: "/about",
@@ -20,7 +19,15 @@ const navLinks = [
       { name: "Kontak", href: "/contact" },
     ],
   },
-  { name: "Masjid", href: "/programs?category=Masjid" },
+  {
+    name: "Masjid",
+    href: "/programs?category=Masjid",
+    dropdown: [
+      { name: "Kemakmuran Masjid", href: "/programs?category=Masjid" },
+      { name: "Jadwal Sholat", href: "/jadwal-sholat" },
+      { name: "Donasi Masjid", href: "/donate" },
+    ],
+  },
   {
     name: "DTA",
     href: "/programs?category=Pendidikan",
