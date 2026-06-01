@@ -42,6 +42,19 @@ export const metadata: Metadata = {
     locale: "id_ID",
     type: "website",
   },
+  manifest: "/manifest",
+  appleWebApp: {
+    capable: true,
+    statusBarStyle: "default",
+    title: "Nurul Iman",
+  },
+};
+
+export const viewport = {
+  themeColor: "#1A4D2E",
+  width: "device-width",
+  initialScale: 1,
+  maximumScale: 1,
 };
 
 export default function RootLayout({
