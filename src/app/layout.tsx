@@ -3,6 +3,7 @@ import { Playfair_Display, Plus_Jakarta_Sans, Noto_Naskh_Arabic } from "next/fon
 import "./globals.css";
 import { cn } from "@/lib/utils";
 import Providers from "@/components/Providers";
+import PWARegistration from "@/components/PWARegistration";
 import { getSiteUrl } from "@/lib/seo";
 
 const playfair = Playfair_Display({
@@ -48,6 +49,7 @@ export const metadata: Metadata = {
     statusBarStyle: "default",
     title: "Nurul Iman",
   },
+  themeColor: "#1A4D2E",
 };
 
 export const viewport = {
@@ -72,6 +74,7 @@ export default function RootLayout({
           notoArabic.variable
         )}
       >
+        <PWARegistration />
         <Providers>{children}</Providers>
       </body>
     </html>

@@ -14,8 +14,25 @@
 
 :root {
   --background: #FDFAF4;
-  --foreground: #1C1C1C;
+  --foreground: #171717;
 }
+
+/* PWA App-like Adjustments */
+@media (display-mode: standalone) {
+  body {
+    -webkit-user-select: none;
+    -webkit-tap-highlight-color: transparent;
+    -webkit-touch-callout: none;
+    overscroll-behavior-y: none; /* Disable pull-to-refresh if desired */
+  }
+
+  /* Re-enable selection for content that needs it */
+  p, h1, h2, h3, h4, h5, h6, span, blockquote, input, textarea {
+    -webkit-user-select: text;
+    user-select: text;
+  }
+}
+
 
 body {
   background: var(--background);
