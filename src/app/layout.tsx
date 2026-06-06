@@ -43,7 +43,7 @@ export const metadata: Metadata = {
     locale: "id_ID",
     type: "website",
   },
-  manifest: "/manifest",
+  manifest: "/manifest.webmanifest",
   appleWebApp: {
     capable: true,
     statusBarStyle: "default",
