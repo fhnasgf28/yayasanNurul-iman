@@ -4,7 +4,7 @@ import "./globals.css";
 import { cn } from "@/lib/utils";
 import Providers from "@/components/Providers";
 import PWARegistration from "@/components/PWARegistration";
-import { getSiteUrl } from "@/lib/seo";
+import { defaultOgImage, defaultOgImageAlt, getSiteUrl } from "@/lib/seo";
 
 const playfair = Playfair_Display({
   subsets: ["latin"],
@@ -42,6 +42,27 @@ export const metadata: Metadata = {
     siteName: "Yayasan Nurul Iman",
     locale: "id_ID",
     type: "website",
+    images: [
+      {
+        url: defaultOgImage,
+        width: 1600,
+        height: 900,
+        alt: defaultOgImageAlt,
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Yayasan Nurul Iman | Masjid & DTA Islami",
+    description: "Menerangi Umat, Membentuk Generasi Qur'ani. Yayasan Nurul Iman berdedikasi memakmurkan Masjid Nurul Iman dan membina generasi muda melalui DTA.",
+    images: [
+      {
+        url: defaultOgImage,
+        width: 1600,
+        height: 900,
+        alt: defaultOgImageAlt,
+      },
+    ],
   },
   manifest: "/manifest.webmanifest",
   appleWebApp: {

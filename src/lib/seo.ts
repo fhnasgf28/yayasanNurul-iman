@@ -3,6 +3,8 @@ import type { Metadata } from "next";
 const siteName = "Yayasan Nurul Iman";
 const defaultDescription =
   "Menerangi Umat, Membentuk Generasi Qur'ani. Yayasan Nurul Iman berdedikasi memakmurkan Masjid Nurul Iman dan membina generasi muda melalui DTA.";
+export const defaultOgImage = "/whatsapp-preview.jpeg";
+export const defaultOgImageAlt = "Jamaah Yayasan Nurul Iman";
 
 export function getSiteUrl() {
   const rawUrl = process.env.NEXT_PUBLIC_SITE_URL;
@@ -45,7 +47,14 @@ export function buildPageMetadata({
   type?: "website" | "article";
 }): Metadata {
   const seoDescription = truncateDescription(description);
-  const images = image ? [{ url: image, alt: title }] : undefined;
+  const images = [
+    {
+      url: image || defaultOgImage,
+      width: 1600,
+      height: 900,
+      alt: image ? title : defaultOgImageAlt,
+    },
+  ];
 
   return {
     title,
@@ -63,10 +72,10 @@ export function buildPageMetadata({
       images,
     },
     twitter: {
-      card: image ? "summary_large_image" : "summary",
+      card: "summary_large_image",
       title,
       description: seoDescription,
-      images: image ? [image] : undefined,
+      images,
     },
   };
 }
