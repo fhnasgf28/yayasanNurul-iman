@@ -2,7 +2,7 @@ import { NextResponse } from "next/server";
 import { getServerSession } from "next-auth/next";
 import { authOptions } from "@/lib/auth";
 import { db } from "@/lib/db";
-import { parseBulanInput } from "@/lib/donatur";
+import { parseBulanInput } from "@/lib/donatur-shared";
 
 export async function POST(req: Request, { params }: { params: Promise<{ id: string }> }) {
   try {

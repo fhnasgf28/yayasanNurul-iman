@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { useState, useMemo } from "react";
 import {
   Edit,
@@ -21,7 +22,7 @@ import {
   type DonaturDonationItem,
   formatBulan,
   formatRupiah,
-} from "@/lib/donatur";
+} from "@/lib/donatur-shared";
 
 // ─── Types ─────────────────────────────────────────────────────────────────────
 
@@ -368,13 +369,14 @@ export default function DonaturManager({ initialDonaturList }: { initialDonaturL
               <h2 className="font-serif text-xl font-bold text-primary">Daftar Donatur</h2>
               <p className="mt-0.5 text-sm text-gray-500">{donaturList.length} donatur terdaftar.</p>
             </div>
-            <a
+            <Link
               href="/api/donatur/pdf"
+              prefetch={false}
               className="inline-flex items-center gap-2 rounded-2xl border border-primary/15 bg-white px-4 py-2.5 text-sm font-bold text-primary shadow-sm transition-colors hover:bg-primary/5"
             >
               <FileText size={16} />
               Cetak PDF
-            </a>
+            </Link>
           </div>
 
           {/* Search */}

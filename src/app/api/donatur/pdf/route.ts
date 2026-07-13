@@ -1,7 +1,8 @@
 import { NextResponse } from "next/server";
 import { getServerSession } from "next-auth/next";
 import { authOptions } from "@/lib/auth";
-import { getAllDonatur, formatBulan, formatRupiah } from "@/lib/donatur";
+import { getAllDonatur } from "@/lib/donatur";
+import { formatBulan, formatRupiah } from "@/lib/donatur-shared";
 
 type PdfColor = [number, number, number];
 
