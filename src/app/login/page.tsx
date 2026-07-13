@@ -1,11 +1,20 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
-import { motion } from "framer-motion";
-import { Lock, Mail, Loader2, AlertCircle, Eye, EyeOff } from "lucide-react";
+import { AnimatePresence, motion } from "framer-motion";
+import { Lock, Mail, Loader2, AlertCircle, Eye, EyeOff, Download, Smartphone } from "lucide-react";
 import { cn } from "@/lib/utils";
+
+type BeforeInstallPromptEvent = Event & {
+  prompt: () => Promise<void>;
+  userChoice: Promise<{ outcome: "accepted" | "dismissed"; platform: string }>;
+};
+
+type NavigatorWithStandalone = Navigator & {
+  standalone?: boolean;
+};
 
 export default function LoginPage() {
   const router = useRouter();
@@ -14,6 +23,49 @@ export default function LoginPage() {
   const [error, setError] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
+  const [showInstallPopup, setShowInstallPopup] = useState(false);
+  const [installPrompt, setInstallPrompt] = useState<BeforeInstallPromptEvent | null>(null);
+
+  useEffect(() => {
+    const isStandalone =
+      window.matchMedia("(display-mode: standalone)").matches ||
+      Boolean((navigator as NavigatorWithStandalone).standalone);
+    const alreadyShown = sessionStorage.getItem("nurul-iman-install-popup") === "dismissed";
+    const isMobile = window.matchMedia("(max-width: 768px)").matches;
+
+    if (isStandalone || alreadyShown || !isMobile) return;
+
+    const popupTimer = window.setTimeout(() => setShowInstallPopup(true), 900);
+    const handleBeforeInstallPrompt = (event: Event) => {
+      event.preventDefault();
+      setInstallPrompt(event as BeforeInstallPromptEvent);
+      setShowInstallPopup(true);
+    };
+
+    window.addEventListener("beforeinstallprompt", handleBeforeInstallPrompt);
+
+    return () => {
+      window.clearTimeout(popupTimer);
+      window.removeEventListener("beforeinstallprompt", handleBeforeInstallPrompt);
+    };
+  }, []);
+
+  const closeInstallPopup = () => {
+    sessionStorage.setItem("nurul-iman-install-popup", "dismissed");
+    setShowInstallPopup(false);
+  };
+
+  const handleInstallApp = async () => {
+    if (!installPrompt) {
+      closeInstallPopup();
+      return;
+    }
+
+    await installPrompt.prompt();
+    await installPrompt.userChoice.catch(() => undefined);
+    setInstallPrompt(null);
+    closeInstallPopup();
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -33,7 +85,7 @@ export default function LoginPage() {
         router.push("/dashboard");
         router.refresh();
       }
-    } catch (err) {
+    } catch {
       setError("Terjadi kesalahan sistem. Silakan coba beberapa saat lagi.");
     } finally {
       setIsLoading(false);
@@ -42,6 +94,60 @@ export default function LoginPage() {
 
   return (
     <main className="min-h-screen flex items-center justify-center bg-islamic px-6 py-12">
+      <AnimatePresence>
+        {showInstallPopup && (
+          <motion.div
+            className="fixed inset-0 z-[100] flex items-end justify-center bg-primary/35 px-4 pb-6 backdrop-blur-sm sm:items-center sm:pb-0"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+          >
+            <motion.div
+              initial={{ opacity: 0, y: 24, scale: 0.98 }}
+              animate={{ opacity: 1, y: 0, scale: 1 }}
+              exit={{ opacity: 0, y: 24, scale: 0.98 }}
+              className="w-full max-w-sm rounded-[2rem] border border-secondary/15 bg-white p-6 shadow-2xl"
+            >
+              <div className="mb-5 flex items-center gap-3">
+                <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-secondary/15 text-primary">
+                  <Smartphone size={24} />
+                </div>
+                <div>
+                  <h2 className="font-serif text-xl font-bold text-primary">Pasang Aplikasi?</h2>
+                  <p className="text-xs font-semibold uppercase tracking-[0.18em] text-secondary">
+                    PWA siap digunakan
+                  </p>
+                </div>
+              </div>
+              <p className="text-sm leading-6 text-gray-500">
+                Tambahkan Yayasan Nurul Iman ke layar utama smartphone agar akses login dan dashboard lebih cepat.
+              </p>
+              {!installPrompt && (
+                <p className="mt-3 text-xs leading-5 text-gray-400">
+                  Jika tombol install browser belum muncul, gunakan menu Share atau titik tiga lalu pilih Add to Home Screen.
+                </p>
+              )}
+              <div className="mt-6 flex gap-3">
+                <button
+                  type="button"
+                  onClick={closeInstallPopup}
+                  className="flex-1 rounded-2xl border border-primary/10 px-4 py-3 text-sm font-bold text-primary transition-colors hover:bg-primary/5"
+                >
+                  Nanti
+                </button>
+                <button
+                  type="button"
+                  onClick={handleInstallApp}
+                  className="flex flex-1 items-center justify-center gap-2 rounded-2xl bg-primary px-4 py-3 text-sm font-bold text-white shadow-lg shadow-primary/20 transition-colors hover:bg-secondary hover:text-primary"
+                >
+                  <Download size={17} />
+                  <span>{installPrompt ? "Pasang" : "Mengerti"}</span>
+                </button>
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
