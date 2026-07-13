@@ -91,12 +91,11 @@ export default function Navbar() {
           </div>
           <span
             className={cn(
-              "hidden whitespace-nowrap text-xl font-serif font-bold transition-colors duration-300 lg:inline xl:text-2xl",
+              "hidden whitespace-nowrap text-2xl font-serif font-bold transition-colors duration-300 xl:inline",
               navStyle === "transparent" ? "text-white" : "text-primary"
             )}
           >
-            <span className="xl:hidden">Nurul Iman</span>
-            <span className="hidden xl:inline">Yayasan Nurul Iman</span>
+            Yayasan Nurul Iman
           </span>
         </Link>
 

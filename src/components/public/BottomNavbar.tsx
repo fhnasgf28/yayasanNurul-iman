@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { AnimatePresence, motion } from "framer-motion";
-import { BookOpen, Circle, Clock3, House, Landmark, Menu, Newspaper, HandHeart, Image as ImageIcon, Mail, Info, UserPlus, WalletCards } from "lucide-react";
+import { BookOpen, Circle, Clock3, House, Landmark, Menu, Newspaper, HandHeart, Image as ImageIcon, Mail, Info, UserPlus, WalletCards, LogIn } from "lucide-react";
 import { usePathname, useSearchParams } from "next/navigation";
 import { useState } from "react";
 import { cn } from "@/lib/utils";
@@ -17,6 +17,7 @@ const primaryItems = [
     isActive: (pathname: string, category: string | null) => pathname === "/programs" && category === "Masjid",
   },
   { label: "Berita", href: "/news", icon: Newspaper, isActive: (pathname: string) => pathname.startsWith("/news") },
+  { label: "Login", href: "/login", icon: LogIn, isActive: (pathname: string) => pathname.startsWith("/login") },
 ];
 
 const secondaryItems = [
