@@ -3,6 +3,7 @@ import { db } from "@/lib/db";
 import { getAdminSession } from "@/lib/admin-auth";
 import { checkRateLimit } from "@/lib/rate-limit";
 import { studentRegistrationSchema } from "@/lib/student-registration";
+import { notifyNewStudentRegistration } from "@/lib/whatsapp";
 
 const submissionWindowMs = 60 * 60 * 1000;
 const submissionLimit = 5;
@@ -56,7 +57,23 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    await db.studentRegistration.create({ data });
+    const registration = await db.studentRegistration.create({ data });
+
+    // Kirim notifikasi WA ke admin — non-blocking, error tidak menggagalkan response
+    void notifyNewStudentRegistration({
+      nama: registration.studentName,
+      namaOrangTua: registration.parentName,
+      noHp: registration.parentPhone,
+      program: registration.program,
+      tanggal: new Intl.DateTimeFormat("id-ID", {
+        day: "2-digit",
+        month: "long",
+        year: "numeric",
+        hour: "2-digit",
+        minute: "2-digit",
+        timeZone: "Asia/Jakarta",
+      }).format(registration.submittedAt),
+    });
 
     return NextResponse.json(
       { message: "Pendaftaran berhasil dikirim" },
