@@ -195,10 +195,11 @@ export default function LoginPage() {
                   required
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  placeholder="admin@nuruliman.or.id"
+                  placeholder="nama@nuruliman.or.id"
                   className="w-full bg-light border border-secondary/10 rounded-2xl py-4 pl-12 pr-6 outline-none focus:border-secondary transition-all shadow-sm"
                 />
               </div>
+              <p className="text-xs text-gray-400 ml-1">Format: <span className="font-mono font-semibold">username@nuruliman.or.id</span></p>
             </div>
 
             <div className="space-y-2">
