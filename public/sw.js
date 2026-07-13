@@ -1,4 +1,4 @@
-const CACHE_NAME = "nurul-iman-pwa-v2";
+const CACHE_NAME = "nurul-iman-pwa-v3";
 const OFFLINE_URL = "/offline";
 
 const PRECACHE_URLS = [
@@ -51,7 +51,6 @@ function shouldRuntimeCache(request) {
   const url = new URL(request.url);
 
   return (
-    url.pathname.startsWith("/_next/static/") ||
     url.pathname === "/favicon.ico" ||
     url.pathname === "/manifest.webmanifest" ||
     url.pathname.startsWith("/pwa-icon/")

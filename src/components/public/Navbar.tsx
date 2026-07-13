@@ -65,12 +65,10 @@ export default function Navbar() {
   }, []);
 
   const isHome = pathname === "/";
+  if (!mounted) return null;
   
-  // Gaya default untuk Server-Side Rendering & Initial Hydration
-  const navStyle = !mounted ? "solid" : (scrolled ? "pill" : (isHome ? "transparent" : "solid"));
+  const navStyle = scrolled ? "pill" : (isHome ? "transparent" : "solid");
 
-  // Render sederhana untuk menyeimbangkan Hydration
-  // Kita pastikan strukturnya identik dengan versi interaktif
   return (
     <motion.nav
       initial={false}
