@@ -32,7 +32,7 @@ export default function Hero() {
       <div className="absolute inset-0 opacity-[0.03] pointer-events-none z-10 bg-islamic scale-150" />
 
       {/* Content Container */}
-      <div className="relative z-20 text-center px-6 max-w-5xl mt-12 md:mt-0">
+      <div className="relative z-20 text-center px-6 max-w-5xl pt-28 pb-8 md:pt-32 lg:pt-36 mt-0">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
