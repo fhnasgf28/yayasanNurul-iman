@@ -1,0 +1,19 @@
+[Unit]
+Description=Yayasan Nurul Iman Next.js app
+After=default.target
+
+[Service]
+Type=simple
+WorkingDirectory=/home/fhnasgf/.openclaw/workspace/yayasan/yayasanNurul-iman
+Environment=NODE_ENV=production
+Environment=PORT=3001
+EnvironmentFile=/home/fhnasgf/.openclaw/workspace/yayasan/yayasanNurul-iman/.env
+ExecStartPre=/usr/bin/docker compose -f /home/fhnasgf/.openclaw/workspace/yayasan/yayasanNurul-iman/docker-compose.yml up -d postgres
+ExecStart=/home/fhnasgf/.nvm/versions/node/v24.14.0/bin/npm run start -- -H 0.0.0.0 -p 3001
+Restart=always
+RestartSec=5
+KillSignal=SIGINT
+TimeoutStopSec=30
+
+[Install]
+WantedBy=default.target

@@ -18,10 +18,11 @@ import {
   UserPlus,
   HandCoins,
   Users,
+  UserCog,
   X,
 } from "lucide-react";
 import { useState } from "react";
-import { signOut } from "next-auth/react";
+import { signOut, useSession } from "next-auth/react";
 
 const menuItems = [
   { name: "Dashboard", href: "/dashboard", icon: LayoutDashboard, exact: true },
@@ -36,6 +37,10 @@ const menuItems = [
   { name: "Pengaturan", href: "/dashboard/settings", icon: Settings },
 ];
 
+const adminOnlyItems = [
+  { name: "Manajemen User", href: "/dashboard/users", icon: UserCog },
+];
+
 type SidebarProps = {
   isMobileOpen?: boolean;
   onMobileClose?: () => void;
@@ -43,7 +48,9 @@ type SidebarProps = {
 
 export default function Sidebar({ isMobileOpen = false, onMobileClose }: SidebarProps) {
   const pathname = usePathname();
+  const { data: session } = useSession();
   const [isCollapsed, setIsCollapsed] = useState(false);
+  const isAdmin = session?.user?.role === "ADMIN";
 
   const isActive = (item: typeof menuItems[0]) =>
     item.exact ? pathname === item.href : pathname === item.href || pathname.startsWith(item.href + "/");
@@ -127,6 +134,38 @@ export default function Sidebar({ isMobileOpen = false, onMobileClose }: Sidebar
               </Link>
             );
           })}
+
+          {/* Menu khusus Admin */}
+          {isAdmin && (
+            <>
+              <div className="my-2 mx-1 border-t border-white/10" />
+              <p className={cn("px-3 pb-1 text-[10px] font-bold uppercase tracking-widest text-white/30", isCollapsed && "md:hidden")}>
+                Admin
+              </p>
+              {adminOnlyItems.map((item) => {
+                const active = isActive(item);
+                return (
+                  <Link
+                    key={item.name}
+                    href={item.href}
+                    onClick={onMobileClose}
+                    className={cn(
+                      "flex items-center space-x-3 rounded-2xl border p-3 transition-all duration-150",
+                      active
+                        ? "border-secondary/30 bg-secondary/20 text-secondary"
+                        : "border-transparent text-white/62 hover:bg-white/8 hover:text-white"
+                    )}
+                    title={isCollapsed ? item.name : undefined}
+                  >
+                    <item.icon size={20} className={cn("shrink-0", active ? "text-secondary" : "")} />
+                    <span className={cn("text-sm font-semibold md:inline", isCollapsed && "md:hidden")}>
+                      {item.name}
+                    </span>
+                  </Link>
+                );
+              })}
+            </>
+          )}
         </nav>
 
         <div className="border-t border-white/10 p-4">
