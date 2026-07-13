@@ -37,6 +37,7 @@ const nextConfig: NextConfig = {
     "landingpage.clipperyt.online",
     "yayasan.clipperyt.online",
     "nuruliman.clipperyt.online",
+    "yayasannuruliman.clipperyt.online",
     ...(tunnelHostname ? [tunnelHostname] : []),
   ],
   images: {

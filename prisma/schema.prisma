@@ -158,3 +158,32 @@ enum DonationReportCategory {
   BEASISWA_SANTRI
   TAHFIDZ
 }
+
+model Donatur {
+  id        String           @id @default(cuid())
+  nama      String
+  telepon   String?
+  alamat    String?          @db.Text
+  catatan   String?          @db.Text
+  aktif     Boolean          @default(true)
+  createdAt DateTime         @default(now())
+  updatedAt DateTime         @updatedAt
+  donations DonaturDonation[]
+
+  @@index([aktif])
+}
+
+model DonaturDonation {
+  id        String   @id @default(cuid())
+  donaturId String
+  donatur   Donatur  @relation(fields: [donaturId], references: [id], onDelete: Cascade)
+  bulan     DateTime
+  nominal   Decimal  @db.Decimal(14, 2)
+  catatan   String?  @db.Text
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([donaturId, bulan])
+  @@index([donaturId])
+  @@index([bulan])
+}

@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Playfair_Display, Plus_Jakarta_Sans, Noto_Naskh_Arabic } from "next/font/google";
 import "./globals.css";
 import { cn } from "@/lib/utils";
@@ -49,10 +49,9 @@ export const metadata: Metadata = {
     statusBarStyle: "default",
     title: "Nurul Iman",
   },
-  themeColor: "#1A4D2E",
 };
 
-export const viewport = {
+export const viewport: Viewport = {
   themeColor: "#1A4D2E",
   width: "device-width",
   initialScale: 1,

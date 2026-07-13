@@ -6,7 +6,7 @@ import { usePathname } from "next/navigation";
 import { cn } from "@/lib/utils";
 import { useHydrated } from "@/lib/use-hydrated";
 import { motion, AnimatePresence } from "framer-motion";
-import { ChevronDown } from "lucide-react";
+import { ChevronDown, LogIn } from "lucide-react";
 
 const navLinks = [
   { name: "Beranda", href: "/" },
@@ -78,24 +78,25 @@ export default function Navbar() {
       className={cn(
         "fixed left-0 right-0 z-50 hidden transition-all duration-500 ease-in-out md:block",
         navStyle === "pill" &&
-          "top-4 mx-auto max-w-6xl w-[95%] rounded-full glass shadow-2xl py-2 px-8 border border-white/20",
+          "top-4 mx-auto max-w-6xl w-[95%] rounded-full glass shadow-2xl py-2 px-5 lg:px-8 border border-white/20",
         navStyle === "solid" &&
-          "top-0 w-full py-4 px-10 bg-white/95 shadow-md border-b border-gray-100 backdrop-blur-sm",
-        navStyle === "transparent" && "top-0 w-full py-5 px-10 bg-transparent"
+          "top-0 w-full py-4 px-4 lg:px-10 bg-white/95 shadow-md border-b border-gray-100 backdrop-blur-sm",
+        navStyle === "transparent" && "top-0 w-full py-5 px-4 lg:px-10 bg-transparent"
       )}
     >
       <div className="flex items-center justify-between">
-        <Link href="/" className="flex items-center space-x-2 group">
+        <Link href="/" className="flex shrink-0 items-center space-x-2 group">
           <div className="w-10 h-10 bg-secondary rounded-full flex items-center justify-center text-primary font-bold text-xl shadow-lg transition-transform duration-200 hover:rotate-12 hover:scale-110">
             🕌
           </div>
           <span
             className={cn(
-              "text-2xl font-serif font-bold transition-colors duration-300",
+              "hidden whitespace-nowrap text-xl font-serif font-bold transition-colors duration-300 lg:inline xl:text-2xl",
               navStyle === "transparent" ? "text-white" : "text-primary"
             )}
           >
-            Yayasan Nurul Iman
+            <span className="xl:hidden">Nurul Iman</span>
+            <span className="hidden xl:inline">Yayasan Nurul Iman</span>
           </span>
         </Link>
 
@@ -112,7 +113,7 @@ export default function Navbar() {
                 <button
                   type="button"
                   className={cn(
-                    "flex items-center space-x-1 px-4 py-2 text-sm font-medium transition-all duration-300 rounded-full hover:bg-white/10 group",
+                    "flex items-center space-x-1 px-3 py-2 text-sm font-medium transition-all duration-300 rounded-full hover:bg-white/10 group lg:px-4",
                     navStyle === "transparent"
                       ? "text-white/90 hover:text-white"
                       : "text-primary hover:text-secondary"
@@ -131,7 +132,7 @@ export default function Navbar() {
                 <Link
                   href={link.href}
                   className={cn(
-                    "px-4 py-2 text-sm font-medium transition-all duration-300 rounded-full hover:bg-white/10 relative group block",
+                    "px-3 py-2 text-sm font-medium transition-all duration-300 rounded-full hover:bg-white/10 relative group block lg:px-4",
                     navStyle === "transparent"
                       ? "text-white/90 hover:text-white"
                       : "text-primary hover:text-secondary"
@@ -176,6 +177,19 @@ export default function Navbar() {
               </AnimatePresence>
             </div>
           ))}
+
+          <Link
+            href="/login"
+            className={cn(
+              "ml-2 inline-flex h-10 shrink-0 items-center gap-2 rounded-full px-4 text-sm font-bold shadow-lg transition-all duration-300 hover:-translate-y-0.5 focus:outline-none focus:ring-2 focus:ring-secondary/50 focus:ring-offset-2 lg:ml-3 lg:px-5",
+              navStyle === "transparent"
+                ? "bg-secondary text-primary hover:bg-white focus:ring-offset-primary"
+                : "bg-primary text-white shadow-primary/20 hover:bg-secondary hover:text-primary"
+            )}
+          >
+            <LogIn size={17} />
+            <span>Login</span>
+          </Link>
         </div>
       </div>
     </motion.nav>
