@@ -79,6 +79,7 @@ export default function Navbar() {
 
   return (
     <nav
+      suppressHydrationWarning
       className={cn(
         "fixed left-0 right-0 z-50 hidden transition-all duration-500 ease-in-out md:block",
         navStyle === "pill" &&
@@ -94,6 +95,7 @@ export default function Navbar() {
             🕌
           </div>
           <span
+            suppressHydrationWarning
             className={cn(
               "hidden whitespace-nowrap text-2xl font-serif font-bold transition-colors duration-300 xl:inline",
               navStyle === "transparent" ? "text-white" : "text-primary"

@@ -7,6 +7,10 @@ generator client {
 
 datasource db {
   provider = "postgresql"
+  // url sengaja tidak diset di sini karena project menggunakan
+  // @prisma/adapter-pg (driver adapter mode).
+  // Koneksi database dikelola di src/lib/db.ts via PrismaPg adapter
+  // menggunakan DATABASE_URL dari environment variable.
 }
 
 model User {

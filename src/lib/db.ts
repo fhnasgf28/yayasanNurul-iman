@@ -13,15 +13,22 @@ type PrismaClientWithGeneratedModels = PrismaClient & {
   prestasi?: unknown;
   contactMessage?: unknown;
   studentRegistration?: unknown;
+  donatur?: unknown;
 };
 
 const globalForPrisma = global as unknown as { prisma?: PrismaClient };
 const currentClient = globalForPrisma.prisma as PrismaClientWithGeneratedModels | undefined;
 
 // Force fresh client (needed after prisma generate in dev)
+// Tambahkan model baru ke checklist ini setiap kali schema diperbarui
 if (
   currentClient &&
-  (!currentClient.prestasi || !currentClient.contactMessage || !currentClient.studentRegistration)
+  (
+    !currentClient.prestasi ||
+    !currentClient.contactMessage ||
+    !currentClient.studentRegistration ||
+    !currentClient.donatur
+  )
 ) {
   globalForPrisma.prisma = undefined;
 }
