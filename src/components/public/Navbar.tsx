@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
 import { cn } from "@/lib/utils";
 import { useHydrated } from "@/lib/use-hydrated";
-import { motion, AnimatePresence } from "framer-motion";
+import { AnimatePresence, motion } from "framer-motion";
 import { ChevronDown, LogIn } from "lucide-react";
 
 const navLinks = [
@@ -65,14 +65,20 @@ export default function Navbar() {
   }, []);
 
   const isHome = pathname === "/";
-  if (!mounted) return null;
-  
-  const navStyle = scrolled ? "pill" : (isHome ? "transparent" : "solid");
+
+  // Hitung navStyle — sebelum mounted, gunakan nilai default agar server & client konsisten
+  const navStyle = !mounted
+    ? isHome
+      ? "transparent"
+      : "solid"
+    : scrolled
+    ? "pill"
+    : isHome
+    ? "transparent"
+    : "solid";
 
   return (
-    <motion.nav
-      initial={false}
-      animate={{ y: 0 }}
+    <nav
       className={cn(
         "fixed left-0 right-0 z-50 hidden transition-all duration-500 ease-in-out md:block",
         navStyle === "pill" &&
@@ -189,6 +195,6 @@ export default function Navbar() {
           </Link>
         </div>
       </div>
-    </motion.nav>
+    </nav>
   );
 }
