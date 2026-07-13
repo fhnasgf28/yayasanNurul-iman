@@ -1,21 +1,17 @@
 /**
- * Utilitas notifikasi WhatsApp via OpenWA (self-hosted)
- * Dokumentasi API: http://localhost:2785/api/docs
+ * Utilitas notifikasi WhatsApp via wa-gateway lokal (Baileys)
+ * Server: /home/fhnasgf/wa-gateway/server.js di port 3002
  *
  * Setup:
- * 1. Jalankan OpenWA: docker compose -f docker-compose.dev.yml up -d
- * 2. Buka http://localhost:2785 → buat API key → scan QR dengan nomor pengirim
- * 3. Isi env vars di .env:
- *    OPENWA_API_KEY=your-api-key
- *    OPENWA_SESSION_ID=default  (nama session di OpenWA)
- *    OPENWA_BASE_URL=http://localhost:2785
+ * 1. cd ~/wa-gateway && node server.js
+ * 2. Scan QR yang muncul di terminal dengan nomor 083823290281
+ * 3. Session tersimpan di ~/wa-gateway/session_auth (tidak perlu scan ulang)
+ * 4. Jalankan sebagai service: systemctl --user enable --now wa-gateway
  */
 
-const OPENWA_BASE_URL = process.env.OPENWA_BASE_URL || "http://localhost:2785";
-const OPENWA_API_KEY = process.env.OPENWA_API_KEY || "";
-const OPENWA_SESSION_ID = process.env.OPENWA_SESSION_ID || "default";
+const WA_GATEWAY_URL = process.env.WA_GATEWAY_URL || "http://127.0.0.1:3002";
 
-// Nomor penerima notifikasi (tanpa tanda + dan spasi, gunakan format internasional)
+// Nomor penerima notifikasi (format internasional tanpa + dan spasi)
 const NOTIF_RECIPIENTS = [
   "6281514846433", // +62 815-1484-6433
   "6281199904033", // +62 811-9990-403
@@ -27,24 +23,13 @@ interface SendWAOptions {
 }
 
 async function sendWhatsApp({ to, message }: SendWAOptions): Promise<boolean> {
-  if (!OPENWA_API_KEY) {
-    console.warn("[WA] OPENWA_API_KEY belum diset, skip notifikasi");
-    return false;
-  }
-
   try {
-    const res = await fetch(
-      `${OPENWA_BASE_URL}/api/${OPENWA_SESSION_ID}/messages/send-text`,
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          "x-api-key": OPENWA_API_KEY,
-        },
-        body: JSON.stringify({ chatId: `${to}@c.us`, text: message }),
-        signal: AbortSignal.timeout(10_000), // 10 detik timeout
-      }
-    );
+    const res = await fetch(`${WA_GATEWAY_URL}/send`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ to, message }),
+      signal: AbortSignal.timeout(10_000),
+    });
 
     if (!res.ok) {
       const err = await res.text();
@@ -55,7 +40,8 @@ async function sendWhatsApp({ to, message }: SendWAOptions): Promise<boolean> {
     console.log(`[WA] ✅ Pesan terkirim ke ${to}`);
     return true;
   } catch (err) {
-    console.error(`[WA] Error kirim ke ${to}:`, err);
+    // Jika gateway tidak jalan, log warning tapi jangan crash
+    console.warn(`[WA] Gateway tidak tersedia, skip notifikasi ke ${to}`);
     return false;
   }
 }
