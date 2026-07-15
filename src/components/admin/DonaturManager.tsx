@@ -5,6 +5,7 @@ import { useState, useMemo } from "react";
 import {
   Edit,
   FileText,
+  FileSpreadsheet,
   Plus,
   Save,
   Trash2,
@@ -369,14 +370,24 @@ export default function DonaturManager({ initialDonaturList }: { initialDonaturL
               <h2 className="font-serif text-xl font-bold text-primary">Daftar Donatur</h2>
               <p className="mt-0.5 text-sm text-gray-500">{donaturList.length} donatur terdaftar.</p>
             </div>
-            <Link
-              href="/api/donatur/pdf"
-              prefetch={false}
-              className="inline-flex items-center gap-2 rounded-2xl border border-primary/15 bg-white px-4 py-2.5 text-sm font-bold text-primary shadow-sm transition-colors hover:bg-primary/5"
-            >
-              <FileText size={16} />
-              Cetak PDF
-            </Link>
+            <div className="flex items-center gap-2">
+              <Link
+                href="/api/donatur/pdf"
+                prefetch={false}
+                className="inline-flex items-center gap-2 rounded-2xl border border-primary/15 bg-white px-4 py-2.5 text-sm font-bold text-primary shadow-sm transition-colors hover:bg-primary/5"
+              >
+                <FileText size={16} />
+                Cetak PDF
+              </Link>
+              <Link
+                href="/api/donatur/excel"
+                prefetch={false}
+                className="inline-flex items-center gap-2 rounded-2xl border border-emerald-200 bg-emerald-50 px-4 py-2.5 text-sm font-bold text-emerald-700 shadow-sm transition-colors hover:bg-emerald-100"
+              >
+                <FileSpreadsheet size={16} />
+                Export Excel
+              </Link>
+            </div>
           </div>
 
           {/* Search */}
