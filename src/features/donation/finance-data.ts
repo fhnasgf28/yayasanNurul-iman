@@ -1,5 +1,5 @@
 import { db } from "@/lib/db";
-import { serializeDonationReport } from "@/lib/finance";
+import { serializeDonationReport } from "@/features/donation/finance";
 
 export async function getDonationReports({ publishedOnly = false } = {}) {
   const reports = await db.donationReport.findMany({

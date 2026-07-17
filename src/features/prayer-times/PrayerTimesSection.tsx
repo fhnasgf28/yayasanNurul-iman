@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { ArrowRight, Clock3, MapPin, MoonStar } from "lucide-react";
-import type { PrayerTimesData } from "@/lib/prayer-times";
+import type { PrayerTimesData } from "@/features/prayer-times/prayer-times";
 
 type Props = {
   data: PrayerTimesData | null;

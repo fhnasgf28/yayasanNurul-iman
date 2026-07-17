@@ -7,7 +7,7 @@ import {
   parseMonthInput,
   serializeDonationReport,
   type DonationCategoryValue,
-} from "@/lib/finance";
+} from "@/features/donation/finance";
 
 function normalizeAmount(value: unknown) {
   const amount = Number(value);

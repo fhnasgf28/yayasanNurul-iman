@@ -1,14 +1,14 @@
 import { NextResponse } from "next/server";
 import { getServerSession } from "next-auth/next";
 import { authOptions } from "@/lib/auth";
-import { getDonationReports } from "@/lib/finance-data";
+import { getDonationReports } from "@/features/donation/finance-data";
 import {
   donationCategoryLabels,
   formatCurrency,
   groupDonationReportsByMonth,
   summarizeDonationReports,
   summarizeDonationReportsByCategory,
-} from "@/lib/finance";
+} from "@/features/donation/finance";
 
 type PdfColor = [number, number, number];
 

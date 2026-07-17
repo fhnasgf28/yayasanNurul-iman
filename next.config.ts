@@ -52,6 +52,11 @@ const nextConfig: NextConfig = {
         hostname: "storage.nu.or.id",
         pathname: "/**",
       },
+      {
+        protocol: "https",
+        hostname: "utfs.io",
+        pathname: "/**",
+      },
     ],
   },
 };

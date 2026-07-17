@@ -4,13 +4,21 @@ import { AnimatePresence, motion } from "framer-motion";
 import { MessageCircle, Send, X } from "lucide-react";
 import { useState } from "react";
 
-const whatsappNumber = "6283823290281";
 const defaultMessage =
   "Assalamu'alaikum, saya ingin bertanya tentang Yayasan Nurul Iman.";
 
-export default function FloatingWhatsApp() {
+interface FloatingWhatsAppProps {
+  settings?: Record<string, string>;
+}
+
+export default function FloatingWhatsApp({ settings }: FloatingWhatsAppProps) {
   const [isOpen, setIsOpen] = useState(false);
   const [message, setMessage] = useState(defaultMessage);
+
+  const rawWa = settings?.whatsapp_number || settings?.contact_phone || "6283823290281";
+  const whatsappNumber = rawWa.replace(/\D/g, "").startsWith("0")
+    ? "62" + rawWa.replace(/\D/g, "").slice(1)
+    : rawWa.replace(/\D/g, "") || "6283823290281";
 
   const trimmedMessage = message.trim();
   const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(

@@ -1,16 +1,17 @@
 import Hero from "@/components/public/Hero";
-import ProgramCard from "@/components/public/ProgramCard";
-import NewsCard from "@/components/public/NewsCard";
-import DonationBanner from "@/components/public/DonationBanner";
-import AchievementSlider from "@/components/public/AchievementSlider";
-import PrayerTimesSection from "@/components/public/PrayerTimesSection";
+import ProgramCard from "@/features/programs/ProgramCard";
+import NewsCard from "@/features/news/NewsCard";
+import DonationBanner from "@/features/donation/DonationBanner";
+import AchievementSlider from "@/features/prestasi/AchievementSlider";
+import PrayerTimesSection from "@/features/prayer-times/PrayerTimesSection";
+import DailyVerse from "@/features/quran-quote/DailyVerse";
 import { ArrowRight, CheckCircle2, ShieldCheck, Target } from "lucide-react";
 import Link from "next/link";
 
 import { getPrograms, getNews } from "@/lib/data";
 import { db } from "@/lib/db";
 import { getSettings } from "@/lib/settings";
-import { getPrayerTimes } from "@/lib/prayer-times";
+import { getPrayerTimes } from "@/features/prayer-times/prayer-times";
 
 export default async function Home() {
   const [featuredPrograms, latestNews, prestasi, settings] = await Promise.all([
@@ -34,6 +35,7 @@ export default async function Home() {
       </div>
 
       <Hero />
+      <PrayerTimesSection data={prayerTimes} />
       
       {/* About Section - Redesigned */}
       <section className="py-32 px-6 relative overflow-hidden bg-white/50 backdrop-blur-[2px]">
@@ -118,6 +120,8 @@ export default async function Home() {
         </div>
       </section>
 
+      <DailyVerse />
+
       {/* Featured Programs Section - Redesigned */}
       <section className="py-32 px-6 bg-primary/5 relative">
         <div className="absolute inset-0 bg-islamic opacity-[0.02] pointer-events-none" />
@@ -149,11 +153,110 @@ export default async function Home() {
 
       <AchievementSlider items={prestasi} />
 
+      {/* Jadwal Kajian & Majelis Taklim Section */}
+      <section className="py-24 px-6 bg-white relative overflow-hidden">
+        {/* Background decorations */}
+        <div className="absolute inset-0 bg-islamic opacity-[0.02] pointer-events-none" />
+        <div className="absolute top-1/2 left-0 w-80 h-80 bg-secondary/5 rounded-full blur-3xl pointer-events-none" />
+        
+        <div className="max-w-7xl mx-auto space-y-16 relative z-10">
+          <div className="text-center space-y-4 max-w-2xl mx-auto">
+            <span className="inline-flex items-center gap-2 text-secondary font-bold tracking-widest uppercase text-sm bg-secondary/5 px-4 py-2 rounded-full border border-secondary/10">
+              Jadwal Kegiatan & Kajian
+            </span>
+            <h2 className="text-3xl md:text-5xl font-serif font-bold text-primary">Majelis Taklim & Dakwah</h2>
+            <p className="text-gray-500 text-sm md:text-base">
+              Mari luangkan waktu untuk menuntut ilmu syar&apos;i dan mempererat ukhuwah islamiyah melalui program kajian rutin di Masjid Nurul Iman.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-10">
+            {/* Weekly Kajian */}
+            <div className="bg-gradient-to-br from-primary/5 to-transparent border border-secondary/15 rounded-[2.5rem] p-8 md:p-10 space-y-8">
+              <div className="flex items-center space-x-4">
+                <div className="w-12 h-12 bg-primary text-white rounded-2xl flex items-center justify-center font-bold text-lg shadow-md shadow-primary/10">
+                  W
+                </div>
+                <div>
+                  <h3 className="font-serif font-bold text-2xl text-primary">Kajian Rutin Pekanan</h3>
+                  <p className="text-xs text-gray-400 font-sans mt-0.5">Diselenggarakan setiap minggu di Masjid Nurul Iman</p>
+                </div>
+              </div>
+
+              <div className="space-y-6">
+                {[
+                  {
+                    time: "Malam Jum'at (Ba'da Maghrib)",
+                    title: "Yasinan, Tahlil & Zikir Bersama",
+                    speaker: "Dipimpin oleh Keimaman Masjid",
+                    desc: "Pembacaan Surat Yasin, Tahlil, dan doa bersama untuk keselamatan umat dan keluarga.",
+                  },
+                  {
+                    time: "Ahad Pagi (07:00 - 08:30 WIB)",
+                    title: "Kajian Fikih Islam (Kitab Fathul Qorib)",
+                    speaker: "Ustadz H. M. Syarifuddin, Lc.",
+                    desc: "Membahas hukum ibadah sehari-hari, thaharah, sholat, dan muamalah dasar.",
+                  },
+                ].map((item, i) => (
+                  <div key={i} className="bg-white p-6 rounded-2xl border border-secondary/5 shadow-sm space-y-3">
+                    <span className="text-[10px] font-bold text-secondary uppercase tracking-widest bg-secondary/10 px-3 py-1 rounded-full font-sans">
+                      {item.time}
+                    </span>
+                    <h4 className="font-serif font-bold text-lg text-primary">{item.title}</h4>
+                    <p className="text-xs text-gray-500 font-medium font-sans">Pemateri: {item.speaker}</p>
+                    <p className="text-xs text-gray-400 font-sans leading-relaxed">{item.desc}</p>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* Monthly / Special Kajian */}
+            <div className="bg-gradient-to-br from-secondary/5 to-transparent border border-secondary/15 rounded-[2.5rem] p-8 md:p-10 space-y-8">
+              <div className="flex items-center space-x-4">
+                <div className="w-12 h-12 bg-secondary text-primary rounded-2xl flex items-center justify-center font-bold text-lg shadow-md shadow-secondary/10">
+                  M
+                </div>
+                <div>
+                  <h3 className="font-serif font-bold text-2xl text-primary">Majelis Tematik & Bulanan</h3>
+                  <p className="text-xs text-gray-400 font-sans mt-0.5">Agenda rutin bulanan dan peringatan hari besar</p>
+                </div>
+              </div>
+
+              <div className="space-y-6">
+                {[
+                  {
+                    time: "Sabtu Pekan Ke-2 (09:00 - 11:30 WIB)",
+                    title: "Majelis Ta&apos;lim Ummahat (Ibu-Ibu)",
+                    speaker: "Ustadzah Siti Aminah, S.Ag.",
+                    desc: "Kajian khusus fiqih wanita, pembinaan keluarga sakinah, dan cara mendidik anak secara islami.",
+                  },
+                  {
+                    time: "Ahad Pekan Ke-4 (Ba'da Subuh)",
+                    title: "Kuliah Subuh & Sarapan Berkah",
+                    speaker: "Ustadz Undangan (MUI / Tokoh Karawang)",
+                    desc: "Kajian tafsir tematik dilanjutkan dengan ramah tamah dan sarapan bersama jamaah.",
+                  },
+                ].map((item, i) => (
+                  <div key={i} className="bg-white p-6 rounded-2xl border border-secondary/5 shadow-sm space-y-3">
+                    <span className="text-[10px] font-bold text-primary uppercase tracking-widest bg-primary/10 px-3 py-1 rounded-full font-sans">
+                      {item.time}
+                    </span>
+                    <h4 className="font-serif font-bold text-lg text-primary">{item.title}</h4>
+                    <p className="text-xs text-gray-500 font-medium font-sans">Pemateri: {item.speaker}</p>
+                    <p className="text-xs text-gray-400 font-sans leading-relaxed">{item.desc}</p>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* News Section - Redesigned */}
       <section className="py-32 px-6 relative overflow-hidden bg-white/50 backdrop-blur-[2px]">
         <div className="absolute top-0 left-0 w-full h-full bg-islamic opacity-[0.03] pointer-events-none" />
         <div className="max-w-7xl mx-auto space-y-20 relative z-10">
-npm          <div className="text-center space-y-6 max-w-3xl mx-auto">
+          <div className="text-center space-y-6 max-w-3xl mx-auto">
              <div className="inline-flex items-center space-x-2 text-secondary font-bold tracking-widest uppercase text-xs bg-secondary/5 px-4 py-2 rounded-full border border-secondary/10">
                 <span>Update Terkini</span>
               </div>

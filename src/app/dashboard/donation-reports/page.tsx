@@ -1,7 +1,7 @@
 import { redirect } from "next/navigation";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
-import { getDonationReports } from "@/lib/finance-data";
+import { getDonationReports } from "@/features/donation/finance-data";
 import DonationReportManager from "@/components/admin/DonationReportManager";
 
 export default async function DonationReportsAdminPage() {

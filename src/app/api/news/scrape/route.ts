@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server';
 import { getServerSession } from 'next-auth';
 import { authOptions } from '@/lib/auth';
-import { refreshNewsIfStale } from '@/lib/news-scraper';
+import { refreshNewsIfStale } from '@/features/news/news-scraper';
 
 export async function POST(req: Request) {
   try {

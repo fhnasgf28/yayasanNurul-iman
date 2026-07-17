@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { refreshNewsIfStale } from "@/lib/news-scraper";
+import { refreshNewsIfStale } from "@/features/news/news-scraper";
 
 export const runtime = "nodejs";
 

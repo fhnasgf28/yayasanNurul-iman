@@ -12,9 +12,13 @@ export async function proxy(request: NextRequest) {
   const isAuthPage = request.nextUrl.pathname.startsWith("/login");
   const isDashboardPage = request.nextUrl.pathname.startsWith("/dashboard");
 
-  // 1. Authentication Logic
+  // 1. Authentication & Authorization Logic
   if (isDashboardPage) {
     if (!token) {
+      return NextResponse.redirect(new URL("/login", request.url));
+    }
+    // Only ADMIN or EDITOR role can access the dashboard
+    if (token.role !== "ADMIN" && token.role !== "EDITOR") {
       return NextResponse.redirect(new URL("/login", request.url));
     }
   }
@@ -56,9 +60,13 @@ export async function proxy(request: NextRequest) {
   // Security Headers
   response.headers.set("Content-Security-Policy", cspHeader);
   response.headers.set("X-Content-Type-Options", "nosniff");
+  response.headers.set("X-Frame-Options", "DENY");
+  response.headers.set("X-XSS-Protection", "1; mode=block");
   response.headers.set("Referrer-Policy", "strict-origin-when-cross-origin");
   response.headers.set("Permissions-Policy", "camera=(), microphone=(), geolocation=()");
   response.headers.set("Strict-Transport-Security", "max-age=31536000; includeSubDomains");
+  response.headers.set("Cross-Origin-Opener-Policy", "same-origin");
+  response.headers.set("Cross-Origin-Resource-Policy", "same-origin");
 
   return response;
 }

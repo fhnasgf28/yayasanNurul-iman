@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { Mail, MapPin, Phone, Camera, Send } from "lucide-react";
 
-export default function Footer() {
+export default function Footer({ settings }: { settings?: Record<string, string> }) {
   return (
     <footer className="bg-primary text-light pt-20 pb-10">
       <div className="max-w-7xl mx-auto px-6 grid grid-cols-1 md:grid-cols-4 gap-12">
@@ -16,7 +16,7 @@ export default function Footer() {
             </h3>
           </div>
           <p className="text-sm opacity-80 leading-relaxed">
-            "Menerangi Umat, Membentuk Generasi Qur'ani" - Yayasan Nurul Iman berdedikasi untuk memakmurkan masjid dan mendidik generasi muda yang cinta Al-Qur'an.
+            {settings?.site_description || '"Menerangi Umat, Membentuk Generasi Qur\'ani" - Yayasan Nurul Iman berdedikasi untuk memakmurkan masjid dan mendidik generasi muda yang cinta Al-Qur\'an.'}
           </p>
           <div className="flex space-x-4 pt-2">
             <Link href="#" className="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center hover:bg-secondary hover:text-primary transition-all">
@@ -59,15 +59,15 @@ export default function Footer() {
           <ul className="space-y-4 text-sm opacity-80">
             <li className="flex items-start space-x-3">
               <MapPin size={20} className="text-secondary shrink-0" />
-              <span>[Alamat Lengkap Masjid/Yayasan]</span>
+              <span>{settings?.contact_address || "Telukjambe Timur, Karawang"}</span>
             </li>
             <li className="flex items-center space-x-3">
               <Phone size={20} className="text-secondary shrink-0" />
-              <span>[Nomor HP/WA Pengurus]</span>
+              <span>{settings?.contact_phone || "+62 812-3456-7890"}</span>
             </li>
             <li className="flex items-center space-x-3">
               <Mail size={20} className="text-secondary shrink-0" />
-              <span>[Email Resmi Yayasan]</span>
+              <span className="break-all">{settings?.contact_email || "info@nuruliman.or.id"}</span>
             </li>
           </ul>
         </div>

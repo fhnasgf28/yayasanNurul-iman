@@ -1,4 +1,4 @@
-import ProgramCard from "@/components/public/ProgramCard";
+import ProgramCard from "@/features/programs/ProgramCard";
 import { getPrograms } from "@/lib/data";
 
 export default async function ProgramsPage({

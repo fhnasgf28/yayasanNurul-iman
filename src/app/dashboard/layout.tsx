@@ -14,6 +14,10 @@ export default async function DashboardLayout({
     redirect("/login");
   }
 
+  if (session.user.role !== "ADMIN" && session.user.role !== "EDITOR") {
+    redirect("/login");
+  }
+
   return (
     <AdminShell user={session.user}>{children}</AdminShell>
   );

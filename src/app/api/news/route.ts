@@ -3,7 +3,7 @@ import { getServerSession } from "next-auth/next";
 import { authOptions } from "@/lib/auth";
 import { db } from "@/lib/db";
 import { sanitizeHtml } from "@/lib/utils";
-import { refreshNewsIfStale } from "@/lib/news-scraper";
+import { refreshNewsIfStale } from "@/features/news/news-scraper";
 
 export async function POST(req: Request) {
   try {

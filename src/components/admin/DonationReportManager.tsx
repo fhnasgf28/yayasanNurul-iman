@@ -11,7 +11,7 @@ import {
   toMonthInputValue,
   type DonationCategoryValue,
   type DonationReportItem,
-} from "@/lib/finance";
+} from "@/features/donation/finance";
 
 type FormState = {
   id?: string;

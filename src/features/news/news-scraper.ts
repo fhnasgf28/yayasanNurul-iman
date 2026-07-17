@@ -1,6 +1,6 @@
 import * as cheerio from 'cheerio';
 import slugify from 'slugify';
-import { db } from './db';
+import { db } from '@/lib/db';
 
 const NU_OR_ID_URL = 'https://www.nu.or.id';
 const NEWS_AUTO_REFRESH_KEY = 'news_last_auto_refresh_at';

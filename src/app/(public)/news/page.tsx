@@ -1,4 +1,4 @@
-import NewsCard from "@/components/public/NewsCard";
+import NewsCard from "@/features/news/NewsCard";
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import { getNews } from "@/lib/data";

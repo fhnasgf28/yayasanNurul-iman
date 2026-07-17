@@ -7,8 +7,8 @@ import {
   groupDonationReportsByMonth,
   summarizeDonationReports,
   summarizeDonationReportsByCategory,
-} from "@/lib/finance";
-import { getDonationReports } from "@/lib/finance-data";
+} from "@/features/donation/finance";
+import { getDonationReports } from "@/features/donation/finance-data";
 
 export const metadata: Metadata = {
   title: "Laporan Keuangan Donasi",

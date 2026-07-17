@@ -1,8 +1,19 @@
+import Link from "next/link";
 import { getGallery } from "@/lib/data";
 
-export default async function GalleryPage() {
+export default async function GalleryPage({
+  searchParams,
+}: {
+  searchParams: Promise<{ category?: string }>;
+}) {
+  const { category } = await searchParams;
   const images = await getGallery();
+  
   const categories = ["Semua", "Masjid Nurul Iman", "Kegiatan DTA", "Tahfidz", "Kegiatan PHBI", "Sosial"];
+
+  const filteredImages = category && category !== "Semua"
+    ? images.filter(img => img.category === category)
+    : images;
 
   return (
     <main className="pt-20">
@@ -22,19 +33,22 @@ export default async function GalleryPage() {
           {/* Categories */}
           <div className="flex flex-wrap justify-center gap-4 mb-16">
             {categories.map((cat) => (
-              <button
+              <Link
                 key={cat}
+                href={cat === "Semua" ? "/gallery" : `/gallery?category=${cat}`}
                 className={`px-6 py-2 rounded-full text-xs md:text-sm font-bold transition-all border ${
-                  cat === "Semua" ? "bg-secondary text-primary border-secondary shadow-md" : "bg-white text-primary border-secondary/10 hover:border-secondary shadow-sm"
+                  (category === cat || (!category && cat === "Semua"))
+                    ? "bg-secondary text-primary border-secondary shadow-md"
+                    : "bg-white text-primary border-secondary/10 hover:border-secondary shadow-sm"
                 }`}
               >
                 {cat}
-              </button>
+              </Link>
             ))}
           </div>
 
           <div className="columns-1 md:columns-2 lg:columns-3 gap-8 space-y-8">
-            {images.map((img) => (
+            {filteredImages.map((img) => (
               <div key={img.id} className="relative group overflow-hidden rounded-3xl break-inside-avoid shadow-lg hover:shadow-2xl transition-all duration-500 border-4 border-white">
                 <img
                   src={img.imageUrl}
@@ -49,9 +63,9 @@ export default async function GalleryPage() {
             ))}
           </div>
           
-          {images.length === 0 && (
+          {filteredImages.length === 0 && (
             <div className="text-center py-20 bg-white rounded-3xl border border-secondary/10">
-              <p className="text-gray-500 font-serif text-xl italic">Belum ada foto di galeri saat ini.</p>
+              <p className="text-gray-500 font-serif text-xl italic">Belum ada foto di galeri untuk kategori ini.</p>
             </div>
           )}
         </div>

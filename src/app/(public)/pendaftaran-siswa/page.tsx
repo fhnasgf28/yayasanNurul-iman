@@ -1,7 +1,8 @@
 import type { Metadata } from "next";
 import Image from "next/image";
+import Link from "next/link";
 import { CalendarDays, GraduationCap, ShieldCheck } from "lucide-react";
-import StudentRegistrationForm from "@/components/public/StudentRegistrationForm";
+import StudentRegistrationForm from "@/features/student-registration/StudentRegistrationForm";
 
 export const metadata: Metadata = {
   title: "Pendaftaran Siswa Baru",
@@ -53,6 +54,19 @@ export default function StudentRegistrationPage() {
       <section className="bg-islamic px-4 py-16 sm:px-6 lg:py-20">
         <div className="mx-auto grid max-w-7xl gap-10 lg:grid-cols-[0.7fr_1.3fr] lg:items-start">
           <aside className="space-y-6 lg:sticky lg:top-28">
+            <div className="bg-gradient-to-br from-primary to-primary/95 p-6 rounded-[2rem] text-white shadow-[0_15px_35px_rgba(26,77,46,0.18)] border border-secondary/20 space-y-4">
+              <h3 className="font-serif font-bold text-lg text-secondary">Sudah Melakukan Pendaftaran?</h3>
+              <p className="text-xs text-white/80 leading-relaxed font-sans">
+                Pantau proses verifikasi berkas dan status penerimaan santri baru secara online.
+              </p>
+              <Link
+                href="/pendaftaran-siswa/status"
+                className="inline-flex w-full items-center justify-center bg-secondary text-primary py-3 px-4 rounded-xl text-xs font-bold hover:bg-opacity-95 transition-all shadow"
+              >
+                Cek Status Pendaftaran Anda →
+              </Link>
+            </div>
+
             <div>
               <h2 className="text-3xl font-serif font-bold text-primary">Informasi Pendaftaran</h2>
               <p className="mt-3 text-sm leading-7 text-gray-500">

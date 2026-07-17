@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
-import type { PrayerName, PrayerTimeEntry } from "@/lib/prayer-times";
+import type { PrayerName, PrayerTimeEntry } from "@/features/prayer-times/prayer-times";
 
 type Props = {
   entries: PrayerTimeEntry[];

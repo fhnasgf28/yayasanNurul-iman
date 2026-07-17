@@ -1,6 +1,6 @@
 "use client";
 
-import { Save, Globe, Mail, Phone, MapPin, Share2, Megaphone } from "lucide-react";
+import { Save, Globe, Mail, Phone, MapPin, Share2, Megaphone, Wallet } from "lucide-react";
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 
@@ -40,6 +40,10 @@ export default function AdminSettingsPage() {
     admission_popup_description: "Pendaftaran siswa baru untuk program DTA, Tahfidz, dan baca tulis Al-Qur'an telah dibuka.",
     admission_popup_cta_label: "Daftar Sekarang",
     admission_popup_cta_href: "/pendaftaran-siswa",
+    bank_name: "Bank Syariah Indonesia (BSI)",
+    bank_account_number: "7144002026",
+    bank_account_holder: "Yayasan Nurul Iman",
+    whatsapp_number: "6283823290281",
     ...TELUKJAMBE_PRAYER_SETTINGS,
   });
   const router = useRouter();
@@ -176,6 +180,54 @@ export default function AdminSettingsPage() {
                   className="w-full bg-base border border-gray-100 rounded-xl py-3 px-4 outline-none focus:border-accent" 
                 />
               </div>
+            </div>
+          </div>
+        </div>
+
+        <div className="bg-white p-8 rounded-3xl border border-gray-100 shadow-sm space-y-6">
+          <div className="flex items-center space-x-3 text-primary mb-2">
+            <Wallet size={20} className="text-accent" />
+            <h3 className="text-lg font-serif font-bold">Rekening & WhatsApp Donasi</h3>
+          </div>
+          
+          <div className="space-y-4">
+            <div className="space-y-2">
+              <label className="text-sm font-bold text-primary">Nama Bank</label>
+              <input 
+                value={settings.bank_name || ""} 
+                onChange={(e) => handleChange("bank_name", e.target.value)}
+                className="w-full bg-base border border-gray-100 rounded-xl py-3 px-4 outline-none focus:border-accent"
+                placeholder="Contoh: Bank Syariah Indonesia (BSI)"
+              />
+            </div>
+            <div className="grid grid-cols-2 gap-4">
+              <div className="space-y-2">
+                <label className="text-sm font-bold text-primary">Nomor Rekening</label>
+                <input 
+                  value={settings.bank_account_number || ""} 
+                  onChange={(e) => handleChange("bank_account_number", e.target.value)}
+                  className="w-full bg-base border border-gray-100 rounded-xl py-3 px-4 outline-none focus:border-accent"
+                  placeholder="Contoh: 7144002026"
+                />
+              </div>
+              <div className="space-y-2">
+                <label className="text-sm font-bold text-primary">Pemilik Rekening</label>
+                <input 
+                  value={settings.bank_account_holder || ""} 
+                  onChange={(e) => handleChange("bank_account_holder", e.target.value)}
+                  className="w-full bg-base border border-gray-100 rounded-xl py-3 px-4 outline-none focus:border-accent"
+                  placeholder="Contoh: Yayasan Nurul Iman"
+                />
+              </div>
+            </div>
+            <div className="space-y-2">
+              <label className="text-sm font-bold text-primary flex items-center">Nomor WhatsApp Konfirmasi (Format: 628...)</label>
+              <input 
+                value={settings.whatsapp_number || ""} 
+                onChange={(e) => handleChange("whatsapp_number", e.target.value)}
+                className="w-full bg-base border border-gray-100 rounded-xl py-3 px-4 outline-none focus:border-accent"
+                placeholder="Contoh: 6283823290281"
+              />
             </div>
           </div>
         </div>

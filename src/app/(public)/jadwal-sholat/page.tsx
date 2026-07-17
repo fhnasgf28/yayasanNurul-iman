@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
-import PrayerTimesPage from "@/components/public/PrayerTimesPage";
-import { getPrayerTimes } from "@/lib/prayer-times";
+import PrayerTimesPage from "@/features/prayer-times/PrayerTimesPage";
+import { getPrayerTimes } from "@/features/prayer-times/prayer-times";
 import { getSettings } from "@/lib/settings";
 
 export const metadata: Metadata = {

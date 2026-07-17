@@ -138,6 +138,86 @@ export default function AboutPage() {
         </div>
       </section>
 
+      {/* Dewan Pengajar & Pengurus */}
+      <section className="py-24 px-6 bg-light bg-islamic">
+        <div className="max-w-7xl mx-auto space-y-16">
+          <div className="text-center space-y-4 max-w-2xl mx-auto">
+            <span className="text-secondary font-bold tracking-widest uppercase text-sm">Amanah Pendidikan</span>
+            <h2 className="text-3xl md:text-5xl font-serif font-bold text-primary">Pengurus & Dewan Pengajar</h2>
+            <p className="text-gray-500 text-sm md:text-base leading-relaxed">
+              Didukung oleh para ustadz dan ustadzah yang berdedikasi, berpengalaman, dan memiliki visi yang sama dalam mencetak generasi Qur'ani yang berakhlak mulia.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+            {[
+              {
+                name: "Ustadz H. M. Syarifuddin, Lc.",
+                role: "Pembina Yayasan & Dewan Syariah",
+                spec: "Spesialis Tafsir Al-Qur'an & Fikih",
+                desc: "Lulusan Universitas Al-Azhar Kairo, membimbing kurikulum keislaman yayasan.",
+                image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=600&auto=format&fit=crop",
+              },
+              {
+                name: "Ustadz Abu Bakar Shidiq, S.Pd.I.",
+                role: "Kepala Madrasah DTA Nurul Iman",
+                spec: "Spesialis Akhlak & Bahasa Arab",
+                desc: "Berpengalaman lebih dari 8 tahun mendidik santri usia dasar di Karawang.",
+                image: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?q=80&w=600&auto=format&fit=crop",
+              },
+              {
+                name: "Ustadz Ahmad Fauzi",
+                role: "Kepala Bidang Tahfidz Al-Qur'an",
+                spec: "Hafizh 30 Juz & Spesialis Tajwid",
+                desc: "Membimbing santri dalam program intensif hafalan Al-Qur'an juz 30 dan seterusnya.",
+                image: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?q=80&w=600&auto=format&fit=crop",
+              },
+              {
+                name: "Ustadzah Siti Aminah, S.Ag.",
+                role: "Pengajar DTA Kelas Dasar",
+                spec: "Pakar Baca Tulis Al-Qur'an (BTQ)",
+                desc: "Menggunakan metode Iqra interaktif untuk melatih kefasihan membaca huruf hijaiyah sejak dini.",
+                image: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?q=80&w=600&auto=format&fit=crop",
+              },
+            ].map((member, i) => (
+              <div 
+                key={i} 
+                className="bg-white rounded-[2.5rem] border border-secondary/10 overflow-hidden shadow-sm hover:shadow-2xl hover:border-secondary/25 transition-all duration-300 group flex flex-col justify-between"
+              >
+                <div className="relative h-64 overflow-hidden bg-slate-100">
+                  <img
+                    src={member.image}
+                    alt={member.name}
+                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-primary/70 via-transparent to-transparent" />
+                  <div className="absolute bottom-4 left-6 right-6">
+                    <span className="text-secondary text-[10px] font-bold uppercase tracking-wider bg-white/95 px-3 py-1 rounded-full shadow">
+                      {member.role}
+                    </span>
+                  </div>
+                </div>
+
+                <div className="p-6 space-y-4 flex-grow flex flex-col justify-between">
+                  <div className="space-y-2">
+                    <h3 className="font-serif font-bold text-primary text-lg leading-snug">
+                      {member.name}
+                    </h3>
+                    <p className="text-xs text-secondary font-bold uppercase tracking-wider flex items-center gap-1.5">
+                      <BookOpen size={12} />
+                      <span>{member.spec}</span>
+                    </p>
+                    <p className="text-xs text-gray-500 leading-relaxed font-sans mt-2">
+                      {member.desc}
+                    </p>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
       <FAQ />
     </main>
   );

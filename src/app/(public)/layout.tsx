@@ -3,8 +3,10 @@ import Navbar from "@/components/public/Navbar";
 import Footer from "@/components/public/Footer";
 import BottomNavbar from "@/components/public/BottomNavbar";
 import FloatingWhatsApp from "@/components/public/FloatingWhatsApp";
-import AdmissionPopupBanner from "@/components/public/AdmissionPopupBanner";
+import AdmissionPopupBanner from "@/features/student-registration/AdmissionPopupBanner";
 import { getSettings } from "@/lib/settings";
+
+export const dynamic = "force-dynamic";
 
 export default async function PublicLayout({
   children,
@@ -18,11 +20,11 @@ export default async function PublicLayout({
       <Navbar />
       <AdmissionPopupBanner settings={settings} />
       <div className="flex-grow pb-20 md:pb-0">{children}</div>
-      <FloatingWhatsApp />
+      <FloatingWhatsApp settings={settings} />
       <Suspense fallback={null}>
         <BottomNavbar />
       </Suspense>
-      <Footer />
+      <Footer settings={settings} />
     </div>
   );
 }

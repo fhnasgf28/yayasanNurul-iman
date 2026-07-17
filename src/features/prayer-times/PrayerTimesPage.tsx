@@ -16,7 +16,7 @@ import {
   Sunset,
   Sun,
 } from "lucide-react";
-import type { PrayerTimesData } from "@/lib/prayer-times";
+import type { PrayerTimesData } from "@/features/prayer-times/prayer-times";
 
 type KemenagPrayerApiItem = {
   cityId: string;
@@ -92,7 +92,7 @@ const dummyKemenagData: KemenagPrayerApiItem = {
 };
 
 const slotMeta: Array<Pick<PrayerSlot, "id" | "label" | "arabic" | "icon" | "tone">> = [
-  { id: "imsak", label: "Imsak", arabic: "إمساك", icon: AlarmClock, tone: "from-teal-500/18 via-teal-400/8 to-white" },
+  { id: "imsak", label: "Imsak", arabic: "إمساak", icon: AlarmClock, tone: "from-teal-500/18 via-teal-400/8 to-white" },
   { id: "subuh", label: "Subuh", arabic: "الفجر", icon: MoonStar, tone: "from-sky-500/18 via-emerald-400/8 to-white" },
   { id: "terbit", label: "Terbit", arabic: "الشروق", icon: Sunrise, tone: "from-amber-400/20 via-orange-300/10 to-white" },
   { id: "dzuhur", label: "Dzuhur", arabic: "الظهر", icon: Sun, tone: "from-yellow-400/18 via-emerald-300/10 to-white" },

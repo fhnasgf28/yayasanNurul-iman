@@ -8,7 +8,7 @@ import { cn } from "@/lib/utils";
 const faqs = [
   {
     question: "Bagaimana cara mendaftarkan santri baru di DTA Nurul Iman?",
-    answer: "Pendaftaran santri baru dibuka setiap menjelang tahun ajaran baru. Orang tua dapat datang langsung ke sekretariat yayasan pada jam operasional (ba'da Maghrib) untuk mengisi formulir dan melengkapi berkas administrasi seperti fotokopi KK dan Akta Kelahiran."
+    answer: "Pendaftaran santri baru dapat dilakukan dengan dua cara: Pertama, secara online langsung melalui website ini di menu 'Pendaftaran'. Kedua, dengan datang langsung ke sekretariat yayasan pada jam operasional (ba'da Maghrib) untuk mengisi formulir fisik dan menyerahkan berkas seperti fotokopi KK dan Akta Kelahiran."
   },
   {
     question: "Apa saja program unggulan yang ada di Yayasan Nurul Iman?",

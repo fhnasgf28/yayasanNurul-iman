@@ -1,5 +1,5 @@
 import { db } from "@/lib/db";
-import { refreshNewsIfStale } from "@/lib/news-scraper";
+import { refreshNewsIfStale } from "@/features/news/news-scraper";
 import { cache } from "react";
 
 export async function getPrograms(limit?: number) {
