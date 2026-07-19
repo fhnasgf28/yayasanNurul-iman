@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { Playfair_Display, Plus_Jakarta_Sans, Noto_Naskh_Arabic } from "next/font/google";
+import { Playfair_Display, Plus_Jakarta_Sans, Amiri } from "next/font/google";
 import "./globals.css";
 import { cn } from "@/lib/utils";
 import Providers from "@/components/Providers";
@@ -16,9 +16,10 @@ const jakarta = Plus_Jakarta_Sans({
   variable: "--font-jakarta",
 });
 
-const notoArabic = Noto_Naskh_Arabic({
-  subsets: ["arabic"],
-  variable: "--font-noto-arabic",
+const amiri = Amiri({
+  subsets: ["arabic", "latin"],
+  weight: ["400", "700"],
+  variable: "--font-amiri",
 });
 
 export const metadata: Metadata = {
@@ -91,7 +92,7 @@ export default function RootLayout({
           "min-h-screen bg-[#FDFAF4] font-sans antialiased",
           playfair.variable,
           jakarta.variable,
-          notoArabic.variable
+          amiri.variable
         )}
       >
         <PWARegistration />
