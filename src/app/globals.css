@@ -15,6 +15,113 @@
 :root {
   --background: #FDFAF4;
   --foreground: #171717;
+  --surface: #FFFFFF;
+  --surface-muted: #F7F2EB;
+  --border-color: rgba(26, 77, 46, 0.08);
+  --text-muted: #6B7280;
+  --card-shadow: 0 4px 24px rgba(26, 77, 46, 0.06);
+}
+
+/* ===== DARK MODE ===== */
+.dark {
+  --background: #0D1A11;
+  --foreground: #F0EAD6;
+  --surface: #162218;
+  --surface-muted: #1C2E1F;
+  --border-color: rgba(201, 168, 76, 0.12);
+  --text-muted: #9CA3AF;
+  --card-shadow: 0 4px 24px rgba(0, 0, 0, 0.4);
+}
+
+/* Dark mode body */
+.dark body {
+  background: var(--background);
+  color: var(--foreground);
+}
+
+/* Dark mode overrides */
+.dark .bg-white {
+  background-color: var(--surface) !important;
+}
+.dark .bg-white\/50 {
+  background-color: rgba(22, 34, 24, 0.5) !important;
+}
+.dark .bg-white\/95 {
+  background-color: rgba(13, 26, 17, 0.95) !important;
+}
+.dark .bg-accent {
+  background-color: var(--surface-muted) !important;
+}
+.dark .bg-primary\/5 {
+  background-color: rgba(22, 34, 24, 0.4) !important;
+}
+.dark .bg-primary\/10 {
+  background-color: rgba(22, 34, 24, 0.7) !important;
+}
+.dark .bg-secondary\/5 {
+  background-color: rgba(201, 168, 76, 0.08) !important;
+}
+.dark .bg-secondary\/10 {
+  background-color: rgba(201, 168, 76, 0.15) !important;
+}
+.dark .text-primary {
+  color: var(--foreground) !important;
+}
+.dark .text-gray-900,
+.dark .text-gray-800,
+.dark .text-gray-700 {
+  color: var(--foreground) !important;
+}
+.dark .text-gray-600 {
+  color: var(--text-muted) !important;
+}
+.dark .text-gray-500 {
+  color: var(--text-muted) !important;
+}
+.dark .text-gray-400 {
+  color: #9CA3AF !important;
+}
+.dark .border-gray-100,
+.dark .border-gray-200,
+.dark .border-secondary\/5,
+.dark .border-secondary\/10,
+.dark .border-secondary\/15,
+.dark .border-secondary\/20 {
+  border-color: var(--border-color) !important;
+}
+.dark .shadow-sm,
+.dark .shadow-md,
+.dark .shadow-lg,
+.dark .shadow-xl {
+  box-shadow: var(--card-shadow) !important;
+}
+.dark input, 
+.dark textarea, 
+.dark select {
+  background-color: var(--surface) !important;
+  color: var(--foreground) !important;
+  border-color: var(--border-color) !important;
+}
+.dark input::placeholder, 
+.dark textarea::placeholder {
+  color: var(--text-muted) !important;
+}
+
+/* Dark mode glass */
+.dark .glass {
+  background: rgba(13, 26, 17, 0.75);
+  backdrop-filter: blur(12px);
+  border-color: rgba(201, 168, 76, 0.15);
+}
+
+/* Dark mode Islamic pattern */
+.dark .bg-islamic {
+  background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M30 0l2.5 7.5L40 10l-7.5 2.5L30 20l-2.5-7.5L20 10l7.5-2.5L30 0zm0 40l2.5 7.5L40 50l-7.5 2.5L30 60l-2.5-7.5L20 50l7.5-2.5L30 40zM0 30l7.5 2.5L10 40l2.5-7.5L20 30l-7.5-2.5L10 20l-2.5 7.5L0 30zm40 0l7.5 2.5L50 40l2.5-7.5L60 30l-7.5-2.5L50 20l-2.5 7.5L40 30z' fill='%23C9A84C' fill-opacity='0.04' fill-rule='evenodd'/%3E%3C/svg%3E");
+}
+
+/* Dark mode transition */
+html {
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 /* PWA App-like Adjustments */
@@ -38,6 +145,7 @@ body {
   background: var(--background);
   color: var(--foreground);
   font-family: var(--font-sans);
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 h1, h2, h3, h4, h5, h6 {

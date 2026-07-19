@@ -17,11 +17,14 @@ import {
   UserPlus,
   WalletCards,
   LogIn,
+  Sun,
+  Moon,
 } from "lucide-react";
 import { usePathname, useSearchParams } from "next/navigation";
 import { useState } from "react";
 import { cn } from "@/lib/utils";
 import { useHydrated } from "@/lib/use-hydrated";
+import { useTheme } from "@/components/ThemeProvider";
 
 const primaryItems = [
   {
@@ -67,6 +70,7 @@ export default function BottomNavbar() {
   const searchParams = useSearchParams();
   const mounted = useHydrated();
   const [isMoreOpen, setIsMoreOpen] = useState(false);
+  const { theme, toggleTheme } = useTheme();
 
   // searchParams hanya dibaca di client untuk menghindari hydration mismatch
   const category = mounted ? searchParams.get("category") : null;
@@ -97,9 +101,45 @@ export default function BottomNavbar() {
                 animate={{ y: 0, opacity: 1 }}
                 exit={{ y: "100%", opacity: 0 }}
                 transition={{ type: "spring", stiffness: 320, damping: 30 }}
-                className="fixed inset-x-0 bottom-[88px] z-[80] mx-3 rounded-[30px] border border-white/40 bg-white/40 p-4 shadow-[0_24px_60px_rgba(26,77,46,0.18)] backdrop-blur-2xl supports-[backdrop-filter]:bg-white/30 md:hidden"
+                className="fixed inset-x-0 bottom-[88px] z-[80] mx-3 rounded-[30px] border border-white/40 bg-white/40 dark:border-white/10 dark:bg-black/55 p-4 shadow-[0_24px_60px_rgba(26,77,46,0.18)] backdrop-blur-2xl supports-[backdrop-filter]:bg-white/30 dark:supports-[backdrop-filter]:bg-black/45 md:hidden"
               >
                 <div className="mx-auto mb-4 h-1.5 w-14 rounded-full bg-secondary/30" />
+                
+                <div className="flex items-center justify-between mb-4 px-2">
+                  <h3 className="text-sm font-bold text-primary dark:text-foreground font-serif">Menu Lainnya</h3>
+                  
+                  {/* Mobile Dark Mode Toggle */}
+                  <button
+                    onClick={toggleTheme}
+                    aria-label="Toggle dark mode"
+                    className="inline-flex h-9 w-9 items-center justify-center rounded-full bg-primary/5 dark:bg-white/10 text-primary dark:text-foreground transition-all duration-300 active:scale-95"
+                  >
+                    <AnimatePresence mode="wait">
+                      {theme === "dark" ? (
+                        <motion.span
+                          key="sun"
+                          initial={{ rotate: -90, opacity: 0 }}
+                          animate={{ rotate: 0, opacity: 1 }}
+                          exit={{ rotate: 90, opacity: 0 }}
+                          transition={{ duration: 0.25 }}
+                        >
+                          <Sun size={17} className="text-secondary" />
+                        </motion.span>
+                      ) : (
+                        <motion.span
+                          key="moon"
+                          initial={{ rotate: 90, opacity: 0 }}
+                          animate={{ rotate: 0, opacity: 1 }}
+                          exit={{ rotate: -90, opacity: 0 }}
+                          transition={{ duration: 0.25 }}
+                        >
+                          <Moon size={17} />
+                        </motion.span>
+                      )}
+                    </AnimatePresence>
+                  </button>
+                </div>
+
                 <div className="grid grid-cols-2 gap-3">
                   {secondaryItems.map((item) => {
                     const Icon = item.icon;
@@ -108,12 +148,12 @@ export default function BottomNavbar() {
                         key={item.href}
                         href={item.href}
                         onClick={() => setIsMoreOpen(false)}
-                        className="flex flex-col items-center gap-2 rounded-2xl border border-white/50 bg-white/55 px-3 py-4 text-center shadow-[0_10px_30px_rgba(26,77,46,0.08)] transition-transform backdrop-blur-md active:scale-95"
+                        className="flex flex-col items-center gap-2 rounded-2xl border border-white/50 bg-white/55 dark:border-white/10 dark:bg-white/5 px-3 py-4 text-center shadow-[0_10px_30px_rgba(26,77,46,0.08)] transition-transform backdrop-blur-md active:scale-95"
                       >
                         <span className="flex h-11 w-11 items-center justify-center rounded-2xl bg-secondary/12 text-[#C8963E]">
                           <Icon size={20} />
                         </span>
-                        <span className="text-xs font-semibold text-primary">{item.label}</span>
+                        <span className="text-xs font-semibold text-primary dark:text-foreground">{item.label}</span>
                       </Link>
                     );
                   })}
@@ -126,9 +166,9 @@ export default function BottomNavbar() {
 
       {/* Bottom nav bar — dirender konsisten di server & client (tidak return null) */}
       <nav
-        className="fixed inset-x-0 bottom-0 z-[90] border-t border-white/35 bg-white/28 px-3 pb-[calc(env(safe-area-inset-bottom)+10px)] pt-3 shadow-[0_-16px_40px_rgba(26,77,46,0.14)] backdrop-blur-2xl supports-[backdrop-filter]:bg-white/22 md:hidden"
+        className="fixed inset-x-0 bottom-0 z-[90] border-t border-white/35 bg-white/28 dark:border-white/10 dark:bg-black/35 px-3 pb-[calc(env(safe-area-inset-bottom)+10px)] pt-3 shadow-[0_-16px_40px_rgba(26,77,46,0.14)] backdrop-blur-2xl supports-[backdrop-filter]:bg-white/22 dark:supports-[backdrop-filter]:bg-black/25 md:hidden"
       >
-        <div className="flex w-full items-end justify-between gap-1 rounded-[28px] border border-white/35 bg-gradient-to-b from-white/18 to-white/8 px-1 py-1 shadow-[inset_0_1px_0_rgba(255,255,255,0.45)]">
+        <div className="flex w-full items-end justify-between gap-1 rounded-[28px] border border-white/35 bg-gradient-to-b from-white/18 to-white/8 dark:border-white/10 dark:from-white/5 dark:to-white/2 px-1 py-1 shadow-[inset_0_1px_0_rgba(255,255,255,0.45)] dark:shadow-none">
           {primaryItems.map((item) => {
             const Icon = item.icon;
             // Sebelum mount, semua item non-active (default) agar server & client sama
@@ -140,7 +180,7 @@ export default function BottomNavbar() {
                 href={item.href}
                 className={cn(
                   "relative flex min-w-0 flex-1 flex-col items-center gap-1 rounded-[22px] px-2 py-2.5 transition-all active:scale-95",
-                  active && "bg-white/45 shadow-[0_8px_20px_rgba(26,77,46,0.08)] backdrop-blur-md"
+                  active && "bg-white/45 dark:bg-white/10 shadow-[0_8px_20px_rgba(26,77,46,0.08)] dark:shadow-none backdrop-blur-md"
                 )}
               >
                 <Circle
@@ -166,7 +206,7 @@ export default function BottomNavbar() {
               "relative flex min-w-0 flex-1 flex-col items-center gap-1 rounded-[22px] px-2 py-2.5 transition-all active:scale-95",
               mounted &&
                 (isMoreOpen || isMoreRoute) &&
-                "bg-white/45 shadow-[0_8px_20px_rgba(26,77,46,0.08)] backdrop-blur-md"
+                "bg-white/45 dark:bg-white/10 shadow-[0_8px_20px_rgba(26,77,46,0.08)] dark:shadow-none backdrop-blur-md"
             )}
           >
             <Circle

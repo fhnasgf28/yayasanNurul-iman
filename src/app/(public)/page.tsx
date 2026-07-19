@@ -3,15 +3,14 @@ import ProgramCard from "@/features/programs/ProgramCard";
 import NewsCard from "@/features/news/NewsCard";
 import DonationBanner from "@/features/donation/DonationBanner";
 import AchievementSlider from "@/features/prestasi/AchievementSlider";
-import PrayerTimesSection from "@/features/prayer-times/PrayerTimesSection";
 import DailyVerse from "@/features/quran-quote/DailyVerse";
+import ScrollReveal, { StaggerContainer, StaggerItem } from "@/components/ScrollReveal";
 import { ArrowRight, CheckCircle2, ShieldCheck, Target } from "lucide-react";
 import Link from "next/link";
 
 import { getPrograms, getNews } from "@/lib/data";
 import { db } from "@/lib/db";
 import { getSettings } from "@/lib/settings";
-import { getPrayerTimes } from "@/features/prayer-times/prayer-times";
 
 export default async function Home() {
   const [featuredPrograms, latestNews, prestasi, settings] = await Promise.all([
@@ -24,7 +23,6 @@ export default async function Home() {
     }),
     getSettings(),
   ]);
-  const prayerTimes = await getPrayerTimes(settings);
 
   return (
     <main className="flex flex-col min-h-screen bg-light relative overflow-x-hidden">
@@ -35,13 +33,13 @@ export default async function Home() {
       </div>
 
       <Hero />
-      <PrayerTimesSection data={prayerTimes} />
       
       {/* About Section - Redesigned */}
-      <section className="py-32 px-6 relative overflow-hidden bg-white/50 backdrop-blur-[2px]">
-        <div className="absolute top-0 left-0 w-full h-full bg-islamic opacity-[0.04] pointer-events-none" />
+      <section className="py-32 px-6 relative overflow-hidden" style={{ background: "var(--surface)" }}>
+        <div className="absolute top-0 left-0 w-full h-full bg-islamic opacity-[0.04] dark:opacity-[0.05] pointer-events-none" />
         
         <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-20 items-center relative z-10">
+          <ScrollReveal variant="fadeLeft" duration={0.9}>
           <div className="relative group">
             {/* Image Stack Decoration */}
             <div className="absolute -top-6 -left-6 w-32 h-32 bg-secondary/10 rounded-3xl -z-10 group-hover:-translate-x-2 group-hover:-translate-y-2 transition-transform duration-500" />
@@ -57,7 +55,7 @@ export default async function Home() {
             </div>
             
             {/* Floating Badge */}
-            <div className="absolute -bottom-8 left-1/2 -translate-x-1/2 bg-white p-6 rounded-3xl shadow-xl border border-secondary/10 flex items-center space-x-4 min-w-[280px]">
+            <div className="absolute -bottom-8 left-1/2 -translate-x-1/2 bg-white p-6 rounded-3xl shadow-xl border border-secondary/10 flex items-center space-x-4 min-w-[280px]" style={{ background: "var(--surface)" }}>
               <div className="w-12 h-12 bg-secondary rounded-2xl flex items-center justify-center text-primary font-bold text-xl">10+</div>
               <div>
                 <p className="text-primary font-bold text-sm">Tahun Berkhidmat</p>
@@ -65,7 +63,9 @@ export default async function Home() {
               </div>
             </div>
           </div>
+          </ScrollReveal>
 
+          <ScrollReveal variant="fadeRight" delay={0.15} duration={0.9}>
           <div className="space-y-12">
             <div className="space-y-6">
               <div className="inline-flex items-center space-x-2 text-secondary font-bold tracking-widest uppercase text-xs bg-secondary/5 px-4 py-2 rounded-full border border-secondary/10">
@@ -80,23 +80,27 @@ export default async function Home() {
               </p>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              <div className="p-8 bg-white rounded-[2rem] border border-secondary/5 shadow-sm hover:shadow-xl hover:border-secondary/20 transition-all group">
+            <StaggerContainer className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <StaggerItem>
+              <div className="p-8 rounded-[2rem] border border-secondary/5 shadow-sm hover:shadow-xl hover:border-secondary/20 transition-all group" style={{ background: "var(--surface)" }}>
                 <div className="w-12 h-12 bg-accent rounded-2xl flex items-center justify-center text-primary mb-6 group-hover:bg-primary group-hover:text-white transition-colors">
                   <ShieldCheck size={24} />
                 </div>
                 <h4 className="font-serif font-bold text-primary text-xl mb-3">Visi Kami</h4>
-                <p className="text-sm text-gray-500 leading-relaxed">Menjadi lembaga yang mandiri dan terpercaya dalam melahirkan generasi Qur'ani yang berakhlak mulia.</p>
+                <p className="text-sm text-gray-500 leading-relaxed">Menjadi lembaga yang mandiri dan terpercaya dalam melahirkan generasi Qur&apos;ani yang berakhlak mulia.</p>
               </div>
+              </StaggerItem>
               
-              <div className="p-8 bg-white rounded-[2rem] border border-secondary/5 shadow-sm hover:shadow-xl hover:border-secondary/20 transition-all group">
+              <StaggerItem>
+              <div className="p-8 rounded-[2rem] border border-secondary/5 shadow-sm hover:shadow-xl hover:border-secondary/20 transition-all group" style={{ background: "var(--surface)" }}>
                 <div className="w-12 h-12 bg-accent rounded-2xl flex items-center justify-center text-primary mb-6 group-hover:bg-secondary group-hover:text-primary transition-colors">
                   <Target size={24} />
                 </div>
                 <h4 className="font-serif font-bold text-primary text-xl mb-3">Misi Kami</h4>
                 <p className="text-sm text-gray-500 leading-relaxed">Menyelenggarakan pendidikan DTA berkualitas dan memakmurkan masjid sebagai pusat peradaban.</p>
               </div>
-            </div>
+              </StaggerItem>
+            </StaggerContainer>
 
             <div className="pt-4 flex flex-col sm:flex-row items-center gap-8">
               <Link
@@ -117,6 +121,7 @@ export default async function Home() {
               </div>
             </div>
           </div>
+          </ScrollReveal>
         </div>
       </section>
 
@@ -126,6 +131,7 @@ export default async function Home() {
       <section className="py-32 px-6 bg-primary/5 relative">
         <div className="absolute inset-0 bg-islamic opacity-[0.02] pointer-events-none" />
         <div className="max-w-7xl mx-auto space-y-20 relative z-10">
+          <ScrollReveal variant="fadeUp">
           <div className="flex flex-col md:flex-row justify-between items-end gap-10">
             <div className="space-y-6 max-w-2xl">
               <div className="inline-flex items-center space-x-2 text-primary font-bold tracking-widest uppercase text-xs bg-primary/5 px-4 py-2 rounded-full border border-primary/10">
@@ -142,12 +148,15 @@ export default async function Home() {
               Lihat Semua Program <ArrowRight size={20} className="ml-2 group-hover:translate-x-1 transition-transform text-secondary" />
             </Link>
           </div>
+          </ScrollReveal>
           
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-10">
+          <StaggerContainer className="grid grid-cols-1 md:grid-cols-3 gap-10" staggerDelay={0.12}>
             {featuredPrograms.map((program) => (
-              <ProgramCard key={program.id} program={program} />
+              <StaggerItem key={program.id}>
+                <ProgramCard program={program} />
+              </StaggerItem>
             ))}
-          </div>
+          </StaggerContainer>
         </div>
       </section>
 
@@ -253,9 +262,10 @@ export default async function Home() {
       </section>
 
       {/* News Section - Redesigned */}
-      <section className="py-32 px-6 relative overflow-hidden bg-white/50 backdrop-blur-[2px]">
+      <section className="py-32 px-6 relative overflow-hidden" style={{ background: "var(--surface)" }}>
         <div className="absolute top-0 left-0 w-full h-full bg-islamic opacity-[0.03] pointer-events-none" />
         <div className="max-w-7xl mx-auto space-y-20 relative z-10">
+          <ScrollReveal variant="fadeUp">
           <div className="text-center space-y-6 max-w-3xl mx-auto">
              <div className="inline-flex items-center space-x-2 text-secondary font-bold tracking-widest uppercase text-xs bg-secondary/5 px-4 py-2 rounded-full border border-secondary/10">
                 <span>Update Terkini</span>
@@ -265,6 +275,7 @@ export default async function Home() {
             </h2>
             <p className="text-gray-500 text-lg font-sans">Tetap terhubung dengan setiap langkah kami dalam menebar manfaat bagi masyarakat.</p>
           </div>
+          </ScrollReveal>
           
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
             {latestNews.map((news) => (

@@ -6,7 +6,8 @@ import { usePathname } from "next/navigation";
 import { cn } from "@/lib/utils";
 import { useHydrated } from "@/lib/use-hydrated";
 import { AnimatePresence, motion } from "framer-motion";
-import { ChevronDown, LogIn } from "lucide-react";
+import { ChevronDown, LogIn, Moon, Sun } from "lucide-react";
+import { useTheme } from "@/components/ThemeProvider";
 
 const navLinks = [
   { name: "Beranda", href: "/" },
@@ -50,6 +51,7 @@ const navLinks = [
 export default function Navbar() {
   const mounted = useHydrated();
   const [scrolled, setScrolled] = useState(false);
+  const { theme, toggleTheme } = useTheme();
   const [activeDropdown, setActiveDropdown] = useState<string | null>(null);
   const pathname = usePathname();
 
@@ -183,10 +185,46 @@ export default function Navbar() {
             </div>
           ))}
 
+          {/* Dark Mode Toggle */}
+          <button
+            onClick={toggleTheme}
+            aria-label="Toggle dark mode"
+            className={cn(
+              "ml-1 inline-flex h-9 w-9 items-center justify-center rounded-full transition-all duration-300 hover:scale-110 focus:outline-none focus:ring-2 focus:ring-secondary/50",
+              navStyle === "transparent"
+                ? "bg-white/10 text-white hover:bg-white/20"
+                : "bg-primary/5 text-primary hover:bg-secondary/10"
+            )}
+          >
+            <AnimatePresence mode="wait">
+              {mounted && theme === "dark" ? (
+                <motion.span
+                  key="sun"
+                  initial={{ rotate: -90, opacity: 0 }}
+                  animate={{ rotate: 0, opacity: 1 }}
+                  exit={{ rotate: 90, opacity: 0 }}
+                  transition={{ duration: 0.25 }}
+                >
+                  <Sun size={17} className="text-secondary" />
+                </motion.span>
+              ) : (
+                <motion.span
+                  key="moon"
+                  initial={{ rotate: 90, opacity: 0 }}
+                  animate={{ rotate: 0, opacity: 1 }}
+                  exit={{ rotate: -90, opacity: 0 }}
+                  transition={{ duration: 0.25 }}
+                >
+                  <Moon size={17} />
+                </motion.span>
+              )}
+            </AnimatePresence>
+          </button>
+
           <Link
             href="/login"
             className={cn(
-              "ml-2 inline-flex h-10 shrink-0 items-center gap-2 rounded-full px-4 text-sm font-bold shadow-lg transition-all duration-300 hover:-translate-y-0.5 focus:outline-none focus:ring-2 focus:ring-secondary/50 focus:ring-offset-2 lg:ml-3 lg:px-5",
+              "ml-1 inline-flex h-10 shrink-0 items-center gap-2 rounded-full px-4 text-sm font-bold shadow-lg transition-all duration-300 hover:-translate-y-0.5 focus:outline-none focus:ring-2 focus:ring-secondary/50 focus:ring-offset-2 lg:ml-2 lg:px-5",
               navStyle === "transparent"
                 ? "bg-secondary text-primary hover:bg-white focus:ring-offset-primary"
                 : "bg-primary text-white shadow-primary/20 hover:bg-secondary hover:text-primary"

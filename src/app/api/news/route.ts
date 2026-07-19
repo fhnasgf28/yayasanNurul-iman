@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server";
+import type { NextRequest } from "next/server";
 import { getServerSession } from "next-auth/next";
 import { authOptions } from "@/lib/auth";
 import { db } from "@/lib/db";
@@ -69,6 +70,42 @@ export async function GET(req: Request) {
     return NextResponse.json(news);
   } catch (error) {
     console.error("[NEWS_GET]", error);
+    return new NextResponse("Internal Error", { status: 500 });
+  }
+}
+
+export async function DELETE(req: NextRequest) {
+  try {
+    const session = await getServerSession(authOptions);
+
+    if (!session) {
+      return new NextResponse("Unauthorized", { status: 401 });
+    }
+
+    const { searchParams } = new URL(req.url);
+    const olderThanDays = parseInt(searchParams.get("olderThanDays") ?? "30", 10);
+
+    if (isNaN(olderThanDays) || olderThanDays < 1) {
+      return new NextResponse("Parameter olderThanDays tidak valid", { status: 400 });
+    }
+
+    const cutoffDate = new Date();
+    cutoffDate.setDate(cutoffDate.getDate() - olderThanDays);
+
+    const { count } = await db.news.deleteMany({
+      where: {
+        createdAt: {
+          lt: cutoffDate,
+        },
+      },
+    });
+
+    return NextResponse.json({
+      message: `Berhasil menghapus ${count} berita yang lebih lama dari ${olderThanDays} hari.`,
+      deletedCount: count,
+    });
+  } catch (error) {
+    console.error("[NEWS_DELETE_BULK]", error);
     return new NextResponse("Internal Error", { status: 500 });
   }
 }

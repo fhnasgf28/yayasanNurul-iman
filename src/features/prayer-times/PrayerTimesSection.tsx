@@ -58,6 +58,7 @@ export default function PrayerTimesSection({ data }: Props) {
                     <MoonStar size={14} className="text-secondary" />
                     {data.hijriDate}
                   </span>
+                  {/* Hidden: jadwal-sholat page
                   <Link
                     href="/jadwal-sholat"
                     className="inline-flex items-center gap-2 rounded-full bg-primary px-4 py-2 text-sm font-semibold text-white shadow-[0_14px_28px_rgba(26,77,46,0.18)] transition-transform hover:-translate-y-0.5"
@@ -65,6 +66,7 @@ export default function PrayerTimesSection({ data }: Props) {
                     Lihat Detail
                     <ArrowRight size={15} className="text-secondary" />
                   </Link>
+                  */}
                 </div>
               </div>
             </div>
