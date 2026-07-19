@@ -84,6 +84,44 @@ export const getNewsBySlug = cache(async function getNewsBySlug(slug: string) {
   }
 });
 
+export async function getRelatedNews(currentSlug: string, category: string, limit = 3) {
+  try {
+    // Prioritas: kategori sama, exclude artikel saat ini
+    const sameCat = await db.news.findMany({
+      where: { published: true, category, NOT: { slug: currentSlug } },
+      select: {
+        id: true, title: true, slug: true, excerpt: true,
+        thumbnail: true, category: true, createdAt: true,
+        author: { select: { name: true } },
+      },
+      orderBy: { createdAt: "desc" },
+      take: limit,
+    });
+
+    if (sameCat.length >= limit) return sameCat;
+
+    // Kurang dari limit — tambah berita terbaru dari kategori lain
+    const needed = limit - sameCat.length;
+    const excludeSlugs = [currentSlug, ...sameCat.map((n) => n.slug)];
+    const others = await db.news.findMany({
+      where: { published: true, slug: { notIn: excludeSlugs } },
+      select: {
+        id: true, title: true, slug: true, excerpt: true,
+        thumbnail: true, category: true, createdAt: true,
+        author: { select: { name: true } },
+      },
+      orderBy: { createdAt: "desc" },
+      take: needed,
+    });
+
+    return [...sameCat, ...others];
+  } catch (error) {
+    console.error("getRelatedNews", error);
+    return [];
+  }
+}
+
+
 export async function getGallery() {
   try {
     const gallery = await db.gallery.findMany({

@@ -1,9 +1,9 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { Calendar, User, ArrowLeft } from "lucide-react";
+import { Calendar, User, ArrowLeft, ArrowRight } from "lucide-react";
 import { notFound } from "next/navigation";
 import { formatDate } from "@/lib/utils";
-import { getNewsBySlug } from "@/lib/data";
+import { getNewsBySlug, getRelatedNews } from "@/lib/data";
 import { buildPageMetadata } from "@/lib/seo";
 import ShareButtons from "@/components/ShareButtons";
 
@@ -65,6 +65,8 @@ export default async function NewsDetailPage({ params }: NewsDetailPageProps) {
   if (!post || !post.published) {
     notFound();
   }
+
+  const related = await getRelatedNews(post.slug, post.category, 3);
 
   return (
     <main className="pt-20">
@@ -133,6 +135,94 @@ export default async function NewsDetailPage({ params }: NewsDetailPageProps) {
           </div>
         </div>
       </section>
+
+      {/* Related News Section */}
+      {related.length > 0 && (
+        <section className="border-t border-gray-100 bg-[#FDFAF4] py-20 px-6">
+          <div className="max-w-6xl mx-auto">
+            {/* Header */}
+            <div className="flex items-end justify-between mb-12">
+              <div className="space-y-2">
+                <p className="text-xs font-bold uppercase tracking-[0.2em] text-accent">Baca Juga</p>
+                <h2 className="text-3xl md:text-4xl font-serif font-bold text-primary">Berita Lainnya</h2>
+              </div>
+              <Link
+                href="/news"
+                className="hidden md:inline-flex items-center gap-2 text-sm font-bold text-primary hover:text-accent transition-colors group"
+              >
+                Lihat Semua Berita
+                <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" />
+              </Link>
+            </div>
+
+            {/* Cards grid */}
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+              {related.map((item, idx) => (
+                <Link
+                  key={item.id}
+                  href={`/news/${item.slug}`}
+                  className="group bg-white rounded-3xl overflow-hidden border border-gray-100 shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 flex flex-col"
+                >
+                  {/* Thumbnail */}
+                  <div className="relative h-48 overflow-hidden bg-primary/5">
+                    {item.thumbnail ? (
+                      <img
+                        src={item.thumbnail}
+                        alt={item.title}
+                        className="h-full w-full object-cover group-hover:scale-105 transition-transform duration-500"
+                      />
+                    ) : (
+                      <div className="h-full w-full flex items-center justify-center bg-gradient-to-br from-primary/10 to-accent/10">
+                        <span className="text-4xl opacity-30">📰</span>
+                      </div>
+                    )}
+                    {/* Category badge */}
+                    <span className="absolute top-4 left-4 bg-white/90 backdrop-blur-sm text-primary text-[10px] font-bold px-3 py-1 rounded-full uppercase tracking-widest">
+                      {item.category}
+                    </span>
+                    {/* Featured label for first item */}
+                    {idx === 0 && (
+                      <span className="absolute top-4 right-4 bg-accent text-white text-[10px] font-bold px-3 py-1 rounded-full uppercase tracking-widest">
+                        Terbaru
+                      </span>
+                    )}
+                  </div>
+
+                  {/* Content */}
+                  <div className="p-6 flex flex-col flex-1 gap-3">
+                    <h3 className="font-serif font-bold text-primary text-lg leading-snug line-clamp-2 group-hover:text-accent transition-colors">
+                      {item.title}
+                    </h3>
+                    <p className="text-sm text-gray-500 leading-relaxed line-clamp-2 flex-1">
+                      {item.excerpt}
+                    </p>
+                    <div className="flex items-center gap-4 text-xs text-gray-400 pt-2 border-t border-gray-50">
+                      <span className="flex items-center gap-1">
+                        <Calendar size={12} />
+                        {formatDate(item.createdAt)}
+                      </span>
+                      <span className="flex items-center gap-1">
+                        <User size={12} />
+                        {item.author.name}
+                      </span>
+                    </div>
+                  </div>
+                </Link>
+              ))}
+            </div>
+
+            {/* Mobile: Lihat Semua */}
+            <div className="mt-10 flex md:hidden justify-center">
+              <Link
+                href="/news"
+                className="inline-flex items-center gap-2 px-6 py-3 rounded-2xl border border-primary text-primary font-bold text-sm hover:bg-primary hover:text-white transition-all"
+              >
+                Lihat Semua Berita <ArrowRight size={16} />
+              </Link>
+            </div>
+          </div>
+        </section>
+      )}
     </main>
   );
 }
