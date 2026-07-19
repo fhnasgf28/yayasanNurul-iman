@@ -14,6 +14,8 @@ type NewsDetailPageProps = {
 export async function generateMetadata({ params }: NewsDetailPageProps): Promise<Metadata> {
   const { slug } = await params;
   const post = await getNewsBySlug(slug);
+  const siteUrl =
+    process.env.NEXT_PUBLIC_SITE_URL ?? "https://yayasannuruliman.clipperyt.online";
 
   if (!post || !post.published) {
     return buildPageMetadata({
@@ -23,12 +25,13 @@ export async function generateMetadata({ params }: NewsDetailPageProps): Promise
     });
   }
 
+  const ogImageUrl = `${siteUrl}/api/og/news?slug=${encodeURIComponent(post.slug)}`;
+
   return {
     ...buildPageMetadata({
       title: post.title,
       description: post.excerpt,
       path: `/news/${post.slug}`,
-      image: post.thumbnail,
       type: "article",
     }),
     keywords: [post.category, ...post.tags, "Yayasan Nurul Iman", "Masjid Nurul Iman", "DTA Nurul Iman"],
@@ -36,7 +39,7 @@ export async function generateMetadata({ params }: NewsDetailPageProps): Promise
     openGraph: {
       title: post.title,
       description: post.excerpt,
-      url: `/news/${post.slug}`,
+      url: `${siteUrl}/news/${post.slug}`,
       siteName: "Yayasan Nurul Iman",
       locale: "id_ID",
       type: "article",
@@ -44,7 +47,13 @@ export async function generateMetadata({ params }: NewsDetailPageProps): Promise
       modifiedTime: post.updatedAt.toISOString(),
       authors: [post.author.name],
       tags: post.tags,
-      images: post.thumbnail ? [{ url: post.thumbnail, alt: post.title }] : undefined,
+      images: [{ url: ogImageUrl, width: 1200, height: 630, alt: post.title }],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: post.title,
+      description: post.excerpt,
+      images: [ogImageUrl],
     },
   };
 }
