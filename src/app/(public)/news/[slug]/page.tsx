@@ -1,10 +1,11 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { Calendar, User, ArrowLeft, Share2 } from "lucide-react";
+import { Calendar, User, ArrowLeft } from "lucide-react";
 import { notFound } from "next/navigation";
 import { formatDate } from "@/lib/utils";
 import { getNewsBySlug } from "@/lib/data";
 import { buildPageMetadata } from "@/lib/seo";
+import ShareButtons from "@/components/ShareButtons";
 
 type NewsDetailPageProps = {
   params: Promise<{ slug: string }>;
@@ -106,19 +107,20 @@ export default async function NewsDetailPage({ params }: NewsDetailPageProps) {
 
           {/* Footer of Article */}
           <div className="pt-12 border-t border-gray-100 flex flex-col md:flex-row justify-between items-center gap-8">
-            <div className="flex items-center space-x-4">
+            <div className="flex items-center space-x-4 flex-wrap gap-y-2">
                <span className="font-bold text-primary">Tag:</span>
-               <div className="flex gap-2">
+               <div className="flex flex-wrap gap-2">
                  {post.tags.map(tag => (
                    <span key={tag} className="bg-base px-3 py-1 rounded-full text-xs text-gray-500">#{tag}</span>
                  ))}
                </div>
             </div>
-            
-            <button className="flex items-center space-x-2 text-primary font-bold hover:text-accent transition-colors">
-              <Share2 size={20} />
-              <span>Bagikan Artikel</span>
-            </button>
+
+            <ShareButtons
+              title={post.title}
+              url={`${process.env.NEXT_PUBLIC_SITE_URL ?? "https://yayasannuruliman.clipperyt.online"}/news/${post.slug}`}
+              excerpt={post.excerpt}
+            />
           </div>
         </div>
       </section>
