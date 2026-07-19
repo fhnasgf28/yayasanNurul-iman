@@ -28,10 +28,13 @@ export default function AboutPage() {
             </div>
             <div className="prose prose-lg text-gray-600 space-y-6">
               <p>
-                Yayasan Nurul Iman didirikan dengan semangat untuk menjaga dan memakmurkan Masjid Nurul Iman sebagai rumah ibadah umat Islam di lingkungan ini.
+                Yayasan Nurul Iman didirikan atas semangat kolektif masyarakat untuk menjaga, merawat, dan memakmurkan Masjid Nurul Iman sebagai pusat ibadah, pendidikan, dan peradaban Islam di lingkungan Karawang.
               </p>
               <p>
-                Seiring waktu, yayasan berkembang dengan menambahkan program pendidikan agama berupa DTA (Diniyah Takmiliyah Awaliyah) untuk membina anak-anak agar mengenal dan mencintai Al-Qur&apos;an sejak dini.
+                Berangkat dari keyakinan bahwa generasi yang kuat dimulai dari pendidikan yang baik, yayasan kemudian mendirikan <strong>DTA (Diniyah Takmiliyah Awaliyah) Nurul Iman</strong> — sebuah madrasah petang yang membina anak-anak agar mencintai Al-Qur&apos;an, memahami ilmu agama, dan tumbuh dengan akhlak mulia.
+              </p>
+              <p>
+                Kini, Yayasan Nurul Iman hadir sebagai rumah bagi ratusan santri dan jamaah — sebuah oasis iman di tengah dinamika zaman.
               </p>
             </div>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8 pt-6">
@@ -71,8 +74,8 @@ export default function AboutPage() {
           <div className="relative">
             <div className="relative h-[600px] rounded-3xl overflow-hidden shadow-2xl z-10 border-8 border-white">
               <img
-                src="https://images.unsplash.com/photo-1591604021695-0c69b7c05981?q=80&w=2070&auto=format&fit=crop"
-                alt="Sejarah Nurul Iman"
+                src="/masjid-exterior.jpg"
+                alt="Masjid Nurul Iman"
                 className="h-full w-full object-cover"
               />
             </div>
@@ -119,18 +122,30 @@ export default function AboutPage() {
           </div>
           <div className="space-y-12">
             {[
-              { year: "Tahun 1", event: "Pendirian Yayasan Nurul Iman & pengelolaan Masjid Nurul Iman" },
-              { year: "Tahun 2", event: "Pembukaan DTA Nurul Iman angkatan pertama" },
-              { year: "Tahun 3", event: "Penambahan program tahsin & tahfidz untuk santri" },
-              { year: "Tahun 4", event: "Pengembangan fasilitas masjid dan ruang kelas DTA" },
-              { year: "Tahun 5", event: "Program beasiswa bagi santri kurang mampu" },
+              { year: "2012", label: "Awal Berdiri", event: "Pendirian Yayasan Nurul Iman dan pembentukan takmir Masjid Nurul Iman sebagai pusat ibadah jamaah.", highlight: false },
+              { year: "2014", label: "Pendidikan", event: "Pembukaan DTA Nurul Iman angkatan pertama dengan 20 santri perdana di bawah bimbingan Ustadz H. Syarifuddin.", highlight: false },
+              { year: "2016", label: "Pengembangan", event: "Penambahan program Tahsin & Tahfidz Juz 30 untuk seluruh santri, target hafal sebelum lulus.", highlight: false },
+              { year: "2019", label: "Fasilitas", event: "Renovasi dan perluasan ruang kelas DTA, penambahan perpustakaan mini, serta pengadaan peralatan audio masjid.", highlight: false },
+              { year: "2022", label: "Sosial", event: "Peluncuran program beasiswa bagi santri kurang mampu dan bantuan kebutuhan pokok jamaah dhuafa.", highlight: true },
+              { year: "Kini", label: "Berkembang", event: "Lebih dari 200 santri aktif, program pendaftaran siswa baru, laporan keuangan transparan, dan website resmi yayasan.", highlight: true },
             ].map((item, i) => (
               <div key={i} className="flex flex-col md:flex-row gap-8 items-center md:items-start group">
-                <div className="w-24 h-24 shrink-0 rounded-full bg-primary flex items-center justify-center text-secondary font-bold text-sm font-serif border-4 border-secondary text-center px-2">
-                  {item.year}
+                <div className={`w-24 h-24 shrink-0 rounded-full flex flex-col items-center justify-center font-bold text-sm font-serif border-4 text-center px-2 transition-all ${
+                  item.highlight 
+                    ? "bg-secondary text-primary border-secondary shadow-lg shadow-secondary/30" 
+                    : "bg-primary text-secondary border-secondary"
+                }`}>
+                  <span className="text-lg">{item.year}</span>
+                  <span className="text-[9px] font-sans uppercase tracking-wider opacity-80">{item.label}</span>
                 </div>
-                <div className="bg-white p-8 rounded-2xl flex-1 border border-secondary/10 group-hover:border-secondary transition-colors shadow-sm">
-                  <p className="text-lg text-primary font-medium">{item.event}</p>
+                <div className={`p-8 rounded-2xl flex-1 border transition-colors shadow-sm ${
+                  item.highlight 
+                    ? "bg-primary text-white border-primary group-hover:shadow-lg" 
+                    : "bg-white border-secondary/10 group-hover:border-secondary"
+                }`}>
+                  <p className={`text-lg font-medium leading-relaxed ${item.highlight ? "text-white" : "text-primary"}`}>
+                    {item.event}
+                  </p>
                 </div>
               </div>
             ))}
@@ -212,6 +227,71 @@ export default function AboutPage() {
                     </p>
                   </div>
                 </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Islamic Quotes / Landasan Section */}
+      <section className="py-24 px-6 bg-primary relative overflow-hidden">
+        <div className="absolute inset-0 opacity-10 bg-islamic" />
+        <div className="max-w-6xl mx-auto relative z-10 space-y-16">
+          <div className="text-center space-y-4">
+            <span className="text-secondary font-bold tracking-widest uppercase text-sm">Landasan Kami</span>
+            <h2 className="text-3xl md:text-5xl font-serif font-bold text-white">Berpijak pada Al-Qur&apos;an &amp; Sunnah</h2>
+            <p className="text-white/60 max-w-2xl mx-auto text-sm leading-relaxed">
+              Setiap langkah Yayasan Nurul Iman didasarkan pada petunjuk Allah SWT dan tuntunan Rasulullah SAW.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            {/* Ayat 1 */}
+            <div className="bg-white/5 backdrop-blur border border-white/10 rounded-3xl p-8 space-y-4 hover:bg-white/10 transition-colors">
+              <div className="text-secondary text-xs font-bold uppercase tracking-widest">QS. At-Taubah: 18</div>
+              <p className="font-arabic text-2xl text-right text-white leading-loose">
+                إِنَّمَا يَعْمُرُ مَسَاجِدَ اللَّهِ مَنْ آمَنَ بِاللَّهِ وَالْيَوْمِ الْآخِرِ
+              </p>
+              <p className="text-white/60 text-xs leading-relaxed italic">
+                &ldquo;Sesungguhnya yang memakmurkan masjid-masjid Allah hanyalah orang yang beriman kepada Allah dan hari akhir.&rdquo;
+              </p>
+            </div>
+
+            {/* Hadits */}
+            <div className="bg-secondary/20 backdrop-blur border border-secondary/30 rounded-3xl p-8 space-y-4 hover:bg-secondary/30 transition-colors">
+              <div className="text-secondary text-xs font-bold uppercase tracking-widest">HR. Muslim</div>
+              <p className="font-arabic text-2xl text-right text-white leading-loose">
+                مَنْ سَلَكَ طَرِيقًا يَلْتَمِسُ فِيهِ عِلْمًا سَهَّلَ اللَّهُ لَهُ طَرِيقًا إِلَى الْجَنَّةِ
+              </p>
+              <p className="text-white/60 text-xs leading-relaxed italic">
+                &ldquo;Barangsiapa menempuh jalan untuk mencari ilmu, Allah akan mudahkan baginya jalan menuju surga.&rdquo;
+              </p>
+            </div>
+
+            {/* Ayat 2 */}
+            <div className="bg-white/5 backdrop-blur border border-white/10 rounded-3xl p-8 space-y-4 hover:bg-white/10 transition-colors">
+              <div className="text-secondary text-xs font-bold uppercase tracking-widest">QS. Al-&apos;Alaq: 1</div>
+              <p className="font-arabic text-2xl text-right text-white leading-loose">
+                اقْرَأْ بِاسْمِ رَبِّكَ الَّذِي خَلَقَ
+              </p>
+              <p className="text-white/60 text-xs leading-relaxed italic">
+                &ldquo;Bacalah dengan (menyebut) nama Tuhanmu yang menciptakan.&rdquo; — Wahyu pertama yang diturunkan, menunjukkan betapa pentingnya ilmu dan membaca.
+              </p>
+            </div>
+          </div>
+
+          {/* Stats row */}
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
+            {[
+              { num: "200+", label: "Santri Aktif", sub: "DTA & Tahfidz" },
+              { num: "10+", label: "Tahun Berkhidmat", sub: "Sejak 2012" },
+              { num: "5", label: "Ustadz & Ustadzah", sub: "Berpengalaman" },
+              { num: "1000+", label: "Jamaah Masjid", sub: "Setiap Jumat" },
+            ].map((s, i) => (
+              <div key={i} className="text-center space-y-2">
+                <p className="text-4xl md:text-5xl font-serif font-bold text-secondary">{s.num}</p>
+                <p className="text-white font-bold text-sm">{s.label}</p>
+                <p className="text-white/40 text-xs">{s.sub}</p>
               </div>
             ))}
           </div>

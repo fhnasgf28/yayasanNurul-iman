@@ -47,19 +47,24 @@ export default async function Home() {
             
             <div className="relative h-[450px] md:h-[600px] rounded-[2.5rem] overflow-hidden shadow-2xl shadow-primary/10 rotate-1 group-hover:rotate-0 transition-transform duration-700">
               <img
-                src="https://images.unsplash.com/photo-1591604021695-0c69b7c05981?q=80&w=2070&auto=format&fit=crop"
-                alt="Yayasan Nurul Iman"
+                src="/masjid-interior.jpg"
+                alt="Interior Masjid Nurul Iman"
                 className="object-cover h-full w-full scale-105 group-hover:scale-100 transition-transform duration-700"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-primary/40 via-transparent to-transparent" />
             </div>
             
             {/* Floating Badge */}
-            <div className="absolute -bottom-8 left-1/2 -translate-x-1/2 bg-white p-6 rounded-3xl shadow-xl border border-secondary/10 flex items-center space-x-4 min-w-[280px]" style={{ background: "var(--surface)" }}>
-              <div className="w-12 h-12 bg-secondary rounded-2xl flex items-center justify-center text-primary font-bold text-xl">10+</div>
+            <div className="absolute -bottom-8 left-1/2 -translate-x-1/2 bg-white p-5 rounded-3xl shadow-xl border border-secondary/10 flex items-center space-x-4 min-w-[300px]" style={{ background: "var(--surface)" }}>
+              <div className="w-14 h-14 bg-secondary rounded-2xl flex items-center justify-center text-primary font-bold text-2xl font-serif shrink-0">10+</div>
               <div>
                 <p className="text-primary font-bold text-sm">Tahun Berkhidmat</p>
-                <p className="text-gray-400 text-xs">Membangun Ummat Beradab</p>
+                <p className="text-gray-400 text-xs leading-snug">Memakmurkan Masjid &amp; Membina Generasi</p>
+                <div className="mt-1.5 flex gap-1">
+                  <span className="text-[9px] bg-secondary/15 text-primary font-bold px-2 py-0.5 rounded-full">Masjid</span>
+                  <span className="text-[9px] bg-primary/10 text-primary font-bold px-2 py-0.5 rounded-full">DTA</span>
+                  <span className="text-[9px] bg-accent/20 text-primary font-bold px-2 py-0.5 rounded-full">Tahfidz</span>
+                </div>
               </div>
             </div>
           </div>
@@ -102,7 +107,17 @@ export default async function Home() {
               </StaggerItem>
             </StaggerContainer>
 
-            <div className="pt-4 flex flex-col sm:flex-row items-center gap-8">
+            {/* Arabic ayat + CTA */}
+            <div className="bg-primary/5 rounded-3xl p-6 border border-secondary/10 space-y-3">
+              <p className="text-xl font-arabic text-right text-primary leading-loose">
+                إِنَّمَا يَعْمُرُ مَسَاجِدَ اللَّهِ مَنْ آمَنَ بِاللَّهِ وَالْيَوْمِ الْآخِرِ
+              </p>
+              <p className="text-xs text-gray-500 italic">
+                &ldquo;Sesungguhnya yang memakmurkan masjid-masjid Allah hanyalah orang yang beriman kepada Allah dan hari akhir.&rdquo; — QS. At-Taubah: 18
+              </p>
+            </div>
+
+            <div className="pt-2 flex flex-col sm:flex-row items-center gap-6">
               <Link
                 href="/about"
                 className="w-full sm:w-auto bg-primary text-white px-10 py-4 rounded-2xl font-bold hover:bg-primary/90 transition-all shadow-lg text-center"
