@@ -37,13 +37,15 @@ export async function proxy(request: NextRequest) {
     default-src 'self';
     script-src 'self' 'unsafe-eval' 'unsafe-inline';
     style-src 'self' 'unsafe-inline';
-    img-src 'self' blob: data: https://images.unsplash.com https://storage.nu.or.id https://utfs.io;
+    img-src 'self' blob: data: https://images.unsplash.com https://storage.nu.or.id https://utfs.io https://i.pravatar.cc;
     font-src 'self';
     frame-src https://www.google.com;
     object-src 'none';
     base-uri 'self';
     form-action 'self';
     frame-ancestors 'self';
+    connect-src 'self' https://equran.id https://api.aladhan.com;
+    media-src 'self' https://equran.id https://cdn.islamic.network;
     upgrade-insecure-requests;
   `.replace(/\s{2,}/g, " ").trim();
 
