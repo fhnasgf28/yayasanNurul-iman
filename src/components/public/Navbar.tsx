@@ -26,6 +26,7 @@ const navLinks = [
     dropdown: [
       { name: "Kemakmuran Masjid", href: "/programs?category=Masjid" },
       { name: "Jadwal Sholat", href: "/jadwal-sholat" },
+      { name: "Al-Qur'an Online", href: "/masjid/quran" },
       { name: "Donasi Masjid", href: "/donate" },
     ],
   },
