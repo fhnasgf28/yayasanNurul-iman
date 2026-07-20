@@ -19,6 +19,7 @@ import {
   LogIn,
   Sun,
   Moon,
+  Scroll,
 } from "lucide-react";
 import { usePathname, useSearchParams } from "next/navigation";
 import { useState } from "react";
@@ -56,6 +57,7 @@ const primaryItems = [
 
 const secondaryItems = [
   { label: "Tentang Kami", href: "/about", icon: Info },
+  { label: "Al-Qur'an", href: "/masjid/quran", icon: Scroll },
   { label: "DTA", href: "/programs?category=Pendidikan", icon: BookOpen },
   { label: "Jadwal Sholat", href: "/jadwal-sholat", icon: Clock3 },
   { label: "Pendaftaran", href: "/pendaftaran-siswa", icon: UserPlus },
@@ -76,7 +78,7 @@ export default function BottomNavbar() {
   const category = mounted ? searchParams.get("category") : null;
 
   const isMoreRoute =
-    ["/gallery", "/contact", "/donate", "/about", "/pendaftaran-siswa", "/jadwal-sholat"].some(
+    ["/gallery", "/contact", "/donate", "/about", "/pendaftaran-siswa", "/jadwal-sholat", "/masjid"].some(
       (route) => pathname.startsWith(route)
     ) ||
     (pathname === "/programs" && category === "Pendidikan");

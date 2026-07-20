@@ -69,16 +69,9 @@ export default function Navbar() {
 
   const isHome = pathname === "/";
 
-  // Hitung navStyle — sebelum mounted, gunakan nilai default agar server & client konsisten
   const navStyle = !mounted
-    ? isHome
-      ? "transparent"
-      : "solid"
-    : scrolled
-    ? "pill"
-    : isHome
-    ? "transparent"
-    : "solid";
+    ? isHome ? "transparent" : "solid"
+    : scrolled ? "pill" : isHome ? "transparent" : "solid";
 
   return (
     <nav
