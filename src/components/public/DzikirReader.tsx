@@ -50,7 +50,7 @@ export default function DzikirReader() {
     let isMounted = true;
     setLoading(true);
     setCelebrate(false);
-    fetch(`https://dzikir.zakiego.com/api/v0/dzikir-${mode}`)
+    fetch(`/api/dzikir/${mode}`)
       .then((res) => res.json())
       .then((json) => {
         if (isMounted) {
