@@ -103,62 +103,66 @@ export default function BottomNavbar() {
                 animate={{ y: 0, opacity: 1 }}
                 exit={{ y: "100%", opacity: 0 }}
                 transition={{ type: "spring", stiffness: 320, damping: 30 }}
-                className="fixed inset-x-0 bottom-[88px] z-[80] mx-3 rounded-[30px] border border-white/40 bg-white/40 dark:border-white/10 dark:bg-black/55 p-4 shadow-[0_24px_60px_rgba(26,77,46,0.18)] backdrop-blur-2xl supports-[backdrop-filter]:bg-white/30 dark:supports-[backdrop-filter]:bg-black/45 md:hidden"
+                className="fixed inset-x-0 bottom-[88px] z-[80] mx-3 rounded-[30px] border border-white/40 bg-white/40 dark:border-white/10 dark:bg-black/55 shadow-[0_24px_60px_rgba(26,77,46,0.18)] backdrop-blur-2xl supports-[backdrop-filter]:bg-white/30 dark:supports-[backdrop-filter]:bg-black/45 md:hidden flex flex-col max-h-[65vh]"
               >
-                <div className="mx-auto mb-4 h-1.5 w-14 rounded-full bg-secondary/30" />
-                
-                <div className="flex items-center justify-between mb-4 px-2">
-                  <h3 className="text-sm font-bold text-primary dark:text-foreground font-serif">Menu Lainnya</h3>
-                  
-                  {/* Mobile Dark Mode Toggle */}
-                  <button
-                    onClick={toggleTheme}
-                    aria-label="Toggle dark mode"
-                    className="inline-flex h-9 w-9 items-center justify-center rounded-full bg-primary/5 dark:bg-white/10 text-primary dark:text-foreground transition-all duration-300 active:scale-95"
-                  >
-                    <AnimatePresence mode="wait">
-                      {theme === "dark" ? (
-                        <motion.span
-                          key="sun"
-                          initial={{ rotate: -90, opacity: 0 }}
-                          animate={{ rotate: 0, opacity: 1 }}
-                          exit={{ rotate: 90, opacity: 0 }}
-                          transition={{ duration: 0.25 }}
-                        >
-                          <Sun size={17} className="text-secondary" />
-                        </motion.span>
-                      ) : (
-                        <motion.span
-                          key="moon"
-                          initial={{ rotate: 90, opacity: 0 }}
-                          animate={{ rotate: 0, opacity: 1 }}
-                          exit={{ rotate: -90, opacity: 0 }}
-                          transition={{ duration: 0.25 }}
-                        >
-                          <Moon size={17} />
-                        </motion.span>
-                      )}
-                    </AnimatePresence>
-                  </button>
+                {/* Handle bar + header — tidak ikut scroll */}
+                <div className="px-4 pt-4 shrink-0">
+                  <div className="mx-auto mb-4 h-1.5 w-14 rounded-full bg-secondary/30" />
+                  <div className="flex items-center justify-between mb-4 px-2">
+                    <h3 className="text-sm font-bold text-primary dark:text-foreground font-serif">Menu Lainnya</h3>
+                    {/* Dark Mode Toggle */}
+                    <button
+                      onClick={toggleTheme}
+                      aria-label="Toggle dark mode"
+                      className="inline-flex h-9 w-9 items-center justify-center rounded-full bg-primary/5 dark:bg-white/10 text-primary dark:text-foreground transition-all duration-300 active:scale-95"
+                    >
+                      <AnimatePresence mode="wait">
+                        {theme === "dark" ? (
+                          <motion.span
+                            key="sun"
+                            initial={{ rotate: -90, opacity: 0 }}
+                            animate={{ rotate: 0, opacity: 1 }}
+                            exit={{ rotate: 90, opacity: 0 }}
+                            transition={{ duration: 0.25 }}
+                          >
+                            <Sun size={17} className="text-secondary" />
+                          </motion.span>
+                        ) : (
+                          <motion.span
+                            key="moon"
+                            initial={{ rotate: 90, opacity: 0 }}
+                            animate={{ rotate: 0, opacity: 1 }}
+                            exit={{ rotate: -90, opacity: 0 }}
+                            transition={{ duration: 0.25 }}
+                          >
+                            <Moon size={17} />
+                          </motion.span>
+                        )}
+                      </AnimatePresence>
+                    </button>
+                  </div>
                 </div>
 
-                <div className="grid grid-cols-2 gap-3">
-                  {secondaryItems.map((item) => {
-                    const Icon = item.icon;
-                    return (
-                      <Link
-                        key={item.href}
-                        href={item.href}
-                        onClick={() => setIsMoreOpen(false)}
-                        className="flex flex-col items-center gap-2 rounded-2xl border border-white/50 bg-white/55 dark:border-white/10 dark:bg-white/5 px-3 py-4 text-center shadow-[0_10px_30px_rgba(26,77,46,0.08)] transition-transform backdrop-blur-md active:scale-95"
-                      >
-                        <span className="flex h-11 w-11 items-center justify-center rounded-2xl bg-secondary/12 text-[#C8963E]">
-                          <Icon size={20} />
-                        </span>
-                        <span className="text-xs font-semibold text-primary dark:text-foreground">{item.label}</span>
-                      </Link>
-                    );
-                  })}
+                {/* Grid item — scrollable */}
+                <div className="overflow-y-auto px-4 pb-4 flex-1">
+                  <div className="grid grid-cols-2 gap-3">
+                    {secondaryItems.map((item) => {
+                      const Icon = item.icon;
+                      return (
+                        <Link
+                          key={item.href}
+                          href={item.href}
+                          onClick={() => setIsMoreOpen(false)}
+                          className="flex flex-col items-center gap-2 rounded-2xl border border-white/50 bg-white/55 dark:border-white/10 dark:bg-white/5 px-3 py-4 text-center shadow-[0_10px_30px_rgba(26,77,46,0.08)] transition-transform backdrop-blur-md active:scale-95"
+                        >
+                          <span className="flex h-11 w-11 items-center justify-center rounded-2xl bg-secondary/12 text-[#C8963E]">
+                            <Icon size={20} />
+                          </span>
+                          <span className="text-xs font-semibold text-primary dark:text-foreground">{item.label}</span>
+                        </Link>
+                      );
+                    })}
+                  </div>
                 </div>
               </motion.div>
             </>
