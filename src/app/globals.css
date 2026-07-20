@@ -9,7 +9,7 @@
   
   --font-serif: var(--font-playfair);
   --font-sans: var(--font-jakarta);
-  --font-arabic: var(--font-scheherazade);
+  --font-arabic: var(--font-scheherazade, "Scheherazade New", serif);
 }
 
 :root {
@@ -153,7 +153,8 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .font-arabic {
-  font-family: var(--font-arabic);
+  /* Directly reference Next.js font variable — resolved on body, not :root */
+  font-family: var(--font-scheherazade, "Scheherazade New", "Amiri", serif);
   direction: rtl;
   unicode-bidi: bidi-override;
   letter-spacing: 0.02em;
