@@ -125,6 +125,7 @@ export default function QuranReader() {
 
   const audioRef = useRef<HTMLAudioElement | null>(null);
   const readerTopRef = useRef<HTMLDivElement | null>(null);
+  const listRef = useRef<HTMLDivElement | null>(null);
 
   // Load persisted state
   useEffect(() => {
@@ -360,6 +361,11 @@ export default function QuranReader() {
     if (next >= 1 && next <= 114) fetchSurah(next);
   };
 
+  // Auto-scroll list ke atas saat search berubah
+  useEffect(() => {
+    listRef.current?.scrollTo({ top: 0, behavior: "instant" });
+  }, [search]);
+
   const filtered = surahList.filter(
     (s) =>
       s.namaLatin.toLowerCase().includes(search.toLowerCase()) ||
@@ -406,7 +412,7 @@ export default function QuranReader() {
         </div>
       </div>
 
-      <div className="overflow-y-auto flex-1">
+      <div ref={listRef} className="overflow-y-auto flex-1">
         {loadingList ? (
           <div className="flex items-center justify-center py-12">
             <Loader2 className="animate-spin text-primary" size={24} />
@@ -442,6 +448,8 @@ export default function QuranReader() {
             </button>
           ))
         )}
+        {/* Padding bawah agar item tidak tertutup bottom nav */}
+        <div className="h-16" />
       </div>
     </>
   );
