@@ -44,7 +44,7 @@ export async function proxy(request: NextRequest) {
     base-uri 'self';
     form-action 'self';
     frame-ancestors 'self';
-    connect-src 'self' https://equran.id https://api.aladhan.com;
+    connect-src 'self' https://equran.id https://api.aladhan.com https://dzikir.vercel.app;
     media-src 'self' https://equran.id https://cdn.islamic.network;
     upgrade-insecure-requests;
   `.replace(/\s{2,}/g, " ").trim();

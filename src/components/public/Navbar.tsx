@@ -27,6 +27,7 @@ const navLinks = [
       { name: "Kemakmuran Masjid", href: "/programs?category=Masjid" },
       { name: "Jadwal Sholat", href: "/jadwal-sholat" },
       { name: "Al-Qur'an Online", href: "/masjid/quran" },
+      { name: "Dzikir Pagi & Sore", href: "/masjid/dzikir" },
       { name: "Donasi Masjid", href: "/donate" },
     ],
   },
