@@ -9,7 +9,7 @@
   
   --font-serif: var(--font-playfair);
   --font-sans: var(--font-jakarta);
-  --font-arabic: var(--font-amiri);
+  --font-arabic: var(--font-scheherazade);
 }
 
 :root {
@@ -157,7 +157,9 @@ h1, h2, h3, h4, h5, h6 {
   direction: rtl;
   unicode-bidi: bidi-override;
   letter-spacing: 0.02em;
-  line-height: 2.2;
+  line-height: 2.4;
+  font-feature-settings: "liga" 1, "calt" 1, "kern" 1;
+  text-rendering: optimizeLegibility;
 }
 
 /* Custom Utilities */

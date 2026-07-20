@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { Playfair_Display, Plus_Jakarta_Sans, Amiri } from "next/font/google";
+import { Playfair_Display, Plus_Jakarta_Sans, Scheherazade_New } from "next/font/google";
 import "./globals.css";
 import { cn } from "@/lib/utils";
 import Providers from "@/components/Providers";
@@ -16,10 +16,10 @@ const jakarta = Plus_Jakarta_Sans({
   variable: "--font-jakarta",
 });
 
-const amiri = Amiri({
+const scheherazade = Scheherazade_New({
   subsets: ["arabic", "latin"],
   weight: ["400", "700"],
-  variable: "--font-amiri",
+  variable: "--font-scheherazade",
 });
 
 export const metadata: Metadata = {
@@ -92,7 +92,7 @@ export default function RootLayout({
           "min-h-screen bg-[#FDFAF4] font-sans antialiased",
           playfair.variable,
           jakarta.variable,
-          amiri.variable
+          scheherazade.variable
         )}
       >
         <PWARegistration />
