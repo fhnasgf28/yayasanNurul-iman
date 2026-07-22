@@ -4,6 +4,7 @@ import Link from "next/link";
 import { AnimatePresence, motion } from "framer-motion";
 import {
   BookOpen,
+  BookMarked,
   Circle,
   Clock3,
   House,
@@ -59,6 +60,7 @@ const secondaryItems = [
   { label: "Tentang Kami", href: "/about", icon: Info },
   { label: "Al-Qur'an", href: "/masjid/quran", icon: Scroll },
   { label: "Dzikir", href: "/masjid/dzikir", icon: Sun },
+  { label: "Hadits", href: "/masjid/hadits", icon: BookMarked },
   { label: "DTA", href: "/programs?category=Pendidikan", icon: BookOpen },
   { label: "Jadwal Sholat", href: "/jadwal-sholat", icon: Clock3 },
   { label: "Pendaftaran", href: "/pendaftaran-siswa", icon: UserPlus },

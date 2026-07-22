@@ -28,6 +28,7 @@ const navLinks = [
       { name: "Jadwal Sholat", href: "/jadwal-sholat" },
       { name: "Al-Qur'an Online", href: "/masjid/quran" },
       { name: "Dzikir Pagi & Sore", href: "/masjid/dzikir" },
+      { name: "Hadits Shahih", href: "/masjid/hadits" },
       { name: "Donasi Masjid", href: "/donate" },
     ],
   },
