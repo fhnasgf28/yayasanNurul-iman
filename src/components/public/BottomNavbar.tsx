@@ -5,6 +5,7 @@ import { AnimatePresence, motion } from "framer-motion";
 import {
   BookOpen,
   BookMarked,
+  BookText,
   Circle,
   Clock3,
   House,
@@ -59,6 +60,7 @@ const primaryItems = [
 const secondaryItems = [
   { label: "Tentang Kami", href: "/about", icon: Info },
   { label: "Al-Qur'an", href: "/masjid/quran", icon: Scroll },
+  { label: "Tafsir", href: "/masjid/tafsir", icon: BookText },
   { label: "Dzikir", href: "/masjid/dzikir", icon: Sun },
   { label: "Hadits", href: "/masjid/hadits", icon: BookMarked },
   { label: "DTA", href: "/programs?category=Pendidikan", icon: BookOpen },
