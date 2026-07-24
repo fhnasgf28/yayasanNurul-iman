@@ -25,7 +25,71 @@ export default async function Home() {
   ]);
 
   return (
-    <main className="flex flex-col min-h-screen bg-light relative overflow-x-hidden">
+    <>
+      {/* JSON-LD Structured Data — Membantu Google memahami konteks situs */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "ReligiousOrganization",
+            name: "Yayasan Nurul Iman",
+            alternateName: "Masjid Nurul Iman",
+            url: "https://yayasannuruliman.clipperyt.online",
+            logo: "https://yayasannuruliman.clipperyt.online/icon-512.png",
+            description:
+              "Yayasan Nurul Iman berdedikasi memakmurkan Masjid Nurul Iman dan membina generasi muda melalui Diniyah Takmiliyah Awaliyah (DTA) berbasis Al-Qur'an.",
+            foundingDate: "2010",
+            address: {
+              "@type": "PostalAddress",
+              addressLocality: "Bandung",
+              addressRegion: "Jawa Barat",
+              addressCountry: "ID",
+            },
+            contactPoint: {
+              "@type": "ContactPoint",
+              contactType: "customer service",
+              email: "assegaffarhab5@gmail.com",
+              availableLanguage: "Indonesian",
+            },
+            sameAs: ["https://github.com/fhnasgf28"],
+            hasOfferCatalog: {
+              "@type": "OfferCatalog",
+              name: "Layanan Yayasan",
+              itemListElement: [
+                {
+                  "@type": "Offer",
+                  itemOffered: {
+                    "@type": "Service",
+                    name: "Diniyah Takmiliyah Awaliyah (DTA)",
+                    description: "Pendidikan agama Islam untuk anak-anak",
+                  },
+                },
+                {
+                  "@type": "Offer",
+                  itemOffered: {
+                    "@type": "Service",
+                    name: "Al-Qur'an Online",
+                    description: "Baca Al-Qur'an lengkap dengan terjemahan dan audio",
+                    url: "https://yayasannuruliman.clipperyt.online/masjid/quran",
+                  },
+                },
+                {
+                  "@type": "Offer",
+                  itemOffered: {
+                    "@type": "Service",
+                    name: "Dzikir Pagi & Sore",
+                    description: "Panduan dzikir pagi dan petang sesuai sunnah",
+                    url: "https://yayasannuruliman.clipperyt.online/masjid/dzikir",
+                  },
+                },
+              ],
+            },
+          }),
+        }}
+      />
+      <main className="flex flex-col min-h-screen bg-light relative overflow-x-hidden">
+
       {/* Global Background Decorations */}
       <div className="fixed inset-0 pointer-events-none z-0">
         <div className="absolute top-[20%] -left-[10%] w-[50%] h-[50%] bg-secondary/5 rounded-full blur-[120px]" />
@@ -311,5 +375,6 @@ export default async function Home() {
 
       <DonationBanner />
     </main>
+    </>
   );
 }
