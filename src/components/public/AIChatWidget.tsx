@@ -1,17 +1,19 @@
 "use client";
 
 import { useState, useEffect, useRef } from "react";
+import Link from "next/link";
+import { useSession } from "next-auth/react";
 import {
   Bot,
   X,
   Send,
   Sparkles,
   Trash2,
-  RefreshCw,
-  Clock,
+  Lock,
+  LogIn,
   HelpCircle,
   MessageSquare,
-  ChevronDown,
+  BookOpen,
 } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 
@@ -22,10 +24,11 @@ interface ChatMessage {
   timestamp: string;
 }
 
-const MAX_DAILY_MESSAGES = 15;
+const MAX_DAILY_MESSAGES = 20;
 const EXPIRY_DAYS = 14; // Auto-delete sessions older than 14 days
 
 export default function AIChatWidget() {
+  const { data: session } = useSession();
   const [isOpen, setIsOpen] = useState(false);
   const [inputMessage, setInputMessage] = useState("");
   const [messages, setMessages] = useState<ChatMessage[]>([]);
@@ -67,7 +70,7 @@ export default function AIChatWidget() {
           {
             id: "welcome-1",
             sender: "ai",
-            text: "Assalamu'alaikum Wr. Wb. 🌸\n\nSaya **Asisten AI Nurul Iman**. Ada yang bisa saya bantu seputar kegiatan Masjid, DTA, Jadwal Sholat, Al-Qur'an, Dzikir, Doa, atau Pendaftaran Siswa?",
+            text: "Assalamu'alaikum Wr. Wb. 🌸\n\nSaya **Asisten AI Nurul Iman**. Saya siap menjawab pertanyaan seputar kegiatan Yayasan, Masjid, DTA, Jadwal Sholat, Al-Qur'an, Dzikir, Doa, Pendaftaran, serta Tanya Jawab Keagamaan umum.",
             timestamp: new Date().toLocaleTimeString("id-ID", {
               hour: "2-digit",
               minute: "2-digit",
@@ -191,13 +194,14 @@ export default function AIChatWidget() {
 
   const quickPrompts = [
     "Bagaimana cara mendaftar DTA?",
+    "Apa keutamaan Puasa Ayyamul Bidh?",
     "Kapan jadwal kajian Subuh?",
-    "Di mana membaca Dzikir Pagi Sore?",
-    "Bagaimana cara berdonasi?",
+    "Bagaimana tata cara wudhu?",
   ];
 
   return (
-    <div className="fixed bottom-6 right-6 z-50 font-sans print:hidden">
+    // Stacked above WhatsApp (bottom-24 on mobile & desktop so they never collide)
+    <div className="fixed bottom-24 right-4 md:right-8 z-[80] font-sans print:hidden">
       {/* --- FLOATING CHAT BUTTON --- */}
       <AnimatePresence>
         {!isOpen && (
@@ -206,13 +210,13 @@ export default function AIChatWidget() {
             animate={{ scale: 1, opacity: 1 }}
             exit={{ scale: 0.8, opacity: 0 }}
             onClick={() => setIsOpen(true)}
-            className="group bg-[#1A4D2E] text-[#C8963E] p-4 rounded-full shadow-2xl hover:shadow-emerald-900/40 hover:scale-105 transition-all duration-300 flex items-center gap-3 border-2 border-[#C8963E]/40"
+            className="group bg-[#1A4D2E] text-[#C8963E] p-3.5 md:p-4 rounded-full shadow-2xl hover:shadow-emerald-900/40 hover:scale-105 transition-all duration-300 flex items-center gap-2.5 border-2 border-[#C8963E]/40"
             aria-label="Tanya Asisten AI Nurul Iman"
           >
             <div className="relative">
-              <Bot size={26} className="text-white group-hover:rotate-12 transition-transform" />
-              <span className="absolute -top-1 -right-1 w-3 h-3 bg-emerald-400 rounded-full border-2 border-[#1A4D2E] animate-ping" />
-              <span className="absolute -top-1 -right-1 w-3 h-3 bg-emerald-400 rounded-full border-2 border-[#1A4D2E]" />
+              <Bot size={24} className="text-white group-hover:rotate-12 transition-transform" />
+              <span className="absolute -top-1 -right-1 w-2.5 h-2.5 bg-emerald-400 rounded-full border-2 border-[#1A4D2E] animate-ping" />
+              <span className="absolute -top-1 -right-1 w-2.5 h-2.5 bg-emerald-400 rounded-full border-2 border-[#1A4D2E]" />
             </div>
             <span className="font-bold text-xs text-white hidden sm:inline-block pr-1">
               Tanya Asisten AI
@@ -225,11 +229,11 @@ export default function AIChatWidget() {
       <AnimatePresence>
         {isOpen && (
           <motion.div
-            initial={{ opacity: 0, y: 40, scale: 0.95 }}
+            initial={{ opacity: 0, y: 30, scale: 0.95 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
-            exit={{ opacity: 0, y: 40, scale: 0.95 }}
+            exit={{ opacity: 0, y: 30, scale: 0.95 }}
             transition={{ duration: 0.2 }}
-            className="w-[92vw] sm:w-[380px] h-[520px] max-h-[82vh] bg-white rounded-3xl border border-secondary/20 shadow-2xl flex flex-col overflow-hidden"
+            className="w-[92vw] sm:w-[380px] h-[520px] max-h-[80vh] bg-white rounded-3xl border border-secondary/20 shadow-2xl flex flex-col overflow-hidden"
           >
             {/* CHAT HEADER */}
             <div className="bg-gradient-to-r from-[#1A4D2E] via-[#163e25] to-[#0f2c1a] text-white p-4 flex items-center justify-between border-b border-[#C8963E]/20">
@@ -245,7 +249,7 @@ export default function AIChatWidget() {
                     <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
                   </div>
                   <p className="text-[10px] text-emerald-200">
-                    Sisa Kuota Hari Ini: {MAX_DAILY_MESSAGES - dailyCount}/{MAX_DAILY_MESSAGES}
+                    {session ? `Pengguna: ${session.user?.name || "Member"}` : `Sisa Kuota: ${MAX_DAILY_MESSAGES - dailyCount}/${MAX_DAILY_MESSAGES}`}
                   </p>
                 </div>
               </div>
@@ -267,6 +271,24 @@ export default function AIChatWidget() {
                 </button>
               </div>
             </div>
+
+            {/* LOGIN CALLOUT BANNER (For General AI Access) */}
+            {!session && (
+              <div className="bg-gradient-to-r from-amber-500/10 via-amber-500/5 to-transparent border-b border-amber-500/20 px-3.5 py-2.5 flex items-center justify-between gap-2 text-xs">
+                <div className="flex items-center gap-2 text-amber-900">
+                  <Lock size={14} className="shrink-0 text-amber-600" />
+                  <span className="text-[11px] font-medium leading-tight">
+                    Ingin percakapan AI tanpa batas?
+                  </span>
+                </div>
+                <Link
+                  href="/login"
+                  className="bg-[#1A4D2E] text-[#C8963E] font-bold text-[10px] px-3 py-1.5 rounded-xl hover:bg-[#153e25] transition shrink-0 flex items-center gap-1 shadow-sm"
+                >
+                  <LogIn size={12} /> Login Akun
+                </Link>
+              </div>
+            )}
 
             {/* MESSAGES CONTAINER */}
             <div className="flex-1 p-4 overflow-y-auto space-y-3 bg-[#FDFAF4] text-xs">
@@ -331,7 +353,7 @@ export default function AIChatWidget() {
                 type="text"
                 value={inputMessage}
                 onChange={(e) => setInputMessage(e.target.value)}
-                placeholder="Tulis pertanyaan seputar yayasan..."
+                placeholder="Tulis pertanyaan umum / seputar yayasan..."
                 disabled={isLoading || dailyCount >= MAX_DAILY_MESSAGES}
                 className="flex-1 px-3.5 py-2.5 rounded-xl text-xs border border-gray-200 outline-none focus:border-primary transition disabled:opacity-50"
               />

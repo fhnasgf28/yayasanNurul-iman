@@ -26,7 +26,7 @@ export default function FloatingWhatsApp({ settings }: FloatingWhatsAppProps) {
   )}`;
 
   return (
-    <div className="fixed bottom-[108px] right-4 z-[85] md:bottom-8 md:right-8">
+    <div className="fixed bottom-6 right-4 md:right-8 z-[85]">
       <AnimatePresence>
         {isOpen && (
           <motion.div

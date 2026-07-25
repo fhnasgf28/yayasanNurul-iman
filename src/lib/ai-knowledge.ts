@@ -4,6 +4,7 @@ export interface KnowledgeRule {
 }
 
 export const KNOWLEDGE_BASE: KnowledgeRule[] = [
+  // --- INFORMASI YAYASAN & DTA ---
   {
     keywords: ["dta", "pendaftaran", "daftar", "ppdb", "masuk", "syarat"],
     response: `📖 *Informasi Pendaftaran Santri DTA Nurul Iman (TA 2026/2027):*
@@ -31,6 +32,51 @@ https://yayasannuruliman.clipperyt.online/pendaftaran-siswa`,
 Detail lengkap kurikulum dapat dilihat di:
 https://yayasannuruliman.clipperyt.online/dta`,
   },
+
+  // --- IBADAH GENERAL & FIQIH ---
+  {
+    keywords: ["puasa", "ayyamul bidh", "senin kamis", "asyura", "nisfu"],
+    response: `🌙 *Informasi & Keutamaan Puasa Sunnah:*
+
+• *Puasa Ayyamul Bidh:* Dilaksanakan setiap tanggal 13, 14, 15 bulan Hijriah saat bulan purnama. Pahalanya seperti puasa sepanjang tahun.
+• *Puasa Senin & Kamis:* Hari di mana amalan manusia diperiksakan di hadapan Allah SWT.
+• *Puasa Asyura (10 Muharram):* Menghapuskan dosa setahun yang lalu.
+
+Lihat kalender puasa sunnah selengkapnya di:
+https://yayasannuruliman.clipperyt.online/masjid/agenda`,
+  },
+  {
+    keywords: ["dhuha", "tahajud", "witir", "shalat sunnah", "sholat sunnah"],
+    response: `🕌 *Keutamaan Shalat Sunnah:*
+
+• *Shalat Dhuha:* Dikerjakan 2 s.d 8 rakaat di pagi hari (setelah terbit matahari hingga menjelang Dzuhur). Keutamaannya melapangkan rezeki & pembuka pintu surga.
+• *Shalat Tahajud:* Dikerjakan di sepertiga malam terakhir setelah bangun tidur. Shalat sunnah paling utama setelah shalat fardhu.
+• *Shalat Witir:* Shalat penutup malam (1, 3, atau 5 rakaat).`,
+  },
+  {
+    keywords: ["surah", "surat", "al-kahfi", "yasin", "al-mulk", "ayat kursi"],
+    response: `📖 *Keutamaan Surah-Surah Pilihan:*
+
+• *Surah Al-Kahfi:* Dibaca pada hari/malam Jumat untuk mendapat cahaya petunjuk di antara dua Jumat & perlindungan dari fitnah Dajjal.
+• *Surah Al-Mulk:* Dibaca sebelum tidur sebagai pelindung dari azab kubur.
+• *Ayat Kursi:* Dibaca setiap selesai shalat fardhu dan sebelum tidur.
+
+Baca Al-Qur'an lengkap di:
+https://yayasannuruliman.clipperyt.online/masjid/quran`,
+  },
+  {
+    keywords: ["wudhu", "wudlu", "bersuci", "thaharah", "batal"],
+    response: `💧 *Rukun Wudhu & Bersuci:*
+
+1. Niat dalam hati.
+2. Membasuh muka secara merata.
+3. Membasuh kedua tangan hingga siku.
+4. Mengusap sebagian kepala/rambut.
+5. Membasuh kedua kaki hingga mata kaki.
+6. Tertib (berurutan).`,
+  },
+
+  // --- MASJID & KEGIATAN ---
   {
     keywords: ["sholat", "jadwal", "waktu", "subuh", "dzuhur", "ashar", "maghrib", "isya"],
     response: `🕌 *Jadwal Sholat & Kegiatan Ibadah Masjid Nurul Iman:*
@@ -44,7 +90,7 @@ https://yayasannuruliman.clipperyt.online/jadwal-sholat
   - Santunan Yatim Pekanan: Setiap Jumat Sore (16.00 WIB).`,
   },
   {
-    keywords: ["quran", "qur'an", "ngaji", "surat", "baca"],
+    keywords: ["quran", "qur'an", "ngaji", "baca"],
     response: `📖 *Al-Qur'an Online Yayasan Nurul Iman:*
 
 Tersedia fitur Al-Qur'an Online lengkap 114 Surah dengan teks Arab, latin, terjemahan, audio, salin ayat, dan buat gambar ayat:
@@ -97,7 +143,7 @@ export function findKnowledgeResponse(userMessage: string): string | null {
 export const SYSTEM_PROMPT = `Kamu adalah "Asisten Nurul Iman", AI pintar dan ramah yang mewakili Yayasan & Masjid Nurul Iman Bandung.
 
 Tugas utama kamu:
-1. Menjawab pertanyaan pengunjung seputar Yayasan Nurul Iman, Masjid Nurul Iman, DTA (Diniyah Takmiliyah Awaliyah), Jadwal Sholat, Al-Qur'an Online, Dzikir Pagi-Sore, Doa Harian, Pendaftaran Santri Baru, Donasi/Infaq, dan Kontak.
-2. Selalu gunakan tutur kata yang sopan, ramah, bernuansa Islami (menggunakan salam seperti Assalamu'alaikum, Insya Allah, Alhamdulillah).
-3. Berikan jawaban yang ringkas, tepat sasaran (maksimal 150-250 kata), dan cantumkan link halaman terkait jika relevan.
-4. Jika ditanya hal yang di luar topik keislaman / yayasan, arahkan dengan santun kembali ke layanan Yayasan Nurul Iman.`;
+1. Menjawab pertanyaan seputar Yayasan & Masjid Nurul Iman (DTA, Jadwal Sholat, Al-Qur'an, Dzikir, Doa, Pendaftaran, Donasi).
+2. Menjawab pertanyaan keagamaan Islam umum (Fiqih, Shalat Sunnah, Puasa, Al-Qur'an, Adab, Akhlak) secara bijak sesuai pemahaman Ahlus Sunnah wal Jama'ah.
+3. Gunakan tutur kata yang ramah, sopan, bernuansa Islami (Assalamu'alaikum, Insya Allah, Alhamdulillah).
+4. Berikan jawaban yang jelas, bermanfaat, dan tidak terlalu panjang (maksimal 200-300 kata).`;
