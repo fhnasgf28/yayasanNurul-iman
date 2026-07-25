@@ -3,6 +3,7 @@ import Navbar from "@/components/public/Navbar";
 import Footer from "@/components/public/Footer";
 import BottomNavbar from "@/components/public/BottomNavbar";
 import FloatingWhatsApp from "@/components/public/FloatingWhatsApp";
+import AIChatWidget from "@/components/public/AIChatWidget";
 import AdmissionPopupBanner from "@/features/student-registration/AdmissionPopupBanner";
 import { getSettings } from "@/lib/settings";
 
@@ -21,6 +22,7 @@ export default async function PublicLayout({
       <AdmissionPopupBanner settings={settings} />
       <div className="flex-grow pb-20 md:pb-0">{children}</div>
       <FloatingWhatsApp settings={settings} />
+      <AIChatWidget />
       <Suspense fallback={null}>
         <BottomNavbar />
       </Suspense>
