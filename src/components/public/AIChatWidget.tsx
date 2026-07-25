@@ -11,9 +11,6 @@ import {
   Trash2,
   Lock,
   LogIn,
-  HelpCircle,
-  MessageSquare,
-  BookOpen,
 } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 
@@ -24,8 +21,131 @@ interface ChatMessage {
   timestamp: string;
 }
 
-const MAX_DAILY_MESSAGES = 20;
+const MAX_DAILY_MESSAGES = 25;
 const EXPIRY_DAYS = 14; // Auto-delete sessions older than 14 days
+
+// --- MARKDOWN RENDERER COMPONENT ---
+function FormattedMarkdown({ content }: { content: string }) {
+  const lines = content.split("\n");
+
+  return (
+    <div className="space-y-1.5 leading-relaxed text-xs">
+      {lines.map((line, idx) => {
+        const trimmed = line.trim();
+        if (!trimmed) return <div key={idx} className="h-1" />;
+
+        // Header ### or ##
+        if (trimmed.startsWith("### ")) {
+          return (
+            <h4 key={idx} className="font-serif font-bold text-xs text-[#1A4D2E] pt-1">
+              {renderInlineMarkdown(trimmed.replace(/^###\s+/, ""))}
+            </h4>
+          );
+        }
+        if (trimmed.startsWith("## ")) {
+          return (
+            <h3 key={idx} className="font-serif font-bold text-xs text-[#1A4D2E] pt-1 border-b border-gray-100 pb-0.5">
+              {renderInlineMarkdown(trimmed.replace(/^##\s+/, ""))}
+            </h3>
+          );
+        }
+
+        // Bullet points (•, -, *)
+        if (trimmed.startsWith("• ") || trimmed.startsWith("- ") || trimmed.startsWith("* ")) {
+          const itemText = trimmed.replace(/^([•\-\*]\s+)/, "");
+          return (
+            <div key={idx} className="flex items-start gap-1.5 pl-1 my-0.5">
+              <span className="text-[#C8963E] font-bold shrink-0 mt-0.5">•</span>
+              <span>{renderInlineMarkdown(itemText)}</span>
+            </div>
+          );
+        }
+
+        // Numbered list (e.g. 1. , 2. )
+        const numMatch = trimmed.match(/^(\d+)\.\s+(.*)/);
+        if (numMatch) {
+          return (
+            <div key={idx} className="flex items-start gap-1.5 pl-1 my-0.5">
+              <span className="text-[#1A4D2E] font-bold text-[11px] shrink-0 mt-0.5">
+                {numMatch[1]}.
+              </span>
+              <span>{renderInlineMarkdown(numMatch[2])}</span>
+            </div>
+          );
+        }
+
+        // Blockquote >
+        if (trimmed.startsWith("> ")) {
+          return (
+            <blockquote
+              key={idx}
+              className="border-l-2 border-[#C8963E] pl-2.5 my-1 text-gray-700 italic bg-amber-500/5 py-1 rounded-r-lg"
+            >
+              {renderInlineMarkdown(trimmed.replace(/^>\s+/, ""))}
+            </blockquote>
+          );
+        }
+
+        return <p key={idx}>{renderInlineMarkdown(line)}</p>;
+      })}
+    </div>
+  );
+}
+
+function renderInlineMarkdown(text: string) {
+  const parts: React.ReactNode[] = [];
+  let lastIndex = 0;
+
+  // Regex pattern matching [label](url) OR **bold** OR *italic*
+  const regex = /\[([^\]]+)\]\(([^)]+)\)|\*\*([^*]+)\*\*|\*([^*]+)\*/g;
+  let match;
+
+  while ((match = regex.exec(text)) !== null) {
+    if (match.index > lastIndex) {
+      parts.push(text.substring(lastIndex, match.index));
+    }
+
+    if (match[1] && match[2]) {
+      // Link [label](url)
+      const label = match[1];
+      const url = match[2];
+      const isInternal = url.startsWith("/") || url.includes("yayasannuruliman");
+      parts.push(
+        <a
+          key={match.index}
+          href={url}
+          target={isInternal ? "_self" : "_blank"}
+          rel="noopener noreferrer"
+          className="text-[#1A4D2E] underline font-bold hover:text-[#C8963E] transition break-all"
+        >
+          {label}
+        </a>
+      );
+    } else if (match[3]) {
+      // Bold **text**
+      parts.push(
+        <strong key={match.index} className="font-bold text-gray-900">
+          {match[3]}
+        </strong>
+      );
+    } else if (match[4]) {
+      // Italic *text*
+      parts.push(
+        <em key={match.index} className="italic text-gray-800">
+          {match[4]}
+        </em>
+      );
+    }
+
+    lastIndex = regex.lastIndex;
+  }
+
+  if (lastIndex < text.length) {
+    parts.push(text.substring(lastIndex));
+  }
+
+  return parts.length > 0 ? parts : text;
+}
 
 export default function AIChatWidget() {
   const { data: session } = useSession();
@@ -290,7 +410,7 @@ export default function AIChatWidget() {
               </div>
             )}
 
-            {/* MESSAGES CONTAINER */}
+            {/* MESSAGES CONTAINER WITH MARKDOWN PARSER */}
             <div className="flex-1 p-4 overflow-y-auto space-y-3 bg-[#FDFAF4] text-xs">
               {messages.map((msg) => {
                 const isAi = msg.sender === "ai";
@@ -302,13 +422,17 @@ export default function AIChatWidget() {
                     }`}
                   >
                     <div
-                      className={`max-w-[85%] rounded-2xl p-3.5 leading-relaxed shadow-sm ${
+                      className={`max-w-[88%] rounded-2xl p-3.5 leading-relaxed shadow-sm ${
                         isAi
                           ? "bg-white border border-secondary/20 text-gray-900 rounded-tl-sm"
                           : "bg-[#1A4D2E] text-white rounded-tr-sm font-medium"
                       }`}
                     >
-                      <p className="whitespace-pre-line">{msg.text}</p>
+                      {isAi ? (
+                        <FormattedMarkdown content={msg.text} />
+                      ) : (
+                        <p className="whitespace-pre-line">{msg.text}</p>
+                      )}
                     </div>
                     <span className="text-[9px] text-gray-400 mt-1 px-1">
                       {msg.timestamp}
@@ -318,7 +442,7 @@ export default function AIChatWidget() {
               })}
 
               {isLoading && (
-                <div className="flex items-center gap-2 text-primary font-semibold text-xs p-2 bg-white/80 rounded-xl border border-secondary/20 w-max">
+                <div className="flex items-center gap-2 text-primary font-semibold text-xs p-2.5 bg-white/90 rounded-2xl border border-secondary/20 w-max shadow-sm">
                   <Sparkles size={14} className="animate-spin text-secondary" />
                   <span>Asisten sedang mengetik...</span>
                 </div>
