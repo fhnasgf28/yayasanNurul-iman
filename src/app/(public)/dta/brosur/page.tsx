@@ -1,14 +1,12 @@
 "use client";
 
-import { useEffect } from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
+import { useSearchParams } from "next/navigation";
 import {
   GraduationCap,
   BookOpen,
-  Calendar,
   CheckCircle2,
-  Phone,
-  Mail,
   MapPin,
   Globe,
   Printer,
@@ -16,21 +14,54 @@ import {
   ArrowLeft,
   Sparkles,
   Award,
+  Loader2,
+  FileCheck,
 } from "lucide-react";
 import {
   MATA_PELAJARAN_LIST,
   TARGET_HAFALAN_LIST,
 } from "@/lib/dta-data";
+import { generateBrochurePDF } from "@/lib/pdf-generator";
 
 export default function BrosurDTA() {
+  const [isDownloading, setIsDownloading] = useState(false);
+  const [downloadSuccess, setDownloadSuccess] = useState(false);
+  const searchParams = useSearchParams();
+
+  // Auto trigger download if URL has ?download=true
+  useEffect(() => {
+    if (searchParams.get("download") === "true") {
+      const timer = setTimeout(() => {
+        handleDownloadPDF();
+      }, 500);
+      return () => clearTimeout(timer);
+    }
+  }, [searchParams]);
+
   const handlePrint = () => {
     window.print();
+  };
+
+  const handleDownloadPDF = async () => {
+    setIsDownloading(true);
+    setDownloadSuccess(false);
+
+    const success = await generateBrochurePDF(
+      "brosur-container",
+      "Brosur-DTA-Nurul-Iman-2026.pdf"
+    );
+
+    setIsDownloading(false);
+    if (success) {
+      setDownloadSuccess(true);
+      setTimeout(() => setDownloadSuccess(false), 4000);
+    }
   };
 
   return (
     <main className="min-h-screen bg-gray-100 text-gray-900 py-8 px-4 print:bg-white print:p-0 print:m-0">
       {/* Top Action Bar (Hidden when Printing) */}
-      <div className="max-w-4xl mx-auto mb-6 flex items-center justify-between gap-4 print:hidden">
+      <div className="max-w-4xl mx-auto mb-6 flex flex-col sm:flex-row items-center justify-between gap-4 print:hidden">
         <Link
           href="/dta"
           className="inline-flex items-center gap-2 text-sm font-bold text-primary hover:text-secondary transition"
@@ -38,18 +69,42 @@ export default function BrosurDTA() {
           <ArrowLeft size={18} /> Kembali ke Portal DTA
         </Link>
 
-        <div className="flex items-center gap-3">
+        <div className="flex items-center gap-3 w-full sm:w-auto">
+          <button
+            onClick={handleDownloadPDF}
+            disabled={isDownloading}
+            className="flex-1 sm:flex-initial bg-secondary text-primary px-5 py-2.5 rounded-xl font-bold text-xs flex items-center justify-center gap-2 hover:bg-secondary/90 transition shadow-md disabled:opacity-50"
+          >
+            {isDownloading ? (
+              <>
+                <Loader2 size={16} className="animate-spin" /> Menyiapkan PDF...
+              </>
+            ) : downloadSuccess ? (
+              <>
+                <FileCheck size={16} className="text-emerald-700" /> PDF Tersimpan!
+              </>
+            ) : (
+              <>
+                <Download size={16} /> Unduh PDF Ke Perangkat
+              </>
+            )}
+          </button>
+
           <button
             onClick={handlePrint}
-            className="bg-primary text-white px-5 py-2.5 rounded-xl font-bold text-xs flex items-center gap-2 hover:bg-primary/90 transition shadow-md"
+            className="bg-primary text-white px-4 py-2.5 rounded-xl font-bold text-xs flex items-center justify-center gap-2 hover:bg-primary/90 transition shadow-md"
+            title="Cetak Brosur"
           >
-            <Printer size={16} /> Cetak / Simpan sebagai PDF
+            <Printer size={16} /> Cetak
           </button>
         </div>
       </div>
 
-      {/* --- A4 PROSURE CONTAINER (210mm x 297mm proportions) --- */}
-      <div className="max-w-4xl mx-auto bg-white border border-gray-200 shadow-2xl rounded-3xl overflow-hidden print:shadow-none print:border-none print:rounded-none print:w-full">
+      {/* --- A4 PROSURE CONTAINER --- */}
+      <div
+        id="brosur-container"
+        className="max-w-4xl mx-auto bg-white border border-gray-200 shadow-2xl rounded-3xl overflow-hidden print:shadow-none print:border-none print:rounded-none print:w-full"
+      >
         {/* BROCHURE HEADER */}
         <header className="bg-gradient-to-r from-[#1A4D2E] via-[#163e25] to-[#0f2c1a] text-white p-8 md:p-10 relative overflow-hidden">
           <div className="absolute top-0 right-0 w-80 h-80 bg-[#C8963E]/10 rounded-full blur-3xl pointer-events-none" />
@@ -83,7 +138,7 @@ export default function BrosurDTA() {
         </header>
 
         {/* BROCHURE CONTENT BODY */}
-        <div className="p-8 md:p-10 space-y-8">
+        <div className="p-8 md:p-10 space-y-8 bg-white">
           {/* Section 1: Profil & Keunggulan */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             <div className="md:col-span-2 space-y-3">
@@ -91,7 +146,7 @@ export default function BrosurDTA() {
                 <Sparkles size={18} className="text-[#C8963E]" /> Profil & Visi Pembinaan
               </h2>
               <p className="text-xs md:text-sm text-gray-700 leading-relaxed">
-                DTA Nurul Iman adalah lembaga pendidikan keagamaan Islam sore hari untuk anak usia SD/MI (6-12 Tahun). Berfokus pada kelancaran membaca Al-Qur'an (Iqro/Tahsin), pembentukan adab islami, hafalan Juz 30, serta bimbingan praktik shalat dan wudhu harian.
+                DTA Nurul Iman adalah lembaga pendidikan keagamaan Islam sore hari untuk anak usia SD/MI (6-12 Tahun). Berfokus pada kelancaran membaca Al-Qur&apos;an (Iqro/Tahsin), pembentukan adab islami, hafalan Juz 30, serta bimbingan praktik shalat dan wudhu harian.
               </p>
             </div>
 

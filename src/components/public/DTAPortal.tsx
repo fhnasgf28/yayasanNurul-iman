@@ -397,11 +397,11 @@ export default function DTAPortal() {
 
               <div className="flex items-center gap-3 w-full md:w-auto">
                 <Link
-                  href="/dta/brosur"
+                  href="/dta/brosur?download=true"
                   target="_blank"
-                  className="flex-1 md:flex-initial bg-primary text-white px-5 py-3 rounded-xl font-bold text-xs flex items-center justify-center gap-2 hover:bg-primary/90 transition shadow-md"
+                  className="flex-1 md:flex-initial bg-secondary text-primary px-5 py-3 rounded-xl font-bold text-xs flex items-center justify-center gap-2 hover:bg-secondary/90 transition shadow-md"
                 >
-                  <Download size={16} /> Unduh Brosur A4 PDF
+                  <Download size={16} /> Unduh Brosur PDF Langsung
                 </Link>
                 <button
                   onClick={handleShareBrochure}
