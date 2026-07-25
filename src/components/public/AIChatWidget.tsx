@@ -320,8 +320,8 @@ export default function AIChatWidget() {
   ];
 
   return (
-    // Stacked above WhatsApp (bottom-24 on mobile & desktop so they never collide)
-    <div className="fixed bottom-24 right-4 md:right-8 z-[80] font-sans print:hidden">
+    // Stacked above WhatsApp (bottom-[148px] on mobile, md:bottom-24 on desktop)
+    <div className="fixed bottom-[148px] right-4 md:bottom-24 md:right-8 z-[80] font-sans print:hidden">
       {/* --- FLOATING CHAT BUTTON --- */}
       <AnimatePresence>
         {!isOpen && (
