@@ -1,9 +1,9 @@
 import { NextRequest, NextResponse } from "next/server";
 import { findKnowledgeResponse, SYSTEM_PROMPT } from "@/lib/ai-knowledge";
 
-const ROUTER_API_URL = "https://xai.hashmicro.co/v1/chat/completions";
-const ROUTER_API_KEY = "sk-03e23aa2ba416da7-641faa-f4504c0c";
-const ROUTER_MODEL = "gpt-5.5";
+const NINEROUTER_API_URL = "http://localhost:20128/v1/chat/completions";
+const NINEROUTER_API_KEY = "sk-4d7386fbdacf12b8-0u1sx1-8e899e07";
+const NINEROUTER_MODEL = "combo1";
 
 export async function POST(req: NextRequest) {
   try {
@@ -26,7 +26,7 @@ export async function POST(req: NextRequest) {
       });
     }
 
-    // 2. High-Performance Router AI Integration (Primary Generative AI Provider)
+    // 2. Primary 9Router AI Engine (Local 9Router Service via secret.txt API Key)
     try {
       const formattedHistory = Array.isArray(history)
         ? history.slice(-6).map((h: { role: string; content: string }) => ({
@@ -41,33 +41,39 @@ export async function POST(req: NextRequest) {
         { role: "user", content: message },
       ];
 
-      const routerRes = await fetch(ROUTER_API_URL, {
+      const routerRes = await fetch(NINEROUTER_API_URL, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${ROUTER_API_KEY}`,
+          Authorization: `Bearer ${NINEROUTER_API_KEY}`,
         },
         body: JSON.stringify({
-          model: ROUTER_MODEL,
+          model: NINEROUTER_MODEL,
           messages,
           stream: false,
-          max_tokens: 350,
+          max_tokens: 400,
           temperature: 0.7,
         }),
       });
 
       if (routerRes.ok) {
         const data = await routerRes.json();
-        const aiContent = data?.choices?.[0]?.message?.content;
+        let aiContent = data?.choices?.[0]?.message?.content;
+
+        // Clean up reasoning thoughts if present
+        if (!aiContent && data?.choices?.[0]?.message?.reasoning_content) {
+          aiContent = data.choices[0].message.reasoning_content;
+        }
+
         if (aiContent && typeof aiContent === "string" && aiContent.trim()) {
           return NextResponse.json({
             reply: aiContent.trim(),
-            source: "router_ai",
+            source: "9router_ai",
           });
         }
       }
     } catch (routerErr) {
-      console.error("Router AI API error:", routerErr);
+      console.error("9Router AI Error:", routerErr);
     }
 
     // 3. Fallback to Gemini API if GEMINI_API_KEY environment variable is set
