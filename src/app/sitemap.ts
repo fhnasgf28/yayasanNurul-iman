@@ -49,6 +49,25 @@ export default function sitemap(): MetadataRoute.Sitemap {
       changeFrequency: "monthly",
       priority: 0.5,
     },
+    // Pendaftaran
+    {
+      url: `${BASE_URL}/pendaftaran-siswa`,
+      lastModified: now,
+      changeFrequency: "monthly",
+      priority: 0.8,
+    },
+    {
+      url: `${BASE_URL}/pendaftaran-siswa/brosur`,
+      lastModified: now,
+      changeFrequency: "monthly",
+      priority: 0.8,
+    },
+    {
+      url: `${BASE_URL}/pendaftaran-siswa/status`,
+      lastModified: now,
+      changeFrequency: "monthly",
+      priority: 0.6,
+    },
     // Programs
     {
       url: `${BASE_URL}/programs`,
