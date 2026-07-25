@@ -396,12 +396,13 @@ export default function DTAPortal() {
               </div>
 
               <div className="flex items-center gap-3 w-full md:w-auto">
-                <button
-                  onClick={handlePrintBrochure}
+                <Link
+                  href="/dta/brosur"
+                  target="_blank"
                   className="flex-1 md:flex-initial bg-primary text-white px-5 py-3 rounded-xl font-bold text-xs flex items-center justify-center gap-2 hover:bg-primary/90 transition shadow-md"
                 >
-                  <Printer size={16} /> Cetak / Simpan PDF
-                </button>
+                  <Download size={16} /> Unduh Brosur A4 PDF
+                </Link>
                 <button
                   onClick={handleShareBrochure}
                   className="bg-secondary text-primary px-5 py-3 rounded-xl font-bold text-xs flex items-center justify-center gap-2 hover:bg-secondary/80 transition shadow-md"
