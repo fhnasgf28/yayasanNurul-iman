@@ -87,6 +87,18 @@ export default function sitemap(): MetadataRoute.Sitemap {
       changeFrequency: "weekly",
       priority: 0.7,
     },
+    {
+      url: `${BASE_URL}/masjid/doa`,
+      lastModified: now,
+      changeFrequency: "weekly",
+      priority: 0.8,
+    },
+    {
+      url: `${BASE_URL}/masjid/agenda`,
+      lastModified: now,
+      changeFrequency: "weekly",
+      priority: 0.8,
+    },
     // Pendaftaran
     {
       url: `${BASE_URL}/pendaftaran-siswa`,

@@ -36,6 +36,9 @@ export const metadata: Metadata = {
   alternates: {
     canonical: "/",
   },
+  verification: {
+    google: "w2LkhaGwwtnU1jYt3g9oBCZHZE6kr2KOQjD0WzfpOCg",
+  },
   openGraph: {
     title: "Yayasan Nurul Iman | Masjid & DTA Islami",
     description: "Menerangi Umat, Membentuk Generasi Qur'ani. Yayasan Nurul Iman berdedikasi memakmurkan Masjid Nurul Iman dan membina generasi muda melalui DTA.",
