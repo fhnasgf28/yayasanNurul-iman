@@ -1,6 +1,10 @@
 import { NextRequest, NextResponse } from "next/server";
 import { findKnowledgeResponse, SYSTEM_PROMPT } from "@/lib/ai-knowledge";
 
+const ROUTER_API_URL = "https://xai.hashmicro.co/v1/chat/completions";
+const ROUTER_API_KEY = "sk-03e23aa2ba416da7-641faa-f4504c0c";
+const ROUTER_MODEL = "gpt-5.5";
+
 export async function POST(req: NextRequest) {
   try {
     const body = await req.json();
@@ -22,26 +26,59 @@ export async function POST(req: NextRequest) {
       });
     }
 
-    // 2. Try Gemini API if GEMINI_API_KEY environment variable is set
+    // 2. High-Performance Router AI Integration (Primary Generative AI Provider)
+    try {
+      const formattedHistory = Array.isArray(history)
+        ? history.slice(-6).map((h: { role: string; content: string }) => ({
+            role: h.role === "user" ? "user" : "assistant",
+            content: h.content,
+          }))
+        : [];
+
+      const messages = [
+        { role: "system", content: SYSTEM_PROMPT },
+        ...formattedHistory,
+        { role: "user", content: message },
+      ];
+
+      const routerRes = await fetch(ROUTER_API_URL, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${ROUTER_API_KEY}`,
+        },
+        body: JSON.stringify({
+          model: ROUTER_MODEL,
+          messages,
+          stream: false,
+          max_tokens: 350,
+          temperature: 0.7,
+        }),
+      });
+
+      if (routerRes.ok) {
+        const data = await routerRes.json();
+        const aiContent = data?.choices?.[0]?.message?.content;
+        if (aiContent && typeof aiContent === "string" && aiContent.trim()) {
+          return NextResponse.json({
+            reply: aiContent.trim(),
+            source: "router_ai",
+          });
+        }
+      }
+    } catch (routerErr) {
+      console.error("Router AI API error:", routerErr);
+    }
+
+    // 3. Fallback to Gemini API if GEMINI_API_KEY environment variable is set
     const apiKey = process.env.GEMINI_API_KEY;
     if (apiKey) {
-      // Try models in order: gemini-2.0-flash -> gemini-1.5-flash
       const models = ["gemini-2.0-flash", "gemini-1.5-flash"];
-
       for (const model of models) {
         try {
           const geminiUrl = `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${apiKey}`;
 
-          // Format conversation history for Gemini API
-          const formattedHistory = Array.isArray(history)
-            ? history.slice(-6).map((h: { role: string; content: string }) => ({
-                role: h.role === "user" ? "user" : "model",
-                parts: [{ text: h.content }],
-              }))
-            : [];
-
           const contents = [
-            ...formattedHistory,
             {
               role: "user",
               parts: [{ text: `${SYSTEM_PROMPT}\n\nPertanyaan Jamaah: ${message}` }],
@@ -54,7 +91,7 @@ export async function POST(req: NextRequest) {
             body: JSON.stringify({
               contents,
               generationConfig: {
-                maxOutputTokens: 400,
+                maxOutputTokens: 350,
                 temperature: 0.7,
               },
             }),
@@ -76,20 +113,12 @@ export async function POST(req: NextRequest) {
       }
     }
 
-    // 3. Fallback Response if GEMINI_API_KEY is missing in .env
-    const setupGuideReply = `Assalamu'alaikum Wr. Wb. 🌸
+    // 4. Default Friendly Response
+    const fallbackReply = `Assalamu'alaikum Wr. Wb. 🌸
 
-Terima kasih atas pertanyaannya! 
+Terima kasih telah menghubungi Asisten Yayasan Nurul Iman. 
 
-Untuk mengaktifkan jawaban **AI Gemini Generatif Luwes** secara penuh untuk pertanyaan umum di luar sistem basis pengetahuan yayasan, tambahkan **GEMINI_API_KEY** di file \`.env\` server:
-
-\`\`\`env
-GEMINI_API_KEY="AIzaSy..."
-\`\`\`
-
-*(API Key gratis dapat dibuat di: https://aistudio.google.com/)*
-
-Saat ini saya dapat membantu Anda secara instan untuk informasi:
+Saya siap membantu Anda dengan informasi seputar:
 - 📖 *Pendaftaran Santri DTA Nurul Iman* (/pendaftaran-siswa)
 - 🕌 *Jadwal Sholat & Kegiatan Masjid* (/jadwal-sholat)
 - 📚 *Al-Qur'an Online & Dzikir Pagi Sore* (/masjid/quran)
@@ -97,8 +126,8 @@ Saat ini saya dapat membantu Anda secara instan untuk informasi:
 - 💚 *Donasi & Infaq Yayasan* (/donate)`;
 
     return NextResponse.json({
-      reply: setupGuideReply,
-      source: "setup_guide",
+      reply: fallbackReply,
+      source: "fallback",
     });
   } catch (error) {
     console.error("AI Chat API Error:", error);
