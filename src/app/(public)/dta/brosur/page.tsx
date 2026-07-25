@@ -59,9 +59,9 @@ export default function BrosurDTA() {
   };
 
   return (
-    <main className="min-h-screen bg-gray-100 text-gray-900 py-8 px-4 print:bg-white print:p-0 print:m-0">
+    <main className="min-h-screen bg-gray-100 text-gray-900 pt-28 md:pt-36 pb-12 px-4 print:bg-white print:p-0 print:m-0">
       {/* Top Action Bar (Hidden when Printing) */}
-      <div className="max-w-4xl mx-auto mb-6 flex flex-col sm:flex-row items-center justify-between gap-4 print:hidden">
+      <div className="max-w-4xl mx-auto mb-8 bg-white border border-secondary/20 rounded-2xl p-4 shadow-md flex flex-col sm:flex-row items-center justify-between gap-4 relative z-30 print:hidden">
         <Link
           href="/dta"
           className="inline-flex items-center gap-2 text-sm font-bold text-primary hover:text-secondary transition"
