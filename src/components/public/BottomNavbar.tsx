@@ -65,7 +65,7 @@ const secondaryItems = [
   { label: "Kumpulan Doa", href: "/masjid/doa", icon: HandHeart },
   { label: "Hadits", href: "/masjid/hadits", icon: BookMarked },
   { label: "Agenda & Kalender", href: "/masjid/agenda", icon: Clock3 },
-  { label: "DTA", href: "/programs?category=Pendidikan", icon: BookOpen },
+  { label: "Kurikulum & Info DTA", href: "/dta", icon: BookOpen },
   { label: "Jadwal Sholat", href: "/jadwal-sholat", icon: Clock3 },
   { label: "Pendaftaran", href: "/pendaftaran-siswa", icon: UserPlus },
   { label: "Galeri", href: "/gallery", icon: ImageIcon },

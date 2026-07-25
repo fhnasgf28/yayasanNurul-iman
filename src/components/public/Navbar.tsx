@@ -37,10 +37,12 @@ const navLinks = [
   },
   {
     name: "DTA",
-    href: "/programs?category=Pendidikan",
+    href: "/dta",
     dropdown: [
+      { name: "Info & Kurikulum DTA", href: "/dta" },
       { name: "Program DTA", href: "/programs?category=Pendidikan" },
       { name: "Pendaftaran Siswa", href: "/pendaftaran-siswa" },
+      { name: "Status Pendaftaran", href: "/pendaftaran-siswa/status" },
     ],
   },
   { name: "Berita", href: "/news" },

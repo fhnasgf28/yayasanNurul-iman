@@ -99,6 +99,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
       changeFrequency: "weekly",
       priority: 0.8,
     },
+    {
+      url: `${BASE_URL}/dta`,
+      lastModified: now,
+      changeFrequency: "weekly",
+      priority: 0.9,
+    },
     // Pendaftaran
     {
       url: `${BASE_URL}/pendaftaran-siswa`,
