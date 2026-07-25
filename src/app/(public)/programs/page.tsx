@@ -1,5 +1,15 @@
-import ProgramCard from "@/features/programs/ProgramCard";
+import type { Metadata } from "next";
+import { Layers } from "lucide-react";
+import ProgramsExplorer from "@/components/public/ProgramsExplorer";
 import { getPrograms } from "@/lib/data";
+import { buildPageMetadata } from "@/lib/seo";
+
+export const metadata: Metadata = buildPageMetadata({
+  title: "Program Khidmah & Kegiatan Yayasan Nurul Iman",
+  description:
+    "Jelajahi program kemakmuran masjid, pendidikan DTA & Tahfidz Al-Qur'an, beasiswa santri yatim/dhuafa, serta kegiatan sosial Yayasan Nurul Iman.",
+  path: "/programs",
+});
 
 export default async function ProgramsPage({
   searchParams,
@@ -8,55 +18,34 @@ export default async function ProgramsPage({
 }) {
   const { category } = await searchParams;
   const allPrograms = await getPrograms();
-  
-  const filteredPrograms = category && category !== "Semua"
-    ? allPrograms.filter(p => p.category === category)
-    : allPrograms;
-
-  const categories = ["Semua", "Masjid", "Pendidikan", "Sosial"];
 
   return (
-    <main className="pt-20">
-      <section className="bg-primary py-24 px-6 text-center relative overflow-hidden">
+    <main className="pt-20 min-h-screen bg-[#FDFAF4]">
+      {/* Page Header Banner */}
+      <section className="bg-primary py-20 px-6 relative overflow-hidden">
         <div className="absolute inset-0 opacity-10 bg-islamic" />
-        <div className="max-w-4xl mx-auto space-y-4 relative z-10">
-          <h1 className="text-4xl md:text-6xl font-serif font-bold text-white">Program Kami</h1>
-          <p className="text-white/70 text-lg md:text-xl">Khidmah Yayasan Nurul Iman dalam memakmurkan masjid dan membina generasi ummat.</p>
+        <div className="max-w-4xl mx-auto text-center relative z-10 space-y-4">
+          <div className="inline-flex items-center gap-2 bg-white/10 border border-white/20 text-secondary text-xs font-bold px-4 py-2 rounded-full uppercase tracking-widest">
+            <Layers size={14} />
+            Yayasan Nurul Iman
+          </div>
+          <h1 className="text-4xl md:text-6xl font-serif font-bold text-white">
+            Program Khidmah Umat
+          </h1>
+          <p className="font-arabic text-2xl md:text-3xl text-secondary/90 leading-loose">
+            وَأَحْسِنُوا ۛ إِنَّ اللَّهَ يُحِبُّ الْمُحْسِنِينَ
+          </p>
+          <p className="text-white/80 text-base md:text-lg max-w-2xl mx-auto">
+            &quot;Dan berbuat baiklah, karena sesungguhnya Allah menyukai orang-orang yang berbuat baik.&quot; (QS. Al-Baqarah: 195).
+          </p>
         </div>
       </section>
 
-      <section className="py-24 px-6 bg-light bg-islamic">
-        <div className="max-w-7xl mx-auto">
-          {/* Filters */}
-          <div className="flex flex-wrap justify-center gap-4 mb-16">
-            {categories.map((cat) => (
-              <a
-                key={cat}
-                href={cat === "Semua" ? "/programs" : `/programs?category=${cat}`}
-                className={`px-8 py-3 rounded-full text-sm font-bold transition-all border ${
-                  (category === cat || (!category && cat === "Semua")) 
-                    ? "bg-secondary text-primary border-secondary shadow-lg scale-105" 
-                    : "bg-white text-primary border-secondary/10 hover:border-secondary shadow-sm"
-                }`}
-              >
-                {cat}
-              </a>
-            ))}
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
-            {filteredPrograms.map((program) => (
-              <ProgramCard key={program.id} program={program} />
-            ))}
-          </div>
-          
-          {filteredPrograms.length === 0 && (
-            <div className="text-center py-20 bg-white rounded-3xl border border-secondary/10">
-              <p className="text-gray-500 font-serif text-xl italic">Belum ada program aktif di kategori ini.</p>
-            </div>
-          )}
-        </div>
-      </section>
+      {/* Interactive Explorer Component */}
+      <ProgramsExplorer
+        initialPrograms={allPrograms}
+        initialCategory={category || "Semua"}
+      />
     </main>
   );
 }
